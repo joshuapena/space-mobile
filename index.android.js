@@ -5,15 +5,19 @@
  */
 
 import React, { Component } from 'react';
-//import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import {Platform, AppRegistry, StyleSheet, Text, View} from 'react-native';
+var icon = require ('react-native-vector-icons/FontAwesome');
+var {FBLogin, FBLoginManager} = require('react-native-facebook-login');
+var LoginBehavior = {
+  'android': FBLoginManager.LoginBehaviors.Native
+}
+
+class FBLoginView extends Component {
+
+}
 
 class ParkingCheckout extends Component {
+  /*
   render() {
     return (
       <View style={styles.container}>
@@ -30,8 +34,25 @@ class ParkingCheckout extends Component {
       </View>
     );
   }
-}
+  */
+  static contextTypes = {
+    isLoggedIn: React.PropTypes.bool,
+    login: React.PropTypes.func,
+    logout: React.PropTypes.func,
+    props: React.PropTypes.object
+  };
 
+  constructor (props) {
+    super (props);
+  }
+
+  render() {
+    return (<FBLogin loginBehavior={LoginBehavior[Platform.OS]}/>);
+  }
+};
+module.exports = ParkingCheckout;
+
+/*
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -50,5 +71,21 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+*/
 
 AppRegistry.registerComponent('ParkingCheckout', () => ParkingCheckout);
+
+/*
+<FBLogin
+    buttonView={<ParkingCheckout />}
+    ref={(fbLogin) => { this.fbLogin = fbLogin }}
+    loginBehavior={FBLoginManager.LoginBehaviors.Native}
+    permissions={["email","user_friends"]}
+    onLogin={function(e){console.log(e)}}
+    onLoginFound={function(e){console.log(e)}}
+    onLoginNotFound={function(e){console.log(e)}}
+    onLogout={function(e){console.log(e)}}
+    onCancel={function(e){console.log(e)}}
+    onPermissionsMissing={function(e){console.log(e)}}
+/>
+*/
