@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.facebook.FacebookSdk;
 import com.facebook.CallbackManager;
 import com.facebook.react.ReactActivity;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
 
 public class MainActivity extends ReactActivity {
     CallbackManager cbm; //mCallbackManager

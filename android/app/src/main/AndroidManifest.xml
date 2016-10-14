@@ -9,13 +9,18 @@
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="22" />
+    <dependency>
+        <groupId>com.facebook.android</groupId>
+        <artifactId>facebook-android-sdk</artifactId>
+        <version>PUT_LATEST_VERSION_HERE</version>
+    </dependency>
 
     <application
       android:name=".MainApplication"
       android:allowBackup="true"
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"
-      android:theme="@style/AppTheme"
+      android:theme="@style/AppTheme">
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
