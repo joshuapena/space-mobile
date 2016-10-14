@@ -9,12 +9,25 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 
+import android.app.Application;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+
+    @Override
+    public void onCreate() {
+      super.onCreate();
+      FacebookSdk.sdkInitialize (getApplicationContext());
+      AppEventsLogger.activateApp (this);
+    }
+
+
     @Override
     protected boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
@@ -22,9 +35,17 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
+      cbm = new CallbackManager.Factory().create();
+      ReactPackage packages[] = new ReactPackage[] {
+        new MainReactPackage(),
+        new FBSDKPackage (cbm),
+      };
+      return Arrays.<ReactPackage>asList (packages);
+      /*
       return Arrays.<ReactPackage>asList(
           new MainReactPackage()
       );
+      */
     }
   };
 
