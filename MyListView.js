@@ -3,6 +3,17 @@ import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'rea
 
 import Button from 'react-native-button' ;
 
+import Icon from 'react-native-vector-icons/FontAwesome';
+const myIcon = (<Icon name="rocket" size={30} color="#900" />);
+const xIcon = (<Icon name="times" size={30} color="#100" />);
+
+
+const customTextButton = (
+  <Icon.Button name="facebook" backgroundColor="#3b5998">
+    <Text style={{fontFamily: 'Arial', fontSize: 15}}>Login with Facebook</Text>
+  </Icon.Button>
+);
+
 export default class MyListView extends Component {
 
   // myArr = [
@@ -71,9 +82,15 @@ export default class MyListView extends Component {
      <View style={{paddingTop: 22}}>
        <ListView
          dataSource={this.state.dataSource}
-         renderRow={(rowData) => <Text>My name is {rowData.price}. I am {rowData.type} years old. </Text>}
+         renderRow={(rowData) => <Text> {xIcon}My price is {rowData.price}, for a {rowData.type}.  </Text>}
        />
-       <Button onPress = { () => this._handlePress() }> Submit </Button>
+       <Icon name="rocket" size={20} color="#900" />
+       {myIcon}
+
+       <Icon.Button name="cloud-download" backgroundColor="#3b5998" onPress={ () => this._handlePress() }>
+         Download data from heroku server
+       </Icon.Button>
+
      </View>
    );
  }

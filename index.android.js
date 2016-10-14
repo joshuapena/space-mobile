@@ -14,7 +14,7 @@ class ParkingCheckout extends Component {
     return (
 
       <View>
-        <NiceInput/>
+        <MyListView/>
       </View>
 
     )
