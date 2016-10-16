@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native';
+import {Navigator, StyleSheet, Text, Slider, Picker, TextInput, View, Image} from 'react-native';
 
 import Button from 'react-native-button' ;
 
@@ -27,12 +27,13 @@ export default class Hostspace extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        price: myType,
+        price: myPrice,
         address: myAddress,
         type : myType
 
       })
     }
+
 
     if (myType != null && myAddress != null && myType != null){
       this.getTestData();
@@ -83,11 +84,12 @@ export default class Hostspace extends Component {
           onChangeText={(address) => this.setState({address})}
           value = {this.state.address}
         />
-        <TextInput
-            placeholder = "type"
-            onChangeText={(type) => this.setState({type})}
-            value = {this.state.type}
-        />
+        <Picker
+          selectedValue={this.state.language}
+          onValueChange={(lang) => this.setState({language: lang})}>
+          <Picker.Item label="Garage" value="garage" />
+          <Picker.Item label="Driveway" value="driveway" />
+        </Picker>
         <Button onPress={() => { this._handlePress()}}>
           Submit to Node baby
         </Button>
