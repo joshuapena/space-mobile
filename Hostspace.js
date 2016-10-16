@@ -74,22 +74,27 @@ export default class Hostspace extends Component {
         <Text style={styles.welcome}>
           What type of space?
         </Text>
-        <TextInput
-          placeholder = "price"
-          onChangeText={(price) => this.setState({price})}
-          value = {this.state.price}
-        />
-        <TextInput
-          placeholder = "address"
-          onChangeText={(address) => this.setState({address})}
-          value = {this.state.address}
-        />
+        <Text>Type:</Text>
         <Picker
           selectedValue={this.state.type}
           onValueChange={(type) => this.setState({type: type})}>
           <Picker.Item label="Garage" value="Garage" />
           <Picker.Item label="Driveway" value="Driveway" />
-        </Picker>
+        </Picker>   
+        <Text>Price:</Text>     
+        <Text style={styles.text} >
+          ${this.state.price && +this.state.price.toFixed(3)}
+        </Text>
+        <Slider
+          {...this.props} 
+          step={1}
+          minimumValue={1}
+          maximumValue={100}
+          onValueChange={(value) => this.setState({price: value})}/>
+        <TextInput
+          placeholder = "address"
+          onChangeText={(address) => this.setState({address})}
+          value = {this.state.address}/>
         <Button onPress={() => { this._handlePress()}}>
           Submit to Node baby
         </Button>
@@ -103,6 +108,16 @@ export default class Hostspace extends Component {
 }
 
 const styles = StyleSheet.create({
+  slider: {
+    height: 10,
+    margin: 10,
+  },
+  text: {
+    fontSize: 14,
+    textAlign: 'center',
+    fontWeight: '500',
+    margin: 10,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -112,6 +127,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     textAlign: 'center',
     margin: 10,
-    marginTop: 100,
+    marginTop: 50,
+    marginBottom: 25,
   },
 });
