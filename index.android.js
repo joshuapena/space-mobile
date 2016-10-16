@@ -23,35 +23,30 @@ class ParkingCheckout extends Component {
   render() {
     return (
       <View style={{marginTop: 22}}>
+
         <Modal
           animationType={"slide"}
           transparent={false}
           visible={this.state.modalVisible}
           onRequestClose={() => {alert("Modal has been closed.")}}
           >
-         <View style={{marginTop: 22}}>
-          <View>
 
+          <TouchableHighlight onPress={() => {
+            this.setModalVisible(!this.state.modalVisible)
+          }}>
+            <Text>Hide Modal</Text>
+          </TouchableHighlight>
             <Hostspace/>
-
-            <TouchableHighlight onPress={() => {
-              this.setModalVisible(!this.state.modalVisible)
-            }}>
-              <Text>Hide Modal</Text>
-            </TouchableHighlight>
-
-          </View>
-         </View>
         </Modal>
 
         <TouchableHighlight onPress={() => {
           this.setModalVisible(true)
         }}>
         <View style={styles.garage}>
-          <Image 
+          <Image
             style={{width: 50, height: 50}}
             source={require('./garage.png')}/>
-          <Text style={styles.hostspot}>Host Spot</Text> 
+          <Text style={styles.hostspot}>Host Spot</Text>
         </View>
         </TouchableHighlight>
       </View>

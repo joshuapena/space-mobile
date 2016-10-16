@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
 
 import Button from 'react-native-button' ;
+const Dimensions = require('Dimensions');
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 const myIcon = (<Icon name="rocket" size={30} color="#900" />);
 const xIcon = (<Icon name="times" size={30} color="#100" />);
-
+const windowDims = Dimensions.get('window');
 
 const customTextButton = (
   <Icon.Button name="facebook" backgroundColor="#3b5998">
@@ -63,6 +64,7 @@ export default class MyListView extends Component {
 
   getTestData() {
    return fetch('https://space-ucsc.herokuapp.com/viewList',)
+
      .then((response) => response.json())
      .then((responseJson) => {
        console.log("GET /test : ", responseJson.code);
@@ -81,8 +83,11 @@ export default class MyListView extends Component {
    return (
      <View style={{paddingTop: 22}}>
        <ListView
+         style={{height: windowDims.height - 175}}
+         enableEmptySections={true} // this line mutes a warning message that applys to
+         //cloneWithRowsAndSections, however, we use cloneWithRows so it is irrelevant to us
          dataSource={this.state.dataSource}
-         renderRow={(rowData) => <Text> {xIcon}My price is {rowData.price}, for a {rowData.type}.  </Text>}
+         renderRow={(rowData) => <Text> {xIcon}My price is {rowData.price}, for a {rowData.type}. {"\n"}It is at {rowData.address} </Text>}
        />
        <Icon name="rocket" size={20} color="#900" />
        {myIcon}
