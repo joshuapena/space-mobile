@@ -88,23 +88,34 @@ export default class Hostspace extends Component {
         <Text style={styles.welcome}>
           What type of space?
         </Text>
-        <TextInput
-          placeholder = "price"
-          onChangeText={(price) => this.setState({price})}
-          value = {this.state.price}
-        />
-        <TextInput
-          placeholder = "address"
-          onChangeText={(address) => this.setState({address})}
-          value = {this.state.address}
-        />
+        <Text style={styles.options}>Type:</Text>
+
         <Picker
           selectedValue={this.state.type}
           onValueChange={(type) => this.setState({type: type})}>
           <Picker.Item label="Garage" value="Garage" />
           <Picker.Item label="Driveway" value="Driveway" />
-        </Picker>
-        <Button onPress={() => { this._handlePress()}}>
+        </Picker>   
+
+        <Text style={styles.options}>Price:</Text>     
+        <Text style={styles.text} >
+          ${this.state.price && +this.state.price.toFixed(3)}/hr
+        </Text>
+        <Slider
+          {...this.props} 
+          style={styles.slider}
+          step={1}
+          minimumValue={1}
+          maximumValue={100}
+          onValueChange={(value) => this.setState({price: value})}/>
+
+        <TextInput style={styles.options}
+          placeholder = "address"
+          onChangeText={(address) => this.setState({address})}
+          value = {this.state.address}/>
+          
+        <Button style={styles.options}
+          onPress={() => { this._handlePress()}}>
           Submit to Node baby
         </Button>
 
@@ -114,6 +125,21 @@ export default class Hostspace extends Component {
 }
 
 const styles = StyleSheet.create({
+  slider: {
+    marginLeft: 15,
+    marginRight:15,
+  },
+  options: {
+    marginTop: 20,
+    marginLeft: 5,
+    marginRight:5,
+  },
+  text: {
+    fontSize: 14,
+    textAlign: 'center',
+    fontWeight: '500',
+    margin: 10,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -123,6 +149,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     textAlign: 'center',
     margin: 10,
-    marginTop: 100,
+    marginTop: 50,
+    marginBottom: 25,
   },
 });
