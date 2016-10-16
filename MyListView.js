@@ -23,12 +23,12 @@ export default class MyListView extends Component {
     super(props);
 
     var myJsonArr = [
-      {'price' : 'raul', 'type' : '3'},
-      {'price' : 'tyler', 'type' : '21'},
-      {'price' : 'joshua', 'type' : '12'},
-      {'price' : 'david', 'type' : '42'},
-      {'price' : 'Matt', 'type' : '34'},
-      {'price' : 'colin', 'type' : '1'}
+      // {'price' : 'raul', 'type' : '3'},
+      // {'price' : 'tyler', 'type' : '21'},
+      // {'price' : 'joshua', 'type' : '12'},
+      // {'price' : 'david', 'type' : '42'},
+      // {'price' : 'Matt', 'type' : '34'},
+      // {'price' : 'colin', 'type' : '1'}
     ];
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
       this.state = {
@@ -37,26 +37,26 @@ export default class MyListView extends Component {
     }
 
   _handlePress() {
-    console.log('Pressed! Triggered async call');
-    var coolArray  = [
-      {'price' : 'bob', 'type' : '3'},
-      {'price' : 'billy', 'type' : '21'},
-      {'price' : 'kevin', 'type' : '12'},
-       {'price' : 'jacob', 'type' : '42'},
-       {'price' : 'Matt', 'type' : '34'},
-       {'price' : 'andrew', 'type' : '1'}
-      ];
-    // this.setState({
-    //   dataSource : this.state.dataSource.cloneWithRows(coolArray)
-    // })
-
-    let myPrice=this.state.price;
-    let myAddress=this.state.address;
-    let myType=this.state.type;
-
-    console.log("my price",myPrice);
-    console.log("address",myAddress);
-    console.log("type", myType);
+    // console.log('Pressed! Triggered async call');
+    // var coolArray  = [
+    //   {'price' : 'bob', 'type' : '3'},
+    //   {'price' : 'billy', 'type' : '21'},
+    //   {'price' : 'kevin', 'type' : '12'},
+    //    {'price' : 'jacob', 'type' : '42'},
+    //    {'price' : 'Matt', 'type' : '34'},
+    //    {'price' : 'andrew', 'type' : '1'}
+    //   ];
+    // // this.setState({
+    // //   dataSource : this.state.dataSource.cloneWithRows(coolArray)
+    // // })
+    //
+    // let myPrice=this.state.price;
+    // let myAddress=this.state.address;
+    // let myType=this.state.type;
+    //
+    // console.log("my price",myPrice);
+    // console.log("address",myAddress);
+    // console.log("type", myType);
     this.getTestData();
 
   }
@@ -87,7 +87,7 @@ export default class MyListView extends Component {
        <Icon name="rocket" size={20} color="#900" />
        {myIcon}
 
-       <Icon.Button name="cloud-download" backgroundColor="#3b5998" onPress={ () => this._handlePress() }>
+       <Icon.Button name="cloud-download" backgroundColor="#3b5998" onPress={ () => this.getTestData() }>
          Download data from heroku server
        </Icon.Button>
 
