@@ -32,10 +32,10 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-     CallbackManager cbm = new CallbackManager.Factory().create();
+      CallbackManager cbm = new CallbackManager.Factory().create();
       ReactPackage packages[] = new ReactPackage[] {
-        new MainReactPackage(),
-        new FBSDKPackage(cbm),
+              new MainReactPackage(),
+              new FBSDKPackage(cbm),
       };
       return Arrays.<ReactPackage>asList (packages);
       /*
@@ -48,7 +48,7 @@ public class MainApplication extends Application implements ReactApplication {
 
   @Override
   public ReactNativeHost getReactNativeHost() {
-      return mReactNativeHost;
+    return mReactNativeHost;
   }
   @Override
   public void onCreate() {

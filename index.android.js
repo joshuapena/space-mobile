@@ -8,13 +8,18 @@ import { View, AppRegistry, Text, Image, Navigator, TextInput} from 'react-nativ
 import NiceInput from './NiceInput';
 import Hostspace from './Hostspace';
 import MyListView from './MyListView';
+import Login from './Login';
 
 class ParkingCheckout extends Component {
   render() {
     return (
 
+  //    <View>
+    //    <MyListView/>
+    //  </View>
       <View>
-        <MyListView/>
+        <Text>Welcome to the Facebook SDK for React Native!</Text>
+        <Login />
       </View>
 
     )

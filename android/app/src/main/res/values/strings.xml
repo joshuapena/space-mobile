@@ -1,4 +1,7 @@
 <resources>
 
+
     <string name="app_name">ParkingCheckout</string>
+    <string name="facebook_app_id">186674011772580</string>
+
 </resources>
