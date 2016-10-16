@@ -27,7 +27,7 @@ export default class Hostspace extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        price: myType,
+        price: myPrice,
         address: myAddress,
         type : myType
 
