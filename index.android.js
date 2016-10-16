@@ -8,6 +8,7 @@ import { View, AppRegistry, Text, Image, Navigator, TextInput} from 'react-nativ
 import NiceInput from './NiceInput';
 import Hostspace from './Hostspace';
 import MyListView from './MyListView';
+import MyModal from './MyModal';
 
 class ParkingCheckout extends Component {
   render() {
