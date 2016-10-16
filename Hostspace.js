@@ -74,28 +74,34 @@ export default class Hostspace extends Component {
         <Text style={styles.welcome}>
           What type of space?
         </Text>
-        <Text>Type:</Text>
+        <Text style={styles.options}>Type:</Text>
+
         <Picker
           selectedValue={this.state.type}
           onValueChange={(type) => this.setState({type: type})}>
           <Picker.Item label="Garage" value="Garage" />
           <Picker.Item label="Driveway" value="Driveway" />
         </Picker>   
-        <Text>Price:</Text>     
+
+        <Text style={styles.options}>Price:</Text>     
         <Text style={styles.text} >
-          ${this.state.price && +this.state.price.toFixed(3)}
+          ${this.state.price && +this.state.price.toFixed(3)}/hr
         </Text>
         <Slider
           {...this.props} 
+          style={styles.slider}
           step={1}
           minimumValue={1}
           maximumValue={100}
           onValueChange={(value) => this.setState({price: value})}/>
-        <TextInput
+
+        <TextInput style={styles.options}
           placeholder = "address"
           onChangeText={(address) => this.setState({address})}
           value = {this.state.address}/>
-        <Button onPress={() => { this._handlePress()}}>
+          
+        <Button style={styles.options}
+          onPress={() => { this._handlePress()}}>
           Submit to Node baby
         </Button>
 
@@ -109,8 +115,13 @@ export default class Hostspace extends Component {
 
 const styles = StyleSheet.create({
   slider: {
-    height: 10,
-    margin: 10,
+    marginLeft: 15,
+    marginRight:15,
+  },
+  options: {
+    marginTop: 20,
+    marginLeft: 5,
+    marginRight:5,
   },
   text: {
     fontSize: 14,
