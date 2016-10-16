@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import {Navigator, Modal, StyleSheet, Text, Slider, Picker, TextInput, View, TouchableHighlight, Image} from 'react-native';
+
+import {Navigator, StyleSheet, Text, Modal, TouchableHighlight, Slider, Picker, TextInput, View, Image} from 'react-native';
+
 
 import Button from 'react-native-button' ;
 
@@ -65,7 +67,6 @@ export default class Hostspace extends Component {
     });
  }
 
-
   render(){
     return(
       <View >
@@ -93,7 +94,7 @@ export default class Hostspace extends Component {
         </Text>
         <Text style={styles.options}>Type:</Text>
 
-        <Picker
+        <Picker style={styles.picker}
           selectedValue={this.state.type}
           onValueChange={(type) => this.setState({type: type})}>
           <Picker.Item label="Garage" value="Garage" />
@@ -109,7 +110,7 @@ export default class Hostspace extends Component {
           style={styles.slider}
           step={1}
           minimumValue={1}
-          maximumValue={100}
+          maximumValue={20}
           onValueChange={(value) => this.setState({price: value})}/>
 
         <TextInput style={styles.options}
@@ -128,14 +129,19 @@ export default class Hostspace extends Component {
 }
 
 const styles = StyleSheet.create({
+  picker: {
+    flex: 1,
+    marginRight: 100,
+    marginLeft: 100,
+  },
   slider: {
     marginLeft: 15,
     marginRight:15,
   },
   options: {
     marginTop: 20,
-    marginLeft: 5,
-    marginRight:5,
+    marginLeft: 20,
+    marginRight:20,
   },
   text: {
     fontSize: 14,
