@@ -42,6 +42,9 @@ export default class Hostspace extends Component {
 
     if (myType != null && myAddress != null && myType != null){
       this.postTestData(myJson);
+      myPrice="";
+      myAddress="";
+      myType="";
     } else{
       this.setModalVisible(true);
       return;
@@ -95,14 +98,14 @@ export default class Hostspace extends Component {
           onValueChange={(type) => this.setState({type: type})}>
           <Picker.Item label="Garage" value="Garage" />
           <Picker.Item label="Driveway" value="Driveway" />
-        </Picker>   
+        </Picker>
 
-        <Text style={styles.options}>Price:</Text>     
+        <Text style={styles.options}>Price:</Text>
         <Text style={styles.text} >
           ${this.state.price && +this.state.price.toFixed(3)}/hr
         </Text>
         <Slider
-          {...this.props} 
+          {...this.props}
           style={styles.slider}
           step={1}
           minimumValue={1}
@@ -113,7 +116,7 @@ export default class Hostspace extends Component {
           placeholder = "address"
           onChangeText={(address) => this.setState({address})}
           value = {this.state.address}/>
-          
+
         <Button style={styles.options}
           onPress={() => { this._handlePress()}}>
           Submit to Node baby
