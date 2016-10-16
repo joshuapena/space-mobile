@@ -9,7 +9,7 @@ import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 
 public class MainActivity extends ReactActivity {
-    CallbackManager cbm; //mCallbackManager
+    CallbackManager cbm = new CallbackManager.Factory().create(); //mCallbackManager
     /**
      * Returns the name of the main component registered from JavaScript.
      * This is used to schedule rendering of the component.

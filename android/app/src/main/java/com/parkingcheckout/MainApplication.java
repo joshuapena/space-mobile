@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.facebook.CallbackManager;
 import com.facebook.react.ReactApplication;
+import io.fullstack.firestack.FirestackPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -35,6 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
       CallbackManager cbm = new CallbackManager.Factory().create();
       ReactPackage packages[] = new ReactPackage[] {
               new MainReactPackage(),
+            new FirestackPackage(getApplicationContext()),
               new FBSDKPackage(cbm),
       };
       return Arrays.<ReactPackage>asList (packages);
