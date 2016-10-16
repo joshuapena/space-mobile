@@ -7,6 +7,7 @@ import { View, AppRegistry, Text, Image, StyleSheet, Modal, TouchableHighlight, 
 import NiceInput from './NiceInput';
 import Hostspace from './Hostspace';
 import MyListView from './MyListView';
+import SpaceListView from './SpaceListView';
 
 class ParkingCheckout extends Component {
 
@@ -53,7 +54,11 @@ class ParkingCheckout extends Component {
           <Text style={styles.hostspot}>Host Spot</Text> 
         </View>
         </TouchableHighlight>
+      
+      <View>
+        <SpaceListView/>
       </View>
+    </View>
     );
   }
 }
