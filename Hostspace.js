@@ -85,10 +85,10 @@ export default class Hostspace extends Component {
           value = {this.state.address}
         />
         <Picker
-          selectedValue={this.state.language}
-          onValueChange={(lang) => this.setState({language: lang})}>
-          <Picker.Item label="Garage" value="garage" />
-          <Picker.Item label="Driveway" value="driveway" />
+          selectedValue={this.state.type}
+          onValueChange={(type) => this.setState({type: type})}>
+          <Picker.Item label="Garage" value="Garage" />
+          <Picker.Item label="Driveway" value="Driveway" />
         </Picker>
         <Button onPress={() => { this._handlePress()}}>
           Submit to Node baby
