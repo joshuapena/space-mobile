@@ -1,20 +1,12 @@
 import React, {Component} from 'react';
-
 import {Navigator, StyleSheet, Text, Modal, TouchableHighlight, Slider, Picker, TextInput, View, Image} from 'react-native';
-
 
 import Button from 'react-native-button' ;
 
 export default class Hostspace extends Component {
   constructor(props){
     super(props);
-    this.state = {text : 'this text will be updated by typing',
-      modalVisible: false
-    };
-  }
-
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
+    this.state = {text : 'this text will be updated by typing', type : 'Garage', price : 1};
   }
 
   _handlePress() {
@@ -42,17 +34,24 @@ export default class Hostspace extends Component {
       })
     }
 
-    if (myType != null && myAddress != null && myType != null){
+
+    if (myType != null && myAddress != null && myType != null){ //Checks if no fields empty
+      this.getTestData();
       this.postTestData(myJson);
-      myPrice="";
-      myAddress="";
-      myType="";
-    } else{
-      this.setModalVisible(true);
-      return;
     }
   }
 
+  getTestData() {
+   return fetch('https://space-ucsc.herokuapp.com/test',)
+     .then((response) => response.json())
+     .then((responseJson) => {
+       console.log("GET /test : ", responseJson.code)
+       return responseJson.code;
+     })
+     .catch((error) => {
+       console.error(error);
+     });
+ }
 
  postTestData(myJson) {
   return fetch('https://space-ucsc.herokuapp.com/createSpace', myJson)
@@ -69,26 +68,8 @@ export default class Hostspace extends Component {
 
   render(){
     return(
-      <View >
-        <Modal
-          animationType={"slide"}
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {alert("Modal has been closed.")}}
-          >
-         <View style={{marginTop: 22}}>
-          <View>
-            <Text>Errors in Form! Fill out all the fields</Text>
+      <View>
 
-            <TouchableHighlight onPress={() => {
-              this.setModalVisible(false)
-            }}>
-              <Text>Hide Modal</Text>
-            </TouchableHighlight>
-
-          </View>
-         </View>
-        </Modal>
         <Text style={styles.welcome}>
           What type of space?
         </Text>
@@ -99,14 +80,14 @@ export default class Hostspace extends Component {
           onValueChange={(type) => this.setState({type: type})}>
           <Picker.Item label="Garage" value="Garage" />
           <Picker.Item label="Driveway" value="Driveway" />
-        </Picker>
+        </Picker>   
 
-        <Text style={styles.options}>Price:</Text>
+        <Text style={styles.options}>Price:</Text>     
         <Text style={styles.text} >
           ${this.state.price && +this.state.price.toFixed(3)}/hr
         </Text>
         <Slider
-          {...this.props}
+          {...this.props} 
           style={styles.slider}
           step={1}
           minimumValue={1}
@@ -123,6 +104,8 @@ export default class Hostspace extends Component {
           Submit to Node baby
         </Button>
 
+        <View style={styles.container} >
+        </View>
       </View>
     )
   }
