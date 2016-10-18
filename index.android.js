@@ -9,6 +9,7 @@ import { View, AppRegistry, Text, Image, Navigator, TextInput} from 'react-nativ
 import NiceInput from './NiceInput';
 import Hostspace from './Hostspace';
 import MyListView from './MyListView';
+import Signup from './Signup';
 import Login from './Login';
 
 var firebase = require ('firebase');
@@ -22,12 +23,11 @@ firebase.initializeApp (config);
 
 class ParkingCheckout extends Component {
   render() {
-    return (
 
+    return (
       <View>
         <Login/>
       </View>
-
     )
   }
 }
