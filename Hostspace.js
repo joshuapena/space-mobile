@@ -28,6 +28,8 @@ export default class Hostspace extends Component {
     console.log("address",myAddress);
     console.log("type", myType);
 
+    this.setModalVisible(false);
+
     var myJson = {
       method: 'POST',
       headers: {
@@ -119,7 +121,7 @@ export default class Hostspace extends Component {
           value = {this.state.address}/>
 
         <Button style={styles.options}
-          onPress={() => { this._handlePress()}}>
+          onPress={() => { this._handlePress(); {props.myPropFunction}}}>
           Submit to Node baby
         </Button>
 

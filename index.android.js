@@ -20,6 +20,10 @@ class ParkingCheckout extends Component {
     this.setState({modalVisible: visible});
   }
 
+  removeModal() {
+    this.setState({modalVisible: false});
+  }
+
   render() {
     return (
       <View style={{marginTop: 22}}>
@@ -36,7 +40,7 @@ class ParkingCheckout extends Component {
           }}>
             <Text>Hide Modal</Text>
           </TouchableHighlight>
-            <Hostspace/>
+            <Hostspace myProp = {this.state.modalVisible} myPropFunction={this.removeModal}/>
         </Modal>
 
         <TouchableHighlight onPress={() => {
