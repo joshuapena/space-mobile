@@ -81,16 +81,13 @@ export default class MyListView extends Component {
 
  render() {
    return (
-     <View style={{paddingTop: 22}}>
+     <View style={styles.container}>
        <ListView
-         style={{height: windowDims.height - 175}}
          enableEmptySections={true} // this line mutes a warning message that applys to
          //cloneWithRowsAndSections, however, we use cloneWithRows so it is irrelevant to us
          dataSource={this.state.dataSource}
          renderRow={(rowData) => <Text> {xIcon}My price is {rowData.price}, for a {rowData.type}. {"\n"}It is at {rowData.address} </Text>}
        />
-       <Icon name="rocket" size={20} color="#900" />
-       {myIcon}
 
        <Icon.Button name="cloud-download" backgroundColor="#3b5998" onPress={ () => this.getTestData() }>
          Download data from heroku server

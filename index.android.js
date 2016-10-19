@@ -53,7 +53,7 @@ class ParkingCheckout extends Component {
         </TouchableHighlight>
       
       <View>
-        <SpaceListView/>
+        <MyListView/>
       </View>
     </View>
     );
