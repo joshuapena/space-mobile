@@ -29,8 +29,7 @@ export default class Signup extends Component {
             alert('button has error');
             switch (error.code) {
                 case "auth/email-already-in-use": 
-                    console.log ('email already in use');
-                    alert ('kill yourself');
+                    alert ('email already in use');
                     break;
 
                 case "auth/invalid-email":
