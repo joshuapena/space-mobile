@@ -12,8 +12,10 @@ var config = {
     storageBucket: "gs://space-252ee.appspot.com",
 }
 firebase.initializeApp (config);
-*/
 
+var db = firebase.database();
+var users = db.ref("users");
+*/
 export default class Signup extends Component {
     constructor (props) {
         super (props);
@@ -56,6 +58,11 @@ export default class Signup extends Component {
         }
     }
 
+   /* userInfoToDb() {
+        var currentUser = firebase.auth().currentUser;
+        var uidRef = db.child("users").set(currentUser.uid);
+    } */
+
     logUserInfoOnPress() {
         var currentUser = firebase.auth().currentUser;
         if (currentUser) {
@@ -80,7 +87,7 @@ export default class Signup extends Component {
         return (
             <View >
                 <Text style = {styles.welcome}>
-                    Enter Login Information
+                    Enter Signup Information
                 </Text>
                 <TextInput
                     placeholder = "email"
@@ -88,6 +95,7 @@ export default class Signup extends Component {
                     value = {this.state.email}
                 />
                 <TextInput
+                    secureTextEntry = {true}
                     placeholder = "password"
                     onChangeText = {(password) => this.setState ({password})}
                     value = {this.state.password}

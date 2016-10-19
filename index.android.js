@@ -26,7 +26,7 @@ class ParkingCheckout extends Component {
 
     return (
       <View>
-        <Login/>
+        <Signup/>
       </View>
     )
   }
