@@ -3,8 +3,16 @@ import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native'
 import Button from 'react-native-button';
 
 var firebase = require ('firebase');
-var ERROR_FALSE = 1;
-var ERROR_TRUE = 0;
+
+/*
+auth/invalid-email
+    Thrown if the email address is not valid.
+auth/user-disabled
+    Thrown if the user corresponding to the given email has been disabled. 
+auth/user-not-found
+    Thrown if there is no user corresponding to the given email.
+auth/wrong-password
+*/
 
 export default class Login extends Component {
     constructor (props) {
@@ -12,28 +20,21 @@ export default class Login extends Component {
         this.state = {text : 'this text will be updated by typing'};
     }
 
-    buttonpress() {
-        console.log ('button has been pressed');
+    logInOnPress() {
         let email = this.state.email;
         let password = this.state.password;
-        var error_ = ERROR_FALSE;
-        firebase.auth().signInWithEmailAndPassword (email, password).catch (function (error) {
-            if (error.code) {
-                error_ = ERROR_TRUE;
-                alert ('cannot log in');
-            }
+        firebase.auth().signInWithEmailAndPassword (email, password).then (function() {
+            alert ('successfully signed in');
+        }, function (error) {
+            alert (error);
         });
-        if (!error_ === ERROR_TRUE) {
-            alert ('sign in success');
-        }
-        error_ = ERROR_FALSE;
     }
 
     render() {
         return (
             <View >
                 <Text style = {styles.welcome}>
-                    SPACE : Login Page (test
+                    SPACE : Login Page (pre-alpha)
                 </Text>
                 <TextInput
                     placeholder = "email"
@@ -45,14 +46,11 @@ export default class Login extends Component {
                     onChangeText = {(password) => this.setState ({password})}
                     value = {this.state.password}
                 />
-                <Button onPress = {() => {this.buttonpress()}}>
-                    Log in
+                <Button onPress = {() => {this.logInOnPress()}}>
+                    [[Log in]]
                 </Button>
                 <Button onPress = {() => this.logOutUser()}>
-                    Log out
-                </Button>
-                <Button onPress = {() => this.logUserInfoOnPress()}>
-                    [[Log user information]]
+                    [[Log out]]
                 </Button>
                 <View style = {styles.container} >
                 </View>
@@ -68,7 +66,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     welcome: {
-        fontSize: 50,
+        fontSize: 25,
         textAlign: 'center',
         margin: 10,
         marginTop: 100,

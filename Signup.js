@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native';
 import Button from 'react-native-button';
 
-
 var firebase = require ('firebase');
-
 
 export default class Signup extends Component {
     constructor (props) {
@@ -12,40 +10,11 @@ export default class Signup extends Component {
         this.state = {text : 'this text will be updated by typing'};
     }
 
-
-   /* postUserData(myJson) {
-        return fetch('https://space-ucsc.herokuapp.com/createUser', myJson)
-        .then((response) => response.json())
-        .then((responseJson) => {
-            console.log("id1: ", responseJson.testid1);
-            console.log("id2: ", responseJson.testid2);
-            console.log("code: ", responseJson.code)
-            return responseJson.code;
-            })
-        .catch((error) => {
-            console.error(error);
-        });
-    }*/
-
-    buttonpress() {
+    signUpOnPress() {
         console.log ('button has been pressed');
         let email = this.state.email;
         let password = this.state.password;
-        var postUserData = function (myJson){
-            return fetch('https://space-ucsc.herokuapp.com/createUser', myJson)
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log("id1: ", responseJson.testid1);
-                console.log("email: ", responseJson.email1);
-                console.log("code: ", responseJson.code)
-                return responseJson.code;
-                })
-            .catch((error) => {
-                console.error(error);
-            });
-        }
         var user = firebase.auth().createUserWithEmailAndPassword (email, password).catch (function (error) {
-            alert('button has error');
             switch (error.code) {
                 case "auth/email-already-in-use": 
                     alert ('email already in use');
@@ -65,29 +34,12 @@ export default class Signup extends Component {
 
                 default: 
                     alert ('error creating account :/');
-                    alert(error)
             }   
-        }).then(function(resp) {
-            alert ('account successfully created');
-            var curr = firebase.auth().currentUser;
-            alert("user uid: "+curr.uid);
-            var myJson = {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                    body: JSON.stringify({
-                    uid: curr.uid,
-                    email: curr.email
-                })
-            }
-            var ref = firebase.database().ref ('users/' + curr.uid).set ({
-                email: email,
-                name: email
-            });
-
-            postUserData(myJson);
+        }).then (function() {
+            var currentUser = firebase.auth().currentUser;
+            firebase.database().ref ('users/' + currentUser.uid).set ({
+                email: currentUser.email
+            });        
         });
     }
 
@@ -115,7 +67,7 @@ export default class Signup extends Component {
         return (
             <View >
                 <Text style = {styles.welcome}>
-                    Enter Signup Information
+                    SPACE : Signup Page (pre-alpha)
                 </Text>
                 <TextInput
                     placeholder = "email"
@@ -128,14 +80,14 @@ export default class Signup extends Component {
                     onChangeText = {(password) => this.setState ({password})}
                     value = {this.state.password}
                 />
-                <Button onPress = {() => {this.buttonpress()}}>
-                    sign up
+                <Button onPress = {() => {this.signUpOnPress()}}>
+                    [[sign up]]
                 </Button>
                 <Button onPress = {() => this.logUserInfoOnPress()}>
-                    Log user information
+                    [[Log user information]]
                 </Button>
                 <Button onPress = {() => this.logOutUser()}>
-                    Log out Button
+                    [[Log out]]
                 </Button>
                 <View style = {styles.container} >
                 </View>
@@ -151,7 +103,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     welcome: {
-        fontSize: 50,
+        fontSize: 25,
         textAlign: 'center',
         margin: 10,
         marginTop: 100,
