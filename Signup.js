@@ -4,16 +4,8 @@ import Button from 'react-native-button';
 
 
 var firebase = require ('firebase');
-/*var config = {
-    apiKey: "AIzaSyAd7nS1dCGQILFxxZ5Jwsla5wy1rnbEI_M",
-    authDomain: "space-252ee.firebaseapp.com",
-    databaseURL: "https://space-252ee.firebaseio.com",
-    storageBucket: "gs://space-252ee.appspot.com",
-}
-firebase.initializeApp (config);*/
 
-//var db = firebase.database();
-//var users = db.ref("users");
+
 export default class Signup extends Component {
     constructor (props) {
         super (props);
@@ -40,17 +32,17 @@ export default class Signup extends Component {
         let email = this.state.email;
         let password = this.state.password;
         var postUserData = function (myJson){
-        return fetch('https://space-ucsc.herokuapp.com/createUser', myJson)
-        .then((response) => response.json())
-        .then((responseJson) => {
-            console.log("id1: ", responseJson.testid1);
-            console.log("email: ", responseJson.email1);
-            console.log("code: ", responseJson.code)
-            return responseJson.code;
-            })
-        .catch((error) => {
-            console.error(error);
-        });
+            return fetch('https://space-ucsc.herokuapp.com/createUser', myJson)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log("id1: ", responseJson.testid1);
+                console.log("email: ", responseJson.email1);
+                console.log("code: ", responseJson.code)
+                return responseJson.code;
+                })
+            .catch((error) => {
+                console.error(error);
+            });
         }
         var user = firebase.auth().createUserWithEmailAndPassword (email, password).catch (function (error) {
             alert('button has error');
@@ -84,20 +76,20 @@ export default class Signup extends Component {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                 },
-                 body: JSON.stringify({
-                 uid: curr.uid,
-                 email: curr.email
-                 })
-                }
+                },
+                    body: JSON.stringify({
+                    uid: curr.uid,
+                    email: curr.email
+                })
+            }
+            var ref = firebase.database().ref ('users/' + curr.uid).set ({
+                email: email,
+                name: email
+            });
+
             postUserData(myJson);
         });
     }
-
-   /* userInfoToDb() {
-        var currentUser = firebase.auth().currentUser;
-       // var uidRef = db.child("users").set(currentUser.uid);
-    } */
 
     logUserInfoOnPress() {
         var currentUser = firebase.auth().currentUser;
