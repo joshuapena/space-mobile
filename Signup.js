@@ -21,10 +21,37 @@ export default class Signup extends Component {
     }
 
 
+   /* postUserData(myJson) {
+        return fetch('https://space-ucsc.herokuapp.com/createUser', myJson)
+        .then((response) => response.json())
+        .then((responseJson) => {
+            console.log("id1: ", responseJson.testid1);
+            console.log("id2: ", responseJson.testid2);
+            console.log("code: ", responseJson.code)
+            return responseJson.code;
+            })
+        .catch((error) => {
+            console.error(error);
+        });
+    }*/
+
     buttonpress() {
         console.log ('button has been pressed');
         let email = this.state.email;
         let password = this.state.password;
+        var postUserData = function (myJson){
+        return fetch('https://space-ucsc.herokuapp.com/createUser', myJson)
+        .then((response) => response.json())
+        .then((responseJson) => {
+            console.log("id1: ", responseJson.testid1);
+            console.log("email: ", responseJson.email1);
+            console.log("code: ", responseJson.code)
+            return responseJson.code;
+            })
+        .catch((error) => {
+            console.error(error);
+        });
+        }
         var user = firebase.auth().createUserWithEmailAndPassword (email, password).catch (function (error) {
             alert('button has error');
             switch (error.code) {
@@ -52,7 +79,19 @@ export default class Signup extends Component {
         }).then(function(resp) {
             alert ('account successfully created');
             var curr = firebase.auth().currentUser;
-            alert("user email"+curr.email);
+            alert("user uid: "+curr.uid);
+            var myJson = {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                 },
+                 body: JSON.stringify({
+                 uid: curr.uid,
+                 email: curr.email
+                 })
+                }
+            postUserData(myJson);
         });
     }
 
@@ -60,19 +99,6 @@ export default class Signup extends Component {
         var currentUser = firebase.auth().currentUser;
        // var uidRef = db.child("users").set(currentUser.uid);
     } */
-    postUserData(myJson) {
-        return fetch('https://space-ucsc.herokuapp.com/createUser', myJson)
-        .then((response) => response.json())
-        .then((responseJson) => {
-          console.log("id1: ", responseJson.testid1);
-          console.log("id2: ", responseJson.testid2);
-          console.log("code: ", responseJson.code)
-          return responseJson.code;
-        })
-        .catch((error) => {
-        console.error(error);
-        });
- }
 
     logUserInfoOnPress() {
         var currentUser = firebase.auth().currentUser;
