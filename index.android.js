@@ -9,6 +9,14 @@ import Hostspace from './Hostspace';
 import MyListView from './MyListView';
 import MyModal from './MyModal';
 
+var firebase = require ('firebase');
+var config = {
+    apiKey: "AIzaSyAd7nS1dCGQILFxxZ5Jwsla5wy1rnbEI_M",
+    authDomain: "space-252ee.firebaseapp.com",
+    databaseURL: "https://space-252ee.firebaseio.com",
+    storageBucket: "gs://space-252ee.appspot.com",
+}
+firebase.initializeApp (config);
 
 class ParkingCheckout extends Component {
 
