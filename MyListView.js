@@ -63,10 +63,6 @@ export default class MyListView extends Component {
  }
 }
 
-       // <Icon.Button name="cloud-download" backgroundColor="#3b5998" onPress={ () => this.getTestData() }>
-       //   Download data from heroku server
-       // </Icon.Button>
-
 
 const styles = StyleSheet.create({
   container: {
