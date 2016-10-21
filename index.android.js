@@ -7,7 +7,6 @@ import { View, AppRegistry, Text, Image, StyleSheet, Modal, TouchableHighlight, 
 import NiceInput from './NiceInput';
 import Hostspace from './Hostspace';
 import MyListView from './MyListView';
-import SpaceListView from './SpaceListView';
 import MyModal from './MyModal';
 
 
