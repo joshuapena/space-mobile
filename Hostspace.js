@@ -10,6 +10,9 @@ export default class Hostspace extends Component {
     this.state = {text : 'this text will be updated by typing', type : 'Garage', price : 1};
   }
 
+  _navigateBack(){
+  this.props.navigator.pop();
+}
   _handlePress() {
     console.log('Pressed!');
 
@@ -66,6 +69,9 @@ export default class Hostspace extends Component {
       updateObj[responseJson.theUniqueKey] = true;
       alert(currentUser.email);
       firebase.database().ref ('users/' + currentUser.uid +'/listing').update(updateObj);
+      if(responseJson.code == 200){
+        this.props.navigator.pop();
+      }
       return responseJson;
     })
     .catch((error) => {
@@ -87,14 +93,14 @@ export default class Hostspace extends Component {
           onValueChange={(type) => this.setState({type: type})}>
           <Picker.Item label="Garage" value="Garage" />
           <Picker.Item label="Driveway" value="Driveway" />
-        </Picker>   
+        </Picker>
 
-        <Text style={styles.options}>Price:</Text>     
+        <Text style={styles.options}>Price:</Text>
         <Text style={styles.text} >
           ${this.state.price && +this.state.price.toFixed(3)}/hr
         </Text>
         <Slider
-          {...this.props} 
+          {...this.props}
           style={styles.slider}
           step={1}
           minimumValue={1}

@@ -26,6 +26,11 @@ export default class MyListView extends Component {
       };
     }
 
+  _navigateSignUp(){
+    this.props.navigator.push({
+      name: 'Hostspace', // Matches route.name
+    })
+  }
 
   getTestData() {
    fetch('https://space-ucsc.herokuapp.com/viewList',)
@@ -53,11 +58,12 @@ export default class MyListView extends Component {
  render() {
    return (
      <View style={styles.container}>
-       <ListView 
+       <ListView
          enableEmptySections={true} // this line mutes a warning message that applys to
          //cloneWithRowsAndSections, however, we use cloneWithRows so it is irrelevant to us
          dataSource={this.state.dataSource}
          renderRow={(rowData) => <Text> {xIcon}My price is {rowData.price}, for a {rowData.type}. {"\n"}It is at {rowData.address} </Text>}/>
+         <Button onPress={() => {this._navigateSignUp()}}> Create New Space</Button>
      </View>
    );
  }

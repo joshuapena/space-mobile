@@ -19,7 +19,24 @@ var config = {
 }
 firebase.initializeApp (config);
 
+
+
 class ParkingCheckout extends Component {
+
+  renderScene (route, navigator){
+    if(route.name == 'NiceInput') {
+      return <NiceInput navigator={navigator} />
+    }
+    if(route.name == 'Hostspace') {
+      return <Hostspace navigator={navigator} />
+    }
+    if(route.name == 'Signup') {
+      return <Signup navigator={navigator} />
+    }
+    if(route.name == 'MyListView') {
+      return <MyListView style={{ flex:1 }} navigator={navigator} />
+    }
+  }
 
   constructor(props) {
     super(props);
@@ -30,42 +47,51 @@ class ParkingCheckout extends Component {
     this.setState({modalVisible: visible});
   }
 
-  render() {
-    return (
-      <View style={{marginTop: 22}}>
+  
 
-        <Modal
-          animationType={"slide"}
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {alert("Modal has been closed.")}}
-          >
-
-          <TouchableHighlight onPress={() => {
-            this.setModalVisible(!this.state.modalVisible)
-          }}>
-            <Text>Hide Modal</Text>
-          </TouchableHighlight>
-            <Hostspace/>
-        </Modal>
-
-        <TouchableHighlight onPress={() => {
-          this.setModalVisible(true)
-        }}>
-        <View style={styles.garage}>
-          <Image
-            style={{width: 50, height: 50}}
-            source={require('./garage.png')}/>
-          <Text style={styles.hostspot}>Host Spot</Text>
-        </View>
-        </TouchableHighlight>
-      
-      <View>
-        <MyListView/>
-      </View>
+render(){
+  return(
+      <View style={{flex: 1}}>
+      <Navigator
+      initialRoute={{ name: 'Signup' }}
+      renderScene={ this.renderScene } />
     </View>
-    );
-  }
+)}
+  // render() {
+  //   return (
+  //     <View style={{marginTop: 22}}>
+  //
+  //       <Modal
+  //         animationType={"slide"}
+  //         transparent={false}
+  //         visible={this.state.modalVisible}
+  //         onRequestClose={() => {alert("Modal has been closed.")}}
+  //         >
+  //
+  //         <TouchableHighlight onPress={() => {
+  //           this.setModalVisible(!this.state.modalVisible)
+  //         }}>
+  //           <Text>Hide Modal</Text>
+  //         </TouchableHighlight>
+  //           <Hostspace/>
+  //       </Modal>
+  //
+  //       <TouchableHighlight onPress={() => {
+  //         this.setModalVisible(true)
+  //       }}>
+  //       <View style={styles.garage}>
+  //         <Image
+  //           style={{width: 50, height: 50}}
+  //           source={require('./garage.png')}/>
+  //         <Text style={styles.hostspot}>Host Spot</Text>
+  //       </View>
+  //       </TouchableHighlight>
+  //
+  //     <View>
+  //     </View>
+  //   </View>
+  //   );
+  // }
 }
 
 

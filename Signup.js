@@ -4,26 +4,37 @@ import Button from 'react-native-button';
 
 var firebase = require ('firebase');
 
+
 export default class Signup extends Component {
     constructor (props) {
         super (props);
         this.state = {text : 'this text will be updated by typing'};
     }
 
-    signUpOnPress() {
+
+    _navigateList(){
+    this.props.navigator.push({
+      name: 'MyListView', // Matches route.name
+    })
+  }
+
+
+
+
+    signUpOnPress(switchPage) {
         console.log ('button has been pressed');
         let email = this.state.email;
         let password = this.state.password;
         var user = firebase.auth().createUserWithEmailAndPassword (email, password).catch (function (error) {
             switch (error.code) {
-                case "auth/email-already-in-use": 
+                case "auth/email-already-in-use":
                     alert ('email already in use');
                     break;
 
                 case "auth/invalid-email":
                     alert ('please enter a valid email');
                     break;
-                
+
                 case "auth/operation-not-allowed":
                     alert ('your account has been disabled');
                     break;
@@ -32,14 +43,15 @@ export default class Signup extends Component {
                     alert ('please enter a stronger password');
                     break;
 
-                default: 
+                default:
                     alert ('error creating account :/');
-            }   
+            }
         }).then (function() {
             var currentUser = firebase.auth().currentUser;
             firebase.database().ref ('users/' + currentUser.uid).set ({
                 email: currentUser.email
-            });        
+            });
+            switchPage;
         });
     }
 
@@ -80,13 +92,15 @@ export default class Signup extends Component {
                     onChangeText = {(password) => this.setState ({password})}
                     value = {this.state.password}
                 />
-                <Button onPress = {() => {this.signUpOnPress()}}>
+                <Button onPress = {() => {this.signUpOnPress(this.props.navigator.push(
+                  {name: 'MyListView'}
+                ))}}>
                     [[sign up]]
                 </Button>
                 <Button onPress = {() => this.logUserInfoOnPress()}>
                     [[Log user information]]
                 </Button>
-                <Button onPress = {() => this.logOutUser()}>
+                <Button onPress = {() => {this.logOutUser(), this._navigateList()}}>
                     [[Log out]]
                 </Button>
                 <View style = {styles.container} >
