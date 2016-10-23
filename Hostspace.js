@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, Modal, TouchableHighlight, Slider, Picker, TextInput, View, Image} from 'react-native';
 
 import Button from 'react-native-button' ;
+var firebase = require ('firebase');
 
 export default class Hostspace extends Component {
   constructor(props){
@@ -59,7 +60,13 @@ export default class Hostspace extends Component {
     .then((responseJson) => {
       console.log("this is the code after POST", responseJson.code);
       console.log("message ", responseJson.message);
-      return responseJson.code;
+      console.log("uid: ", responseJson.theUniqueKey);
+      var currentUser = firebase.auth().currentUser;
+      var updateObj = {};
+      updateObj[responseJson.theUniqueKey] = true;
+      alert(currentUser.email);
+      firebase.database().ref ('users/' + currentUser.uid +'/listing').update(updateObj);
+      return responseJson;
     })
     .catch((error) => {
       console.error(error);

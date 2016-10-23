@@ -8,6 +8,7 @@ import NiceInput from './NiceInput';
 import Hostspace from './Hostspace';
 import MyListView from './MyListView';
 import MyModal from './MyModal';
+import Signup from './Signup';
 
 var firebase = require ('firebase');
 var config = {
