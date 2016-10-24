@@ -89,22 +89,24 @@ class ParkingCheckout extends Component {
     }
 
     if(route.name == 'Login') {
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          return <MyListView navigator={navigator} />
-          console.log("user is signed in, skip log in page");
-          console.log(user.email);
-          // this.setState({
-          //   logStatus: {name:'MyListView'}
-          // });
-
-          // this.props.navigator.push({name: "MyListView"});
-        } else {
-          console.log("no one is signed in");
-          // return {name: "Login"};
-          return <Login navigator={navigator} />
-        }
-      });
+      // firebase.auth().onAuthStateChanged(function(user) {
+        // if (user) {
+        //   console.log("user is signed in, skip log in page");
+        //   console.log(user.email);
+        //
+        //   return <MyListView navigator={navigator} />
+        //   // this.setState({
+        //   //   logStatus: {name:'MyListView'}
+        //   // });
+        //
+        //   // this.props.navigator.push({name: "MyListView"});
+        // } else {
+        //   console.log("no one is signed in");
+        //   // return {name: "Login"};
+        //   return <Login navigator={navigator} />
+        // }
+      // });
+      return <Login navigator={navigator} />
     }
     if(route.name == 'Settings') {
       return <Settings  navigator={navigator} />

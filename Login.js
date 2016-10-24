@@ -21,29 +21,32 @@ export default class Login extends Component {
 
 
     componentWillMount(){
-      var change = null;
-      firebase.auth().onAuthStateChanged(function(user) {
+      console.log('componentWillMount');
+      // var navigator = this.props.navigator;
+      var self = this;
 
+      // var goToPage = function(currentUser) {
+      //   var currentUser = firebase.auth().currentUser;
+      //   if(currentUser){
+      //     this.props.navigator.push({name: "MyListView"});
+      //     console.log("user was already logged in");
+      //   } else{
+      //     console.log("no one was logged in");
+      //   }
+      // }
+
+      firebase.auth().onAuthStateChanged(function(user) {
+        // goToPage(user)
         if (user) {
           console.log("user is signed in at login screen");
           console.log(user.email);
-          this.props.navigator.push({name: "MyListView"});
+          self.props.navigator.push({name: "MyListView"});
           change = true;
         } else {
           console.log("no one is signed in");
           return;
         }
       });
-
-      // var currentUser = firebase.auth().currentUser;
-      // if(currentUser){
-      //   this.props.navigator.push({name: "MyListView"});
-      //   console.log("user was already logged in");
-      // } else{
-      //   console.log("no one was logged in");
-      // }
-      if (change === true)
-        this.props.navigator.push({name: 'MyListView'});
     }
 
 
