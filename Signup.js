@@ -4,26 +4,52 @@ import Button from 'react-native-button';
 
 var firebase = require ('firebase');
 
+
 export default class Signup extends Component {
     constructor (props) {
         super (props);
         this.state = {text : 'this text will be updated by typing'};
     }
 
-    signUpOnPress() {
+
+    _navigateList(){
+    this.props.navigator.push({
+      name: 'MyListView', // Matches route.name
+    })
+  }
+
+//   _navigateSignIn(){
+//   this.props.navigator.push({
+//     name: 'Login', // Matches route.name
+//   })
+// }
+
+  _navigateBack(){
+    this.props.navigator.pop()
+  }
+
+
+
+
+
+    signUpOnPress(switchPage, destination) {
         console.log ('button has been pressed');
         let email = this.state.email;
         let password = this.state.password;
+        if(!email || !password) {
+          alert ('please fill out all fields');
+          return;
+        }
         var user = firebase.auth().createUserWithEmailAndPassword (email, password).catch (function (error) {
             switch (error.code) {
-                case "auth/email-already-in-use": 
+                case "auth/email-already-in-use":
                     alert ('email already in use');
                     break;
 
                 case "auth/invalid-email":
                     alert ('please enter a valid email');
                     break;
-                
+
                 case "auth/operation-not-allowed":
                     alert ('your account has been disabled');
                     break;
@@ -32,14 +58,15 @@ export default class Signup extends Component {
                     alert ('please enter a stronger password');
                     break;
 
-                default: 
+                default:
                     alert ('error creating account :/');
-            }   
+            }
         }).then (function() {
             var currentUser = firebase.auth().currentUser;
             firebase.database().ref ('users/' + currentUser.uid).set ({
                 email: currentUser.email
-            });        
+            });
+            switchPage(destination);
         });
     }
 
@@ -80,14 +107,20 @@ export default class Signup extends Component {
                     onChangeText = {(password) => this.setState ({password})}
                     value = {this.state.password}
                 />
-                <Button onPress = {() => {this.signUpOnPress()}}>
-                    [[sign up]]
+                <Button onPress = {() => this.signUpOnPress(this.props.navigator.push,
+                  {name: 'MyListView'})}
+                > [[sign up]]
                 </Button>
-                <Button onPress = {() => this.logUserInfoOnPress()}>
-                    [[Log user information]]
+                <Button onPress = {() => this.logUserInfoOnPress(this.props.navigator.push,
+                  {name: 'MyListView'})
+                }>
+                    [[If logged in, continue]]
                 </Button>
-                <Button onPress = {() => this.logOutUser()}>
+                <Button onPress = {() => {this.logOutUser()}}>
                     [[Log out]]
+                </Button>
+                <Button onPress = {() => this._navigateBack()}>
+                    [[Already have an account? Log in]]
                 </Button>
                 <View style = {styles.container} >
                 </View>

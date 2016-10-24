@@ -6,10 +6,11 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
-    "firebase": "^3.5.0",
+    "firebase": "^3.5.1",
     "react": "^15.3.2",
     "react-native": "0.34.1",
     "react-native-button": "^1.7.1",
-    "react-native-vector-icons": "^2.1.0"
+    "react-native-vector-icons": "^2.1.0",
+    "react-timer-mixin": "^0.13.3"
   }
 }

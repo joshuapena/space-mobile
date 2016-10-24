@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Navigator, StyleSheet, Text, TouchableHighlight, Slider, Picker, TextInput, View, Image} from 'react-native';
+import {Navigator, StyleSheet, Text, Modal, TouchableHighlight, Slider, Picker, TextInput, View, Image} from 'react-native';
 
 import Button from 'react-native-button' ;
 var firebase = require ('firebase');
 
-export default class Hostspace extends Component {
+export default class RideView extends Component {
   constructor(props){
     super(props);
     this.state = {text : 'this text will be updated by typing', type : 'Garage', price : 1};
@@ -70,7 +70,7 @@ export default class Hostspace extends Component {
       var currentUser = firebase.auth().currentUser;
       var updateObj = {};
       updateObj[responseJson.theUniqueKey] = true;
-      // alert(currentUser.email);
+      alert(currentUser.email);
       firebase.database().ref ('users/' + currentUser.uid +'/listing').update(updateObj);
 
       return responseJson;
@@ -114,7 +114,7 @@ export default class Hostspace extends Component {
           value = {this.state.address}/>
 
         <Button style={styles.options}
-          onPress={() => { this._handlePress(); {this.props.myPropFunction}}}>
+          onPress={() => { this._handlePress()}}>
           Submit to Node baby
         </Button>
 
@@ -129,38 +129,3 @@ export default class Hostspace extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  picker: {
-    flex: 1,
-    marginRight: 100,
-    marginLeft: 100,
-  },
-  slider: {
-    marginLeft: 15,
-    marginRight:15,
-  },
-  options: {
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight:20,
-  },
-  text: {
-    fontSize: 14,
-    textAlign: 'center',
-    fontWeight: '500',
-    margin: 10,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  welcome: {
-    fontSize: 50,
-    textAlign: 'center',
-    margin: 10,
-    marginTop: 50,
-    marginBottom: 25,
-  },
-});
