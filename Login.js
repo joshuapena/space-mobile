@@ -4,15 +4,8 @@ import Button from 'react-native-button';
 
 var firebase = require ('firebase');
 
-/*
-auth/invalid-email
-    Thrown if the email address is not valid.
-auth/user-disabled
-    Thrown if the user corresponding to the given email has been disabled.
-auth/user-not-found
-    Thrown if there is no user corresponding to the given email.
-auth/wrong-password
-*/
+const dismissKeyboard = require('dismissKeyboard')
+
 
 export default class Login extends Component {
     constructor (props) {
@@ -21,18 +14,58 @@ export default class Login extends Component {
     }
 
     _navigateCreate(){
-      this.props.navigator.pop()
+      this.props.navigator.push({name: "Signup"});
     }
 
+
+
+
+    // componentDidMount(){
+    //   var change = null;
+    //   firebase.auth().onAuthStateChanged(function(user) {
+    //
+    //     if (user) {
+    //       console.log("user is signed in at login screen");
+    //       console.log(user.email);
+    //       this.props.navigator.push({name: "MyListView"});
+    //       change = true;
+    //     } else {
+    //       console.log("no one is signed in");
+    //       return;
+    //     }
+    //   });
+    //
+    //   // var currentUser = firebase.auth().currentUser;
+    //   // if(currentUser){
+    //   //   this.props.navigator.push({name: "MyListView"});
+    //   //   console.log("user was already logged in");
+    //   // } else{
+    //   //   console.log("no one was logged in");
+    //   // }
+    //   if (change === true)
+    //     this.props.navigator.push({name: 'MyListView'});
+    // }
+
+
     logInOnPress(switchPage, destination) {
+        dismissKeyboard();
         let email = this.state.email;
         let password = this.state.password;
+
+
+
+        if( !email || !password){
+          alert ("Fill out all fields");
+          return;
+        }
         firebase.auth().signInWithEmailAndPassword (email, password).then (function() {
             //alert ('successfully signed in');
             switchPage(destination);
         }, function (error) {
             alert (error);
         });
+
+
     }
 
     render() {
@@ -54,10 +87,10 @@ export default class Login extends Component {
                 <Button onPress = {() => {this.logInOnPress(
                   this.props.navigator.push, {name: 'MyListView'}
                 )}}>
-                    [[Log in]]
+                    Log in
                 </Button>
                 <Button onPress = {() => this._navigateCreate() }>
-                    [[Create an account instead]]
+                    Create an account instead
                 </Button>
                 <View style = {styles.container} >
                 </View>

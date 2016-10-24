@@ -70,7 +70,7 @@ export default class Hostspace extends Component {
       var currentUser = firebase.auth().currentUser;
       var updateObj = {};
       updateObj[responseJson.theUniqueKey] = true;
-      alert(currentUser.email);
+      // alert(currentUser.email);
       firebase.database().ref ('users/' + currentUser.uid +'/listing').update(updateObj);
 
       return responseJson;

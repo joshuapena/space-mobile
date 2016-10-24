@@ -10,6 +10,8 @@ import MyListView from './MyListView';
 import MyModal from './MyModal';
 import Signup from './Signup';
 import Login from './Login';
+import Settings from './Settings';
+import MyPosts from './MyPosts';
 
 var firebase = require ('firebase');
 var config = {
@@ -20,6 +22,17 @@ var config = {
 }
 firebase.initializeApp (config);
 
+
+// firebase.auth().onAuthStateChanged(function(user) {
+//   if (user) {
+//     console.log("user is signed in");
+//     this.props.navigator.push({
+//       name: 'MyListView', // Matches route.name
+//     });
+//   } else {
+//     console.log("no one is signed in");
+//   }
+//   });
 
 
 class ParkingCheckout extends Component {
@@ -35,10 +48,16 @@ class ParkingCheckout extends Component {
       return <Signup navigator={navigator} />
     }
     if(route.name == 'MyListView') {
-      return <MyListView style={{ flex:1 }} navigator={navigator} />
+      return <MyListView navigator={navigator} />
     }
     if(route.name == 'Login') {
-      return <Login style={{ flex:1 }} navigator={navigator} />
+      return <Login navigator={navigator} />
+    }
+    if(route.name == 'Settings') {
+      return <Settings  navigator={navigator} />
+    }
+    if(route.name == 'MyPosts') {
+      return <MyPosts  navigator={navigator} />
     }
   }
 
@@ -57,7 +76,7 @@ render(){
   return(
       <View style={{flex: 1}}>
       <Navigator
-      initialRoute={{ name: 'Signup' }}
+      initialRoute={{ name: 'Login' }}
       renderScene={ this.renderScene } />
     </View>
 )}

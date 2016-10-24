@@ -27,6 +27,7 @@ export default class Signup extends Component {
 
 
 
+
     signUpOnPress(switchPage, destination) {
         console.log ('button has been pressed');
         let email = this.state.email;
