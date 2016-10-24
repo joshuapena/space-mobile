@@ -37,6 +37,43 @@ firebase.initializeApp (config);
 
 class ParkingCheckout extends Component {
 
+  constructor (props) {
+      super (props);
+      this.state = {
+        text : 'this text will be updated by typing',
+        logStatus: {name:'Login'}
+      }
+  }
+
+
+
+  // componentWillMount()
+    checkLogIn()
+    {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        console.log("user is signed in when app starts");
+        console.log(user.email);
+        this.setState({
+          logStatus: {name:'MyListView'}
+        });
+         return {name: "MyListView"}
+        this.props.navigator.push({name: "MyListView"});
+      } else {
+        console.log("no one is signed in");
+        return {name: "Login"};
+      }
+    });
+
+    // var currentUser = firebase.auth().currentUser;
+    // if(currentUser){
+    //   this.props.navigator.push({name: "MyListView"});
+    //   console.log("user was already logged in");
+    // } else{
+    //   console.log("no one was logged in");
+    // }
+  }
+
   renderScene (route, navigator){
     if(route.name == 'NiceInput') {
       return <NiceInput navigator={navigator} />
@@ -61,22 +98,32 @@ class ParkingCheckout extends Component {
     }
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {modalVisible: false};
-  }
-
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
-
 
 
 render(){
+  // var userLogIn = {name: 'Login'};
+  //
+  // firebase.auth().onAuthStateChanged(function(user) {
+  //   if (user) {
+  //     userLogIn = {name: 'MyListView'};
+  //     console.log("user is signed in when app starts");
+  //     console.log(user.email);
+  //     this.setState({
+  //       logStatus: {name:'MyListView' }
+  //     });
+  //     this.props.navigator.push({name: "MyListView"});
+  //
+  //   } else {
+  //     console.log("no one is signed in");
+  //     return;
+  //   }
+  // });
+
+
   return(
       <View style={{flex: 1}}>
       <Navigator
-      initialRoute={{ name: 'Login' }}
+      initialRoute={{'name' : 'Login'}}
       renderScene={ this.renderScene } />
     </View>
 )}

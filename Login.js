@@ -20,31 +20,31 @@ export default class Login extends Component {
 
 
 
-    // componentDidMount(){
-    //   var change = null;
-    //   firebase.auth().onAuthStateChanged(function(user) {
-    //
-    //     if (user) {
-    //       console.log("user is signed in at login screen");
-    //       console.log(user.email);
-    //       this.props.navigator.push({name: "MyListView"});
-    //       change = true;
-    //     } else {
-    //       console.log("no one is signed in");
-    //       return;
-    //     }
-    //   });
-    //
-    //   // var currentUser = firebase.auth().currentUser;
-    //   // if(currentUser){
-    //   //   this.props.navigator.push({name: "MyListView"});
-    //   //   console.log("user was already logged in");
-    //   // } else{
-    //   //   console.log("no one was logged in");
-    //   // }
-    //   if (change === true)
-    //     this.props.navigator.push({name: 'MyListView'});
-    // }
+    componentDidMount(){
+      var change = null;
+      firebase.auth().onAuthStateChanged(function(user) {
+
+        if (user) {
+          console.log("user is signed in at login screen");
+          console.log(user.email);
+          this.props.navigator.push({name: "MyListView"});
+          change = true;
+        } else {
+          console.log("no one is signed in");
+          return;
+        }
+      });
+
+      // var currentUser = firebase.auth().currentUser;
+      // if(currentUser){
+      //   this.props.navigator.push({name: "MyListView"});
+      //   console.log("user was already logged in");
+      // } else{
+      //   console.log("no one was logged in");
+      // }
+      if (change === true)
+        this.props.navigator.push({name: 'MyListView'});
+    }
 
 
     logInOnPress(switchPage, destination) {
