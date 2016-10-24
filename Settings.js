@@ -25,10 +25,8 @@ export default class Settings extends Component {
     }
 
     logOutUser(switchPage) {
-        var currentUserName = firebase.auth().currentUser;
         firebase.auth().signOut().then(function() {
-            alert (currentUserName + ' logged out');
-            currentUserName = null;
+            alert (' logged out');
             switchPage();
         }, function (error) {
             alert ('error logging out');
