@@ -45,6 +45,10 @@ export default class MyPosts extends Component {
     })
   }
 
+  _navigateBack(){
+    this.props.navigator.pop()
+  }
+
   getTestData() {
     var currentUser = firebase.auth().currentUser;
     //var arrOfData = [];
@@ -112,6 +116,7 @@ export default class MyPosts extends Component {
          renderRow={(rowData) => <Text> {xIcon}My price is {rowData.price}, for a {rowData.type}. {"\n"}It is at {rowData.address} </Text>}/>
          <Button onPress={() => {this._navigateSignUp()}}> Create New Space</Button>
          <Button onPress={() => {this._navigateSettings()}}> User Settings</Button>
+         <Button onPress={() => {this._navigateBack()}}> Cancel </Button>
      </View>
    );
  }
