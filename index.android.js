@@ -48,22 +48,22 @@ class ParkingCheckout extends Component {
 
 
   // componentWillMount()
-    checkLogIn()
-    {
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        console.log("user is signed in when app starts");
-        console.log(user.email);
-        this.setState({
-          logStatus: {name:'MyListView'}
-        });
-         return {name: "MyListView"}
-        this.props.navigator.push({name: "MyListView"});
-      } else {
-        console.log("no one is signed in");
-        return {name: "Login"};
-      }
-    });
+    // checkLogIn()
+    // {
+    // firebase.auth().onAuthStateChanged(function(user) {
+    //   if (user) {
+    //     console.log("user is signed in when app starts");
+    //     console.log(user.email);
+    //     this.setState({
+    //       logStatus: {name:'MyListView'}
+    //     });
+    //      return {name: "MyListView"}
+    //     this.props.navigator.push({name: "MyListView"});
+    //   } else {
+    //     console.log("no one is signed in");
+    //     return {name: "Login"};
+    //   }
+    // });
 
     // var currentUser = firebase.auth().currentUser;
     // if(currentUser){
@@ -72,7 +72,7 @@ class ParkingCheckout extends Component {
     // } else{
     //   console.log("no one was logged in");
     // }
-  }
+    //}
 
   renderScene (route, navigator){
     if(route.name == 'NiceInput') {
@@ -87,8 +87,24 @@ class ParkingCheckout extends Component {
     if(route.name == 'MyListView') {
       return <MyListView navigator={navigator} />
     }
+
     if(route.name == 'Login') {
-      return <Login navigator={navigator} />
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          return <MyListView navigator={navigator} />
+          console.log("user is signed in, skip log in page");
+          console.log(user.email);
+          // this.setState({
+          //   logStatus: {name:'MyListView'}
+          // });
+
+          // this.props.navigator.push({name: "MyListView"});
+        } else {
+          console.log("no one is signed in");
+          // return {name: "Login"};
+          return <Login navigator={navigator} />
+        }
+      });
     }
     if(route.name == 'Settings') {
       return <Settings  navigator={navigator} />

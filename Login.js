@@ -20,7 +20,7 @@ export default class Login extends Component {
 
 
 
-    componentDidMount(){
+    componentWillMount(){
       var change = null;
       firebase.auth().onAuthStateChanged(function(user) {
 
