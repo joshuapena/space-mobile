@@ -18,11 +18,15 @@ export default class Signup extends Component {
     })
   }
 
-  _navigateSignIn(){
-  this.props.navigator.push({
-    name: 'Login', // Matches route.name
-  })
-}
+//   _navigateSignIn(){
+//   this.props.navigator.push({
+//     name: 'Login', // Matches route.name
+//   })
+// }
+
+  _navigateBack(){
+    this.props.navigator.pop()
+  }
 
 
 
@@ -115,7 +119,7 @@ export default class Signup extends Component {
                 <Button onPress = {() => {this.logOutUser()}}>
                     [[Log out]]
                 </Button>
-                <Button onPress = {() => this._navigateSignIn()}>
+                <Button onPress = {() => this._navigateBack()}>
                     [[Already have an account? Log in]]
                 </Button>
                 <View style = {styles.container} >

@@ -4,6 +4,8 @@ import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'rea
 import Button from 'react-native-button' ;
 const Dimensions = require('Dimensions');
 
+const TimerMixin =  require('react-timer-mixin');
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 const myIcon = (<Icon name="rocket" size={30} color="#900" />);
 const xIcon = (<Icon name="times" size={30} color="#100" />);
@@ -61,11 +63,15 @@ export default class MyListView extends Component {
      });
  }
 
+  mixins: [TimerMixin]
   componentDidMount(){
     this.getTestData();
-    setInterval( () => {
+    this.timer = setInterval( () => {
       this.getTestData();
     }, 3000)
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
  render() {
