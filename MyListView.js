@@ -58,12 +58,14 @@ export default class MyListView extends Component {
  render() {
    return (
      <View style={styles.container}>
+      <Text> List of users</Text>
        <ListView
          enableEmptySections={true} // this line mutes a warning message that applys to
          //cloneWithRowsAndSections, however, we use cloneWithRows so it is irrelevant to us
          dataSource={this.state.dataSource}
          renderRow={(rowData) => <Text> {xIcon}My price is {rowData.price}, for a {rowData.type}. {"\n"}It is at {rowData.address} </Text>}/>
          <Button onPress={() => {this._navigateSignUp()}}> Create New Space</Button>
+         <Button onPress={() => {this._navigateSignUp()}}> User Settings</Button>
      </View>
    );
  }

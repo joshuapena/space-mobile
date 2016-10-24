@@ -8,7 +8,7 @@ var firebase = require ('firebase');
 auth/invalid-email
     Thrown if the email address is not valid.
 auth/user-disabled
-    Thrown if the user corresponding to the given email has been disabled. 
+    Thrown if the user corresponding to the given email has been disabled.
 auth/user-not-found
     Thrown if there is no user corresponding to the given email.
 auth/wrong-password
@@ -20,11 +20,16 @@ export default class Login extends Component {
         this.state = {text : 'this text will be updated by typing'};
     }
 
-    logInOnPress() {
+    _navigateCreate(){
+      this.props.navigator.pop()
+    }
+
+    logInOnPress(switchPage, destination) {
         let email = this.state.email;
         let password = this.state.password;
         firebase.auth().signInWithEmailAndPassword (email, password).then (function() {
-            alert ('successfully signed in');
+            //alert ('successfully signed in');
+            switchPage(destination);
         }, function (error) {
             alert (error);
         });
@@ -46,11 +51,13 @@ export default class Login extends Component {
                     onChangeText = {(password) => this.setState ({password})}
                     value = {this.state.password}
                 />
-                <Button onPress = {() => {this.logInOnPress()}}>
+                <Button onPress = {() => {this.logInOnPress(
+                  this.props.navigator.push, {name: 'MyListView'}
+                )}}>
                     [[Log in]]
                 </Button>
-                <Button onPress = {() => this.logOutUser()}>
-                    [[Log out]]
+                <Button onPress = {() => this._navigateCreate() }>
+                    [[Create an account instead]]
                 </Button>
                 <View style = {styles.container} >
                 </View>

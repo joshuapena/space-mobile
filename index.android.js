@@ -9,6 +9,7 @@ import Hostspace from './Hostspace';
 import MyListView from './MyListView';
 import MyModal from './MyModal';
 import Signup from './Signup';
+import Login from './Login';
 
 var firebase = require ('firebase');
 var config = {
@@ -36,6 +37,9 @@ class ParkingCheckout extends Component {
     if(route.name == 'MyListView') {
       return <MyListView style={{ flex:1 }} navigator={navigator} />
     }
+    if(route.name == 'Login') {
+      return <Login style={{ flex:1 }} navigator={navigator} />
+    }
   }
 
   constructor(props) {
@@ -47,7 +51,7 @@ class ParkingCheckout extends Component {
     this.setState({modalVisible: visible});
   }
 
-  
+
 
 render(){
   return(

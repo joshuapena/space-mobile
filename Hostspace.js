@@ -62,6 +62,9 @@ export default class Hostspace extends Component {
     .then((response) => response.json())
     .then((responseJson) => {
       console.log("this is the code after POST", responseJson.code);
+      if(responseJson.code == 200){
+        this.props.navigator.pop();
+      }
       console.log("message ", responseJson.message);
       console.log("uid: ", responseJson.theUniqueKey);
       var currentUser = firebase.auth().currentUser;
@@ -69,9 +72,7 @@ export default class Hostspace extends Component {
       updateObj[responseJson.theUniqueKey] = true;
       alert(currentUser.email);
       firebase.database().ref ('users/' + currentUser.uid +'/listing').update(updateObj);
-      if(responseJson.code == 200){
-        this.props.navigator.pop();
-      }
+
       return responseJson;
     })
     .catch((error) => {
@@ -115,6 +116,11 @@ export default class Hostspace extends Component {
         <Button style={styles.options}
           onPress={() => { this._handlePress()}}>
           Submit to Node baby
+        </Button>
+
+        <Button style={styles.options}
+          onPress={() => { this._navigateBack()}}>
+          Cancel
         </Button>
 
         <View style={styles.container} >

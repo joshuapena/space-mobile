@@ -18,13 +18,23 @@ export default class Signup extends Component {
     })
   }
 
+  _navigateSignIn(){
+  this.props.navigator.push({
+    name: 'Login', // Matches route.name
+  })
+}
 
 
 
-    signUpOnPress(switchPage) {
+
+    signUpOnPress(switchPage, destination) {
         console.log ('button has been pressed');
         let email = this.state.email;
         let password = this.state.password;
+        if(!email || !password) {
+          alert ('please fill out all fields');
+          return;
+        }
         var user = firebase.auth().createUserWithEmailAndPassword (email, password).catch (function (error) {
             switch (error.code) {
                 case "auth/email-already-in-use":
@@ -51,7 +61,7 @@ export default class Signup extends Component {
             firebase.database().ref ('users/' + currentUser.uid).set ({
                 email: currentUser.email
             });
-            switchPage;
+            switchPage(destination);
         });
     }
 
@@ -92,16 +102,20 @@ export default class Signup extends Component {
                     onChangeText = {(password) => this.setState ({password})}
                     value = {this.state.password}
                 />
-                <Button onPress = {() => {this.signUpOnPress(this.props.navigator.push(
-                  {name: 'MyListView'}
-                ))}}>
-                    [[sign up]]
+                <Button onPress = {() => this.signUpOnPress(this.props.navigator.push,
+                  {name: 'MyListView'})}
+                > [[sign up]]
                 </Button>
-                <Button onPress = {() => this.logUserInfoOnPress()}>
-                    [[Log user information]]
+                <Button onPress = {() => this.logUserInfoOnPress(this.props.navigator.push,
+                  {name: 'MyListView'})
+                }>
+                    [[If logged in, continue]]
                 </Button>
-                <Button onPress = {() => {this.logOutUser(), this._navigateList()}}>
+                <Button onPress = {() => {this.logOutUser()}}>
                     [[Log out]]
+                </Button>
+                <Button onPress = {() => this._navigateSignIn()}>
+                    [[Already have an account? Log in]]
                 </Button>
                 <View style = {styles.container} >
                 </View>
