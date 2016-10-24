@@ -4,6 +4,8 @@ import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'rea
 import Button from 'react-native-button' ;
 const Dimensions = require('Dimensions');
 
+const TimerMixin =  require('react-timer-mixin');
+
 var firebase = require ('firebase');
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -29,6 +31,8 @@ export default class MyPosts extends Component {
       };
     }
 
+  mixins: [TimerMixin]
+
   _navigateSignUp(){
     this.props.navigator.push({
       name: 'Hostspace', // Matches route.name
@@ -45,6 +49,7 @@ export default class MyPosts extends Component {
     var currentUser = firebase.auth().currentUser;
     //var arrOfData = [];
     //alert(currentUser.email);
+    if (currentUser) {
       firebase.database().ref('/users/' + currentUser.uid + "/listing/").once('value').then(function(snapshot) {
         //console.log(snapshot);
         snapshot.forEach(function(childSnapshot){
@@ -69,6 +74,7 @@ export default class MyPosts extends Component {
       // });
       console.log("dataSource was updated");
     }
+  }
 
   //  fetch('https://space-ucsc.herokuapp.com/viewList')
   //    .then((response) => response.json())
@@ -87,9 +93,12 @@ export default class MyPosts extends Component {
 
   componentDidMount(){
     this.getTestData();
-    setInterval( () => {
+    this.timer = setInterval( () => {
       this.getTestData();
     }, 3000)
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
  render() {
