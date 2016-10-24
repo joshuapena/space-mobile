@@ -63,7 +63,7 @@ export default class Login extends Component {
         }
         firebase.auth().signInWithEmailAndPassword (email, password).then (function() {
             //alert ('successfully signed in');
-            switchPage(destination);
+            // switchPage(destination);
         }, function (error) {
             alert (error);
         });
