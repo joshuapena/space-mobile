@@ -83,7 +83,7 @@ export default class Hostspace extends Component {
   render(){
     return(
       <View>
-
+        
         <Text style={styles.welcome}>
           What type of space?
         </Text>
