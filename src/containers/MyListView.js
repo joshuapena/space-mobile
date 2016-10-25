@@ -50,8 +50,8 @@ export default class MyListView extends Component {
    fetch('https://space-ucsc.herokuapp.com/viewList',)
      .then((response) => response.json())
      .then((responseJson) => {
-       console.log("GET /test : ", responseJson.code);
-       console.log(JSON.stringify(responseJson.spaceListing));
+       //console.log("GET /test : ", responseJson.code);
+       //console.log(JSON.stringify(responseJson.spaceListing, null, 3));
        this.setState({
          dataSource : this.state.dataSource.cloneWithRows(responseJson.spaceListing)
        });
