@@ -114,7 +114,7 @@ export default class MyPosts extends Component {
 
  render() {
    return (
-     <View >
+     <View style={styles.container}>
       <Text> List of Spaces</Text>
        <ListView
          enableEmptySections={true} // this line mutes a warning message that applys to

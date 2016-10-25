@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
+import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, TouchableOpacity  } from 'react-native';
 
 import Button from 'react-native-button' ;
 const Dimensions = require('Dimensions');
@@ -74,6 +74,12 @@ export default class MyListView extends Component {
     clearInterval(this.timer);
   }
 
+  pressListItem(data){
+    // console.log(data.price);
+    // console.log(data.type);
+    // console.log(data.address);
+  }
+
  render() {
    return (
      <View style={styles.container}>
@@ -82,7 +88,13 @@ export default class MyListView extends Component {
          enableEmptySections={true} // this line mutes a warning message that applys to
          //cloneWithRowsAndSections, however, we use cloneWithRows so it is irrelevant to us
          dataSource={this.state.dataSource}
-         renderRow={(rowData) => <Text> {xIcon}My price is {rowData.price}, for a {rowData.type}. {"\n"}It is at {rowData.address} </Text>}/>
+
+         renderRow={(rowData) =>
+           <TouchableOpacity  underlayColor = {'red'} onPress = {this.pressListItem(rowData)}>
+            <Text> My price is {rowData.price}, for a {rowData.type}. {"\n"}It is at {rowData.address} </Text>
+           </TouchableOpacity >
+         }
+         />
          <Button onPress={() => {this._navigateSignUp()}}> Create New Space</Button>
          <Button onPress={() => {this._navigateSettings()}}> User Settings</Button>
          <Button onPress={() => {this._navigateMyPosts()}}> My Postings</Button>
