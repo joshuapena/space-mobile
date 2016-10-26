@@ -11,6 +11,7 @@ import Signup from './containers/Signup';
 import Login from './containers/Login';
 import Settings from './containers/Settings';
 import MyPosts from './containers/MyPosts';
+import MapView from './containers/MapView';
 
 var firebase = require ('firebase');
 var config = {
@@ -41,6 +42,9 @@ export default function native (platform) {
       }
       if(route.name == 'MyPosts') {
         return <MyPosts  navigator={navigator} />
+      }
+      if(route.name == 'MapView'){
+        return <MapView navigator={navigator} />
       }
     },
     render(){
