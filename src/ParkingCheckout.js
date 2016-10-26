@@ -12,6 +12,7 @@ import Login from './containers/Login';
 import Settings from './containers/Settings';
 import MyPosts from './containers/MyPosts';
 import PostInfo from './containers/PostInfo';
+import EditPost from './containers/EditPost';
 
 var firebase = require ('firebase');
 var config = {
@@ -45,6 +46,9 @@ export default function native (platform) {
       }
       if(route.name == 'PostInfo') {
         return <PostInfo navigator={navigator} route={route} />
+      }
+      if(route.name == 'EditPost') {
+        return <EditPost navigator={navigator} route={route} />
       }
     },
     render(){
