@@ -3,7 +3,7 @@
 
 import React, {Component} from 'react';
 import { View, AppRegistry, Text, Image, StyleSheet, Modal, TouchableHighlight, Navigator, TextInput} from 'react-native';
-
+import MapView from 'react-native-maps';
 
 import Hostspace from './containers/Hostspace';
 import MyListView from './containers/MyListView';
@@ -20,6 +20,8 @@ var config = {
     storageBucket: "gs://space-252ee.appspot.com",
 }
 firebase.initializeApp (config);
+
+
 
 export default function native (platform) {
   let ParkingCheckout = React.createClass({
@@ -45,11 +47,8 @@ export default function native (platform) {
     },
     render(){
       return(
-        <View style={{flex: 1}}>
-          <Navigator
-          initialRoute={{'name' : 'Login'}}
-          renderScene={ this.renderScene } />
-        </View>
+        <MapView style = {{flex : 1}}
+        />
       )
     }
   });
