@@ -11,7 +11,7 @@ export default class PostInfo extends Component {
 
   _navigateBack(){
   this.props.navigator.pop();
-  console.log(this.props.navigator)
+  console.log(this.props.route)
 }
 
 
@@ -23,7 +23,7 @@ export default class PostInfo extends Component {
             <Button transparent onPress={() => this._navigateBack()}>
                 <Icon name='ios-arrow-back' />
             </Button>
-            <Title>Info</Title>
+            <Title>{this.props.route.item.address}</Title>
           </Header> 
             <Content>
                 <View >
