@@ -33,6 +33,13 @@ export default class MyPosts extends Component {
       name: 'Settings', // Matches route.name
     })
   }
+    _navigateEditPost(self, item){
+    console.log(item)
+    self.props.navigator.push({
+      name: 'EditPost', // Matches route.name
+      item: item
+    })
+  }
 
   _navigateBack(){
     this.props.navigator.pop()
@@ -74,7 +81,7 @@ export default class MyPosts extends Component {
     this.getTestData();
     this.timer = setInterval( () => {
       this.getTestData();
-    }, 3000)
+    }, 500)
   }
 
   componentWillUnmount() {
@@ -95,7 +102,7 @@ export default class MyPosts extends Component {
         <Content>
           <List dataArray={this.state.dataSource}
               renderRow={(item) => 
-                <ListItem>
+                <ListItem button onPress={() => {this._navigateEditPost(this, item)}}>
                 <Text> My price is {item.price}, for a {item.type}. {"\n"}It is at {item.address} </Text>
                 </ListItem>
                 }>
