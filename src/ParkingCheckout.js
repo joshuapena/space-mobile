@@ -44,7 +44,7 @@ export default function native (platform) {
         return <MyPosts  navigator={navigator} />
       }
       if(route.name == 'PostInfo') {
-        return <PostInfo navigator={navigator} />
+        return <PostInfo navigator={navigator} route={route} />
       }
     },
     render(){
