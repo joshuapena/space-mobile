@@ -49,6 +49,19 @@ export default class Settings extends Component {
                         this.props.navigator.resetTo,{name: 'Login'})}}>
                           Log out
                       </Button>
+
+                      <TextInput
+                          placeholder = "Change your username"
+                          onChangeText = {(username) => this.setState ({username})}
+                          value = {this.state.username}
+                      />
+
+                      <Button >
+                      Change username
+                      </Button>
+
+
+
                   </View>
               </Content>
             </Container>
