@@ -96,14 +96,18 @@ export default class MyListView extends Component {
         {renderIf(this.state.spinnerState)(
           <Spinner color='#e74c3c' />
         )}
+
+        {renderIf(!this.state.spinnerState)(
           <List dataArray={this.state.dataSource}
               renderRow={(item) =>
                 <ListItem button onPress={() => {this._navigatePostInfo(this, item)}}>
                 <Text>My price is ${item.price} for a {item.type}. {"\n"}It is at {item.address} </Text>
                 </ListItem>
-
                 }>
           </List>
+          )}
+
+
         </Content>
 
         <View>

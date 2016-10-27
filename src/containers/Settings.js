@@ -5,16 +5,6 @@ import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native'
 
 var firebase = require ('firebase');
 
-/*
-auth/invalid-email
-    Thrown if the email address is not valid.
-auth/user-disabled
-    Thrown if the user corresponding to the given email has been disabled.
-auth/user-not-found
-    Thrown if there is no user corresponding to the given email.
-auth/wrong-password
-*/
-
 export default class Settings extends Component {
     constructor (props) {
         super (props);
