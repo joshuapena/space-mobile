@@ -124,6 +124,22 @@ export default class Hostspace extends Component {
                   onChangeText={(address) => this.setState({address})}
                   value = {this.state.address}/>
 
+                <TextInput style={styles.options}
+                  placeholder = "City"
+                  onChangeText={(city) => this.setState({city})}
+                  value = {this.state.city}/>
+
+                <TextInput style={styles.options}
+                  placeholder = "State"
+                  onChangeText={(state) => this.setState({state})}
+                    value = {this.state.state}/>
+
+                  <TextInput style={styles.options}
+                    placeholder = "zip"
+                    keyboardType="numeric"
+                    onChangeText={(zip) => this.setState({zip})}
+                    value = {this.state.zip}/>
+
                 <Button style={styles.options}
                   onPress={() => { this._handlePress(); {this.props.myPropFunction}}}>
                   Submit to Node baby

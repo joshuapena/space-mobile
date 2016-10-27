@@ -1,6 +1,12 @@
+/*
+List of all the rides you have posted
+Can navigate to EditPost to Delete
+Can navigate back to MyListViews
+*/
+
 import React, {Component} from 'react';
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
-import { Container, Content, Thumbnail, Button, Icon, Header, Title, List, ListItem, Footer, FooterTab } from 'native-base';
+import { Container, Content, Thumbnail, Button, Icon, Header, Spinner, Title, List, ListItem, Footer, FooterTab } from 'native-base';
 
 const Dimensions = require('Dimensions');
 const TimerMixin =  require('react-timer-mixin');
@@ -81,7 +87,7 @@ export default class MyPosts extends Component {
     this.getTestData();
     this.timer = setInterval( () => {
       this.getTestData();
-    }, 500)
+    }, 3000)
   }
 
   componentWillUnmount() {
@@ -100,6 +106,7 @@ export default class MyPosts extends Component {
       </Header>
 
       <Content>
+      <Spinner color='green' />
         <List dataArray={this.state.dataSource}
             renderRow={(item) =>
               <ListItem button onPress={() => {this._navigateEditPost(this, item)}}>

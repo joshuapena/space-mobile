@@ -1,3 +1,9 @@
+/*
+Only poster of ride can see this page
+Delete and edit ride from this page
+
+*/
+
 import React, {Component} from 'react';
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
 import {Container, Content, Thumbnail, Button, Header, Title, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
@@ -24,7 +30,7 @@ export default class EditPost extends Component {
                 <Icon name='ios-arrow-back' />
             </Button>
             <Title>{this.props.route.item.address}</Title>
-          </Header> 
+          </Header>
             <Content>
            <Button small danger>Delete this post</Button>
             </Content>

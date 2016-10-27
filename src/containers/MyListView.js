@@ -1,3 +1,8 @@
+/*
+View a list of all publicly viewable rides
+*/
+
+
 import React, {Component} from 'react';
 
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
@@ -76,17 +81,6 @@ export default class MyListView extends Component {
   }
 
 
-
-  pressListItem(self){
-    console.log('button press');
-    console.log(self.props);
-    // this.props.navigator.push({name: 'PostView'})
-    //
-    // console.log("price ", data.price);
-    // console.log("type", data.type);
-    // console.log("address", data.address);
-  }
-
  render() {
    return (
 
@@ -102,9 +96,9 @@ export default class MyListView extends Component {
 
               renderRow={(item) =>
                 <ListItem button onPress={() => {this._navigatePostInfo(this, item)}}>
-                <Text> {xIcon}My price is {item.price}, for a {item.type}. {"\n"}It is at {item.address} </Text>
+                <Text>My price is ${item.price} for a {item.type}. {"\n"}It is at {item.address} </Text>
                 </ListItem>
-              
+
                 }>
           </List>
         </Content>

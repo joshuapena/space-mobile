@@ -14,8 +14,6 @@ export default class PostInfo extends Component {
   console.log(this.props.route)
 }
 
-
-
   render() {
       return (
           <Container style={{backgroundColor: 'white'}}>
@@ -24,9 +22,13 @@ export default class PostInfo extends Component {
                 <Icon name='ios-arrow-back' />
             </Button>
             <Title>{this.props.route.item.address}</Title>
-          </Header> 
+          </Header>
             <Content>
                 <View >
+                <Text> Posted by {this.props.route.item.poster}.</Text>
+                <Text> They are charging ${this.props.route.item.price}.</Text>
+                <Text> Do you want a {this.props.route.item.type}?</Text>
+                <Button> Check into this parking space</Button>
                 </View>
             </Content>
           </Container>

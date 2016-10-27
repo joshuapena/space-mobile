@@ -1,3 +1,14 @@
+/*
+Signup page creates a new account on firebase
+Can navigate to MyListView
+Can navigate to login
+
+
+TODO
+Some of the error messages crash the app
+*/
+
+
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native';
 import Button from 'react-native-button';
@@ -83,6 +94,7 @@ export default class Signup extends Component {
                 </Text>
                 <TextInput
                     placeholder = "email"
+                    keyboardType={'email-address'}
                     onChangeText = {(email) => this.setState ({email})}
                     value = {this.state.email}
                 />
