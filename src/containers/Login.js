@@ -1,3 +1,9 @@
+/*
+Login page will be the first page a user will see
+Can navigate to MyListView
+Can navigate to Signup
+*/
+
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native';
 import Button from 'react-native-button';
@@ -63,6 +69,10 @@ export default class Login extends Component {
                 </Text>
                 <TextInput
                     placeholder = "email"
+                    keyboardType={'email-address'}
+                    onSubmitEditing={() => {this.logInOnPress(
+                      this.props.navigator.replace, {name: 'MyListView'}
+                    )}}
                     onChangeText = {(email) => this.setState ({email})}
                     value = {this.state.email}
                 />
@@ -70,6 +80,9 @@ export default class Login extends Component {
                     placeholder = "password"
                     onChangeText = {(password) => this.setState ({password})}
                     value = {this.state.password}
+                    onSubmitEditing={() => {this.logInOnPress(
+                      this.props.navigator.replace, {name: 'MyListView'}
+                    )}}
                 />
                 <Button onPress = {() => {this.logInOnPress(
                   this.props.navigator.replace, {name: 'MyListView'}
