@@ -4,13 +4,13 @@
 import React, {Component} from 'react';
 import { View, AppRegistry, Text, Image, StyleSheet, Modal, TouchableHighlight, Navigator, TextInput} from 'react-native';
 
-
 import Hostspace from './containers/Hostspace';
 import MyListView from './containers/MyListView';
 import Signup from './containers/Signup';
 import Login from './containers/Login';
 import Settings from './containers/Settings';
 import MyPosts from './containers/MyPosts';
+import MyMapView from './containers/MyMapView';
 
 import PostInfo from './containers/PostInfo';
 import EditPost from './containers/EditPost';
@@ -50,6 +50,9 @@ export default function native (platform) {
       }
       if(route.name == 'EditPost') {
         return <EditPost navigator={navigator} route={route} />
+      }
+      if(route.name == 'MyMapView'){
+        return <MyMapView navigator={navigator} />
       }
     },
     render(){

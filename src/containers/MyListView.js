@@ -51,6 +51,13 @@ export default class MyListView extends Component {
     })
   }
 
+  _navigateMyMapView(){
+    this.props.navigator.push({
+      name: 'MyMapView', // Matches route.name
+    })
+  }
+
+
   getTestData() {
    fetch('https://space-ucsc.herokuapp.com/viewList',)
      .then((response) => response.json())
@@ -107,6 +114,7 @@ export default class MyListView extends Component {
           <Button small onPress={() => {this._navigateSignUp()}}> Create New Space</Button>
           <Button small onPress={() => {this._navigateSettings()}}> User Settings</Button>
           <Button small onPress={() => {this._navigateMyPosts()}}> My Postings</Button>
+          <Button small onPress = {() => {this._navigateMyMapView()}}> Map View </Button>
         </View>
     </Container>
 
