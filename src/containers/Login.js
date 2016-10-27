@@ -21,7 +21,7 @@ export default class Login extends Component {
 
 
     componentWillMount(){
-      console.log('componentWillMount');
+
       // var navigator = this.props.navigator;
       var self = this;
 
@@ -35,12 +35,13 @@ export default class Login extends Component {
       //   }
       // }
 
+      //Checks if user is already logged in
       firebase.auth().onAuthStateChanged(function(user) {
         // goToPage(user)
         if (user) {
           console.log("user is signed in at login screen");
           console.log(user.email);
-          self.props.navigator.push({name: "MyListView"});
+          self.props.navigator.replace({name: "MyListView"});
           change = true;
         } else {
           console.log("no one is signed in");
@@ -71,9 +72,9 @@ export default class Login extends Component {
 
     render() {
         return (
-            <View >
+            <View style={{flex: 1, backgroundColor: 'white'}}>
                 <Text style = {styles.welcome}>
-                    SPACE : Login Page (pre-alpha)
+                    Login
                 </Text>
                 <TextInput
                     placeholder = "email"
@@ -86,15 +87,13 @@ export default class Login extends Component {
                     value = {this.state.password}
                 />
                 <Button onPress = {() => {this.logInOnPress(
-                  this.props.navigator.push, {name: 'MyListView'}
+                  this.props.navigator.replace, {name: 'MyListView'}
                 )}}>
                     Log in
                 </Button>
                 <Button onPress = {() => this._navigateCreate() }>
                     Create an account instead
                 </Button>
-                <View style = {styles.container} >
-                </View>
             </View>
         )
     }

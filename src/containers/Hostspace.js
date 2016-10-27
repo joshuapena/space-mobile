@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TouchableHighlight, Slider, Picker, TextInput, View, Image} from 'react-native';
+import {Container, Content, Button, Thumbnail, Header, Icon, Title, List, ListItem, Footer, FooterTab } from 'native-base';
 
-import Button from 'react-native-button' ;
 var firebase = require ('firebase');
 
 export default class Hostspace extends Component {
@@ -80,52 +80,56 @@ export default class Hostspace extends Component {
     });
  }
 
+
   render(){
     return(
-      <View>
+      <Container style={{backgroundColor: 'white'}}>
+        <Header style={{backgroundColor: '#e74c3c'}}>
+          <Button transparent onPress={() => this. _navigateBack()}>
+              <Icon name='ios-arrow-back' />
+          </Button>
+          <Title>Host a space</Title>
+        </Header> 
+          <Content>
+              <View>
 
-        <Text style={styles.welcome}>
-          What type of space?
-        </Text>
-        <Text style={styles.options}>Type:</Text>
-
-        <Picker style={styles.picker}
-          selectedValue={this.state.type}
-          onValueChange={(type) => this.setState({type: type})}>
-          <Picker.Item label="Garage" value="Garage" />
-          <Picker.Item label="Driveway" value="Driveway" />
-        </Picker>
-
-        <Text style={styles.options}>Price:</Text>
-        <Text style={styles.text} >
-          ${this.state.price && +this.state.price.toFixed(3)}/hr
-        </Text>
-        <Slider
-          {...this.props}
-          style={styles.slider}
-          step={1}
-          minimumValue={1}
-          maximumValue={20}
-          onValueChange={(value) => this.setState({price: value})}/>
-
-        <TextInput style={styles.options}
-          placeholder = "address"
-          onChangeText={(address) => this.setState({address})}
-          value = {this.state.address}/>
-
-        <Button style={styles.options}
-          onPress={() => { this._handlePress(); {this.props.myPropFunction}}}>
-          Submit to Node baby
-        </Button>
-
-        <Button style={styles.options}
-          onPress={() => { this._navigateBack()}}>
-          Cancel
-        </Button>
-
-        <View style={styles.container} >
-        </View>
-      </View>
+                <Text style={styles.welcome}>
+                  What type of space?
+                </Text>
+                <Text style={styles.options}>Type:</Text>
+        
+                <Picker style={styles.picker}
+                  selectedValue={this.state.type}
+                  onValueChange={(type) => this.setState({type: type})}>
+                  <Picker.Item label="Garage" value="Garage" />
+                  <Picker.Item label="Driveway" value="Driveway" />
+                </Picker>
+        
+                <Text style={styles.options}>Price:</Text>
+                <Text style={styles.text} >
+                  ${this.state.price && +this.state.price.toFixed(3)}/hr
+                </Text>
+                <Slider
+                  {...this.props}
+                  style={styles.slider}
+                  step={1}
+                  minimumValue={1}
+                  maximumValue={20}
+                  onValueChange={(value) => this.setState({price: value})}/>
+        
+                <TextInput style={styles.options}
+                  placeholder = "address"
+                  onChangeText={(address) => this.setState({address})}
+                  value = {this.state.address}/>
+        
+                <Button style={styles.options}
+                  onPress={() => { this._handlePress(); {this.props.myPropFunction}}}>
+                  Submit to Node baby
+                </Button>
+                
+              </View>
+          </Content>
+      </Container>
     )
   }
 }
@@ -157,10 +161,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   welcome: {
-    fontSize: 50,
+    fontSize: 30,
     textAlign: 'center',
-    margin: 10,
-    marginTop: 50,
+    marginTop: 40,
     marginBottom: 25,
   },
 });

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
+import { Container, Content, Button, Thumbnail, Header, Icon, Title, List, ListItem, Footer, FooterTab } from 'native-base';
 import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native';
-import Button from 'react-native-button';
+// import Button from 'react-native-button';
 
 var firebase = require ('firebase');
 
@@ -21,39 +22,36 @@ export default class Settings extends Component {
     }
 
     _navigateBack(){
-      this.props.navigator.pop()
+      this.props.navigator.pop();
     }
 
-    logOutUser(switchPage) {
+    logOutUser(switchPage, destination) {
         firebase.auth().signOut().then(function() {
-            alert (' logged out');
-            switchPage();
+            alert ('logged out');
+            switchPage(destination);
         }, function (error) {
             alert ('error logging out');
         });
     }
 
     render() {
-
-
         return (
-            <View >
-                <Text style = {styles.welcome}>
-                    Settings
-                </Text>
-
-                <Button onPress = {() => {this.logOutUser(
-                  this.props.navigator.popToTop )}}>
-                    [[Log out]]
-                </Button>
-
-                <Button onPress = { () => this. _navigateBack()
-                }>
-                    [[Cancel]]
-                </Button>
-
-
-            </View>
+            <Container style={{backgroundColor: 'white'}}>
+            <Header style={{backgroundColor: '#e74c3c'}}>
+              <Button transparent onPress={() => this._navigateBack()}>
+                  <Icon name='ios-arrow-back' />
+              </Button>
+              <Title>Settings</Title>
+            </Header>
+              <Content>
+                  <View >
+                      <Button onPress = {() => {this.logOutUser(
+                        this.props.navigator.resetTo,{name: 'Login'})}}>
+                          Log out
+                      </Button>
+                  </View>
+              </Content>
+            </Container>
         )
     }
 }

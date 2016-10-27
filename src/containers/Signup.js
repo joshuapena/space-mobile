@@ -92,9 +92,9 @@ export default class Signup extends Component {
 
     render() {
         return (
-            <View >
+            <View style={{flex: 1, backgroundColor: 'white'}}>
                 <Text style = {styles.welcome}>
-                    SPACE : Signup Page (pre-alpha)
+                    Signup
                 </Text>
                 <TextInput
                     placeholder = "email"
@@ -109,21 +109,11 @@ export default class Signup extends Component {
                 />
                 <Button onPress = {() => this.signUpOnPress(this.props.navigator.push,
                   {name: 'MyListView'})}
-                > [[sign up]]
-                </Button>
-                <Button onPress = {() => this.logUserInfoOnPress(this.props.navigator.push,
-                  {name: 'MyListView'})
-                }>
-                    [[If logged in, continue]]
-                </Button>
-                <Button onPress = {() => {this.logOutUser()}}>
-                    [[Log out]]
+                > sign up
                 </Button>
                 <Button onPress = {() => this._navigateBack()}>
-                    [[Already have an account? Log in]]
+                  Already have an account? Log in
                 </Button>
-                <View style = {styles.container} >
-                </View>
             </View>
         )
     }

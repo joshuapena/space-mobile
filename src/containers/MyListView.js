@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, TouchableOpacity  } from 'react-native';
 
-import Button from 'react-native-button' ;
+import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
+import {Container, Content, Thumbnail, Button, Header, Title, List, ListItem, Footer, FooterTab } from 'native-base';
+
+
 const Dimensions = require('Dimensions');
 
 const TimerMixin =  require('react-timer-mixin');
@@ -53,7 +55,7 @@ export default class MyListView extends Component {
        //console.log("GET /test : ", responseJson.code);
        //console.log(JSON.stringify(responseJson.spaceListing, null, 3));
        this.setState({
-         dataSource : this.state.dataSource.cloneWithRows(responseJson.spaceListing)
+         dataSource : responseJson.spaceListing
        });
 
        responseJson.code;
@@ -74,34 +76,64 @@ export default class MyListView extends Component {
     clearInterval(this.timer);
   }
 
-  pressListItem(data){
-    // console.log(data.price);
-    // console.log(data.type);
-    // console.log(data.address);
+
+
+  pressListItem(self){
+    console.log('button press');
+    console.log(self.props);
+    // this.props.navigator.push({name: 'PostView'})
+    //
+    // console.log("price ", data.price);
+    // console.log("type", data.type);
+    // console.log("address", data.address);
   }
 
  render() {
    return (
-     <View style={styles.container}>
-      <Text> List of Spaces</Text>
-       <ListView
-         enableEmptySections={true} // this line mutes a warning message that applys to
-         //cloneWithRowsAndSections, however, we use cloneWithRows so it is irrelevant to us
-         dataSource={this.state.dataSource}
 
-         renderRow={(rowData) =>
-           <TouchableOpacity  underlayColor = {'red'} onPress = {this.pressListItem(rowData)}>
-            <Text> My price is {rowData.price}, for a {rowData.type}. {"\n"}It is at {rowData.address} </Text>
-           </TouchableOpacity >
-         }
-         />
-         <Button onPress={() => {this._navigateSignUp()}}> Create New Space</Button>
-         <Button onPress={() => {this._navigateSettings()}}> User Settings</Button>
-         <Button onPress={() => {this._navigateMyPosts()}}> My Postings</Button>
-     </View>
+      <Container style={{backgroundColor: 'white'}}>
+      <Header style={{backgroundColor: '#e74c3c'}}>
+        <Button transparent>
+          <Icon name='navicon' size={20} color='white'/>
+        </Button>
+        <Title>SPACE</Title>
+      </Header>
+        <Content>
+          <List dataArray={this.state.dataSource}
+              renderRow={(item) =>
+                <View>
+
+                <ListItem button onPress={ () => {this.pressListItem(this, item)}}>
+                <Text> {xIcon}My price is {item.price}, for a {item.type}. {"\n"}It is at {item.address} </Text>
+                </ListItem>
+                </ View>
+                }>
+          </List>
+        </Content>
+
+        <View>
+          <Button small onPress={() => {this._navigateSignUp()}}> Create New Space</Button>
+          <Button small onPress={() => {this._navigateSettings()}}> User Settings</Button>
+          <Button small onPress={() => {this._navigateMyPosts()}}> My Postings</Button>
+        </View>
+    </Container>
+
    );
  }
 }
+
+
+     // <View style={styles.container}>
+     //  <Text> List of Spaces</Text>
+     //   <ListView
+     //     enableEmptySections={true} // this line mutes a warning message that applys to
+     //     //cloneWithRowsAndSections, however, we use cloneWithRows so it is irrelevant to us
+     //     dataSource={this.state.dataSource}
+     //     renderRow={(rowData) => <Text> {xIcon}My price is {rowData.price}, for a {rowData.type}. {"\n"}It is at {rowData.address} </Text>}/>
+     //     <Button onPress={() => {this._navigateSignUp()}}> Create New Space</Button>
+     //     <Button onPress={() => {this._navigateSettings()}}> User Settings</Button>
+     //     <Button onPress={() => {this._navigateMyPosts()}}> My Postings</Button>
+     // </View>
 
 
 const styles = StyleSheet.create({

@@ -11,6 +11,7 @@ import Signup from './containers/Signup';
 import Login from './containers/Login';
 import Settings from './containers/Settings';
 import MyPosts from './containers/MyPosts';
+import PostView from './containers/PostView';
 
 var firebase = require ('firebase');
 var config = {
