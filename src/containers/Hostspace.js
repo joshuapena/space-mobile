@@ -14,48 +14,50 @@ export default class Hostspace extends Component {
   this.props.navigator.pop();
 }
   _handlePress() {
+    var self = this;
     console.log('Pressed!');
 
     let myPrice=this.state.price;
     let myAddress=this.state.address;
     let myType=this.state.type;
+    let myUsername = "";
 
     console.log("my price",myPrice);
     console.log("address",myAddress);
     console.log("type", myType);
 
-    var myJson = {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        price: myPrice,
-        address: myAddress,
-        type : myType
+    let currentUser = firebase.auth().currentUser;
+    let updateObj = {};
 
-      })
-    }
+    var ref = firebase.database().ref("users/" + currentUser.uid+ "/username");
+    ref.once("value")
+    .then(function(snapshot) {
+      var key = snapshot.val(); // "ada"
+      myUsername = key;
+      console.log("this is a key", key);
 
 
-    if (myType != null && myAddress != null && myType != null){ //Checks if no fields empty
-      this.getTestData();
-      this.postTestData(myJson);
-    }
+
+      var myJson = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          price: myPrice,
+          address: myAddress,
+          type : myType,
+          poster: myUsername,
+        })
+      }
+      if (myType != null && myAddress != null && myType != null){ //Checks if no fields empty
+        console.log(myJson.body);
+        self.postTestData(myJson);
+      }
+    });
   }
 
-  getTestData() {
-   return fetch('https://space-ucsc.herokuapp.com/test',)
-     .then((response) => response.json())
-     .then((responseJson) => {
-       console.log("GET /test : ", responseJson.code)
-       return responseJson.code;
-     })
-     .catch((error) => {
-       console.error(error);
-     });
- }
 
  postTestData(myJson) {
   return fetch('https://space-ucsc.herokuapp.com/createSpace', myJson)
@@ -89,7 +91,7 @@ export default class Hostspace extends Component {
               <Icon name='ios-arrow-back' />
           </Button>
           <Title>Host a space</Title>
-        </Header> 
+        </Header>
           <Content>
               <View>
 
@@ -97,14 +99,14 @@ export default class Hostspace extends Component {
                   What type of space?
                 </Text>
                 <Text style={styles.options}>Type:</Text>
-        
+
                 <Picker style={styles.picker}
                   selectedValue={this.state.type}
                   onValueChange={(type) => this.setState({type: type})}>
                   <Picker.Item label="Garage" value="Garage" />
                   <Picker.Item label="Driveway" value="Driveway" />
                 </Picker>
-        
+
                 <Text style={styles.options}>Price:</Text>
                 <Text style={styles.text} >
                   ${this.state.price && +this.state.price.toFixed(3)}/hr
@@ -116,17 +118,17 @@ export default class Hostspace extends Component {
                   minimumValue={1}
                   maximumValue={20}
                   onValueChange={(value) => this.setState({price: value})}/>
-        
+
                 <TextInput style={styles.options}
                   placeholder = "address"
                   onChangeText={(address) => this.setState({address})}
                   value = {this.state.address}/>
-        
+
                 <Button style={styles.options}
                   onPress={() => { this._handlePress(); {this.props.myPropFunction}}}>
                   Submit to Node baby
                 </Button>
-                
+
               </View>
           </Content>
       </Container>

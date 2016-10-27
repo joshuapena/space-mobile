@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native';
 import Button from 'react-native-button';
+const dismissKeyboard = require('dismissKeyboard')
 
 var firebase = require ('firebase');
-
-const dismissKeyboard = require('dismissKeyboard')
 
 
 export default class Login extends Component {
@@ -18,22 +17,8 @@ export default class Login extends Component {
     }
 
 
-
-
     componentWillMount(){
-
-      // var navigator = this.props.navigator;
       var self = this;
-
-      // var goToPage = function(currentUser) {
-      //   var currentUser = firebase.auth().currentUser;
-      //   if(currentUser){
-      //     this.props.navigator.push({name: "MyListView"});
-      //     console.log("user was already logged in");
-      //   } else{
-      //     console.log("no one was logged in");
-      //   }
-      // }
 
       //Checks if user is already logged in
       firebase.auth().onAuthStateChanged(function(user) {

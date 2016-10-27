@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native';
 import Button from 'react-native-button';
 
+const dismissKeyboard = require('dismissKeyboard')
 var firebase = require ('firebase');
 
 
@@ -10,7 +11,6 @@ export default class Signup extends Component {
         super (props);
         this.state = {text : 'this text will be updated by typing'};
     }
-
 
     _navigateList(){
     this.props.navigator.push({
@@ -28,16 +28,21 @@ export default class Signup extends Component {
     this.props.navigator.pop()
   }
 
-
-
-
-
     signUpOnPress(switchPage, destination) {
+        dismissKeyboard();
         console.log ('button has been pressed');
         let email = this.state.email;
         let password = this.state.password;
-        if(!email || !password) {
+        let passwordConfirm = this.state.passwordConfirm;
+        let username = this.state.username;
+
+        if(!email || !password || !passwordConfirm || !username) {
           alert ('please fill out all fields');
+          return;
+        }
+
+        if(password !== passwordConfirm){
+          alert ('passwords do not match');
           return;
         }
         var user = firebase.auth().createUserWithEmailAndPassword (email, password).catch (function (error) {
@@ -57,36 +62,16 @@ export default class Signup extends Component {
                 case "auth/weak-password":
                     alert ('please enter a stronger password');
                     break;
-
                 default:
                     alert ('error creating account :/');
             }
         }).then (function() {
             var currentUser = firebase.auth().currentUser;
             firebase.database().ref ('users/' + currentUser.uid).set ({
-                email: currentUser.email
+                email: currentUser.email,
+                username : username
             });
             switchPage(destination);
-        });
-    }
-
-    logUserInfoOnPress() {
-        var currentUser = firebase.auth().currentUser;
-        if (currentUser) {
-            console.log ('user email is ' + currentUser.email);
-            console.log ('user name is ' + currentUser.displayName);
-        } else {
-            console.log ("user is null");
-        }
-    }
-
-    logOutUser() {
-        var currentUserName = firebase.auth().currentUser;
-        firebase.auth().signOut().then(function() {
-            alert (currentUserName + ' logged out');
-            currentUserName = null;
-        }, function (error) {
-            alert ('error logging out');
         });
     }
 
@@ -102,10 +87,21 @@ export default class Signup extends Component {
                     value = {this.state.email}
                 />
                 <TextInput
+                    placeholder = "username"
+                    onChangeText = {(username) => this.setState ({username})}
+                    value = {this.state.username}
+                />
+                <TextInput
                     secureTextEntry = {true}
                     placeholder = "password"
                     onChangeText = {(password) => this.setState ({password})}
                     value = {this.state.password}
+                />
+                <TextInput
+                    secureTextEntry = {true}
+                    placeholder = "confirm password"
+                    onChangeText = {(passwordConfirm) => this.setState ({passwordConfirm})}
+                    value = {this.state.passwordConfirm}
                 />
                 <Button onPress = {() => this.signUpOnPress(this.props.navigator.push,
                   {name: 'MyListView'})}
