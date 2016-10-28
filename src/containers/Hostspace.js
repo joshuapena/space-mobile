@@ -13,6 +13,7 @@ export default class Hostspace extends Component {
   _navigateBack(){
   this.props.navigator.pop();
 }
+
   _handlePress() {
     var self = this;
     console.log('Pressed!');
@@ -20,66 +21,49 @@ export default class Hostspace extends Component {
     let myPrice=this.state.price;
     let myAddress=this.state.address;
     let myType=this.state.type;
+    let myCity = this.state.city;
+    let myState = this.state.state;
     let myUsername = "";
-
-    console.log("my price",myPrice);
-    console.log("address",myAddress);
-    console.log("type", myType);
 
     let currentUser = firebase.auth().currentUser;
     let updateObj = {};
 
+    // to get username
     var ref = firebase.database().ref("users/" + currentUser.uid+ "/username");
     ref.once("value")
     .then(function(snapshot) {
       var key = snapshot.val(); // "ada"
       myUsername = key;
-      console.log("this is a key", key);
-
-
+      // console.log("this is a key", key);
 
       var myJson = {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
           price: myPrice,
           address: myAddress,
+          city: myCity,
+          state: myState,
           type : myType,
           poster: myUsername,
-        })
-      }
-      if (myType != null && myAddress != null && myType != null){ //Checks if no fields empty
+        }
+
+      if (myType && myAddress && myPrice && myCity && myState){ //Checks if no fields empty
         console.log(myJson.body);
         self.postTestData(myJson);
+      } else{
+        console.log("not saved to node");
       }
     });
   }
 
-
- postTestData(myJson) {
-  return fetch('https://space-ucsc.herokuapp.com/createSpace', myJson)
-    .then((response) => response.json())
-    .then((responseJson) => {
-      console.log("this is the code after POST", responseJson.code);
-      if(responseJson.code == 200){
-        this.props.navigator.pop();
-      }
-      console.log("message ", responseJson.message);
-      console.log("uid: ", responseJson.theUniqueKey);
-      var currentUser = firebase.auth().currentUser;
+  postTestData(myPost) {
+    console.log("posting data");
+    var currentUser = firebase.auth().currentUser;
+    var newPost = firebase.database().ref ('listings/').push(myPost,
+    function(){
+      console.log("posted this", newPost.key);
       var updateObj = {};
-      updateObj[responseJson.theUniqueKey] = true;
-      // alert(currentUser.email);
+      updateObj[newPost.key] = true;
       firebase.database().ref ('users/' + currentUser.uid +'/listing').update(updateObj);
-
-      return responseJson;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  });
  }
 
 
@@ -134,15 +118,9 @@ export default class Hostspace extends Component {
                   onChangeText={(state) => this.setState({state})}
                     value = {this.state.state}/>
 
-                  <TextInput style={styles.options}
-                    placeholder = "zip"
-                    keyboardType="numeric"
-                    onChangeText={(zip) => this.setState({zip})}
-                    value = {this.state.zip}/>
-
                 <Button style={styles.options}
                   onPress={() => { this._handlePress(); {this.props.myPropFunction}}}>
-                  Submit to Node baby
+                  Submit New Space
                 </Button>
 
               </View>
