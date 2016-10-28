@@ -95,7 +95,7 @@ export default class MyListView extends Component {
       <Container style={{backgroundColor: 'white'}}>
       <Header style={{backgroundColor: '#e74c3c'}}>
         <Button transparent>
-          <Icon name='navicon' size={20} color='white'/>
+          <Icon name='ios-arrow-back' size={20} color='white'/>
         </Button>
         <Title>SPACE</Title>
       </Header>
