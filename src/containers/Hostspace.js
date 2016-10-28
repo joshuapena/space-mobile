@@ -55,6 +55,7 @@ export default class Hostspace extends Component {
   }
 
   postTestData(myPost) {
+    var self = this;
     console.log("posting data");
     var currentUser = firebase.auth().currentUser;
     var newPost = firebase.database().ref ('listings/').push(myPost,
@@ -63,6 +64,9 @@ export default class Hostspace extends Component {
       var updateObj = {};
       updateObj[newPost.key] = true;
       firebase.database().ref ('users/' + currentUser.uid +'/listing').update(updateObj);
+      firebase.database().ref ('listings/' + newPost.key).update({uid : newPost.key}, function (){
+        self._navigateBack();
+      });
   });
  }
 
