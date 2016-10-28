@@ -8,31 +8,62 @@ import React, {Component} from 'react';
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
 import {Container, Content, Thumbnail, Button, Header, Title, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
 
+var firebase = require ('firebase');
 
 export default class EditPost extends Component {
   constructor (props) {
       super (props);
-      this.state = {text : 'this text will be updated by typing'};
+      this.state = {
+        text : 'this text will be updated by typing',
+        postId: "",
+        thisPost: ""
+    };
   }
 
-  _navigateBack(){
-  this.props.navigator.pop();
-  console.log(this.props.route)
+
+deleteButtonPressed(){
+  var self = this;
+  var currentUser = firebase.auth().currentUser;
+  var updateObj = {};
+  firebase.database().ref ('users/' + currentUser.uid +'/listing/'+self.state.postId).remove();
+  firebase.database().ref('/listings/'+self.state.postId).remove(function(){
+    self.props.navigator.pop();
+  });
 }
 
 
+_navigateBack(){
+  this.props.navigator.pop();
+}
+
+componentDidMount(){
+
+  var mykey = Object.keys(this.props.route.item)[0]
+  var myValues = Object.values(this.props.route.item)[0]
+  console.log(mykey);
+  console.log(myValues);
+  console.log(this.props.route.item[mykey]);
+  this.setState({
+    postId: mykey,
+    thisPost: Object.values(this.props.route.item)[0]
+  })
+}
 
   render() {
       return (
           <Container style={{backgroundColor: 'white'}}>
-          <Header style={{backgroundColor: '#e74c3c'}}>
-            <Button transparent onPress={() => this._navigateBack()}>
-                <Icon name='ios-arrow-back' />
-            </Button>
-            <Title>{this.props.route.item.address}</Title>
-          </Header>
+            <Header style={{backgroundColor: '#e74c3c'}}>
+              <Button transparent onPress={() => this._navigateBack()}>
+                  <Icon name='ios-arrow-back' />
+              </Button>
+              <Title>{this.state.thisPost.address}</Title>
+            </Header>
             <Content>
-           <Button small danger>Delete this post</Button>
+              <Text>{this.state.postId}</Text>
+              <Button small danger
+                onPress={()=>{this.deleteButtonPressed()}}
+               >Delete this post
+               </Button>
             </Content>
           </Container>
       )

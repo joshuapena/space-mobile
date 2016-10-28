@@ -25,6 +25,8 @@ export default class MyPosts extends Component {
       this.state = {
         spinnerState: true,
         dataSource: {},
+        dataArray : [],
+        dataExists : true
       };
     }
 
@@ -44,7 +46,8 @@ export default class MyPosts extends Component {
     console.log(item)
     self.props.navigator.push({
       name: 'EditPost', // Matches route.name
-      item: item
+      item: item,
+
     })
   }
 
@@ -57,8 +60,18 @@ export default class MyPosts extends Component {
     var myState = this.state;
     var self = this;
     var myStateObj = this.state.dataSource;
+    var myStateArr = [];
+
     if (currentUser) {
       firebase.database().ref('/users/' + currentUser.uid + "/listing/").once('value').then(function(snapshot) {
+        // console.log("this is the snapshot",snapshot.val());
+        if(!snapshot.val()){
+          console.log("no data");
+          self.setState({
+            dataExists: false,
+            spinnerState: false
+          });
+        }
         snapshot.forEach(function(childSnapshot){
           console.log("the id of posts is: "+ childSnapshot.key);
           firebase.database().ref('/listings/' + childSnapshot.key).once('value').then(function(postSnapshot){
@@ -68,15 +81,21 @@ export default class MyPosts extends Component {
             // console.log("post and data "+ JSON.stringify (postData));
             //myStateArr.push({postKey : postData});
             myStateObj[postKey] = postData;
+            var obj = {[postKey] : postData}
+            myStateArr.push(obj);
+
 
             self.setState({spinnerState: false});
-            console.log("myArrWithData " + JSON.stringify(myStateObj));
+            // console.log("myObjWithData " + JSON.stringify(myStateObj));
+            console.log("myArrWithData " + JSON.stringify(myStateArr));
             self.setState({
               dataSource : myStateObj,
+              dataArray: myStateArr
             });
 
-
           });
+
+
 
         });
       });
@@ -85,16 +104,18 @@ export default class MyPosts extends Component {
 
   componentDidMount(){
     this.getTestData();
-    this.timer = setInterval( () => {
-      this.getTestData();
-    }, 4500)
+    // this.timer = setInterval( () => {
+    //   this.getTestData();
+    // }, 4500)
   }
 
   componentWillUnmount() {
     clearInterval(this.timer);
   }
 
-
+  //list data takes in an array of Posts
+  //each post has a uid as the key, and an object of fields as a values
+  //item is returned by list. represents an index of the array (aka one post)
  render() {
    return (
       <Container style={{backgroundColor: 'white'}}>
@@ -109,10 +130,14 @@ export default class MyPosts extends Component {
       {renderIf(this.state.spinnerState)(
         <Spinner color='#e74c3c' />
       )}
-        <List dataArray={this.state.dataSource}
+
+      {renderIf(!this.state.dataExists)(
+        <Text> There is no data</Text>
+      )}
+        <List dataArray={this.state.dataArray}
             renderRow={(item) =>
               <ListItem button onPress={() => {this._navigateEditPost(this, item)}}>
-              <Text>My price is {item.price}, for a {item.type}. {"\n"}It is at {item.address} </Text>
+              <Text>My price is {Object.values(item)[0].price}, for a {Object.values(item)[0].type}. {"\n"}It is at {Object.values(item)[0].address} </Text>
               </ListItem>
               }>
         </List>

@@ -39,13 +39,16 @@ export default class MyListView extends Component {
   }
 
   _navigateMyPosts(){
+    clearInterval(this.timer);
     this.props.navigator.push({
       name: 'MyPosts', // Matches route.name
     })
   }
 
   _navigatePostInfo(self, item){
-    console.log(item)
+    // console.log("the post you clicked", Object.keys.(item[0]));
+    // console.log("the post id ", item.keys)
+
     self.props.navigator.push({
       name: 'PostInfo', // Matches route.name
       item: item
@@ -58,10 +61,12 @@ export default class MyListView extends Component {
      .then((responseJson) => {
        //console.log("GET /test : ", responseJson.code);
        //console.log(JSON.stringify(responseJson.spaceListing, null, 3));
+      //  console.log("this is the responseJson", responseJson.spaceListing);
        this.setState({
          spinnerState: false,
-         dataSource : responseJson.spaceListing,
+         dataSource :  responseJson.spaceListing,
        });
+      //  console.log("this is the dataSource", this.state.dataSource);
        responseJson.code;
      })
      .catch((error) => {

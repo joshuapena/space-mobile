@@ -14,6 +14,17 @@ export default class PostInfo extends Component {
   console.log(this.props.route)
 }
 
+checkIntoSpot(){
+  var currentUser = firebase.auth().currentUser;
+  // firebase.database().ref ('users/' + currentUser.uid).set ({
+  //     email: currentUser.email,
+  //     username : username
+  // });
+
+  var currentUser = firebase.auth().currentUser;
+  firebase.database().ref('listings')
+}
+
   render() {
       return (
           <Container style={{backgroundColor: 'white'}}>
@@ -28,6 +39,7 @@ export default class PostInfo extends Component {
                 <Text> Posted by {this.props.route.item.poster}.</Text>
                 <Text> They are charging ${this.props.route.item.price}.</Text>
                 <Text> Do you want a {this.props.route.item.type}?</Text>
+                <Text> Do you want a {this.props.route.item.key}?</Text>
                 <Button> Check into this parking space</Button>
                 </View>
             </Content>
