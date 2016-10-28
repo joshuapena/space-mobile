@@ -1,7 +1,6 @@
 import MapView from 'react-native-maps';
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native';
-import GoogleMap from 'react-native-maps-google';
 
 export default class MyMapView extends Component {
 
