@@ -6,12 +6,12 @@ View a list of all publicly viewable rides
 import React, {Component} from 'react';
 
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
-import {Container, Content, Thumbnail, Button, Header, Title, List, ListItem, Footer, FooterTab } from 'native-base';
+import {Container, Content, Thumbnail, Button, Header, Spinner, Title, List, ListItem, Footer, FooterTab } from 'native-base';
 
 const TimerMixin =  require('react-timer-mixin');
 import Icon from 'react-native-vector-icons/FontAwesome';
 const xIcon = (<Icon name="times" size={30} color="#100" />);
-
+var renderIf = require('render-if');
 
 
 export default class MyListView extends Component {
@@ -22,6 +22,7 @@ export default class MyListView extends Component {
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
       this.state = {
         dataSource: ds.cloneWithRows([]),
+        spinnerState : true
       };
     }
 
@@ -65,9 +66,9 @@ export default class MyListView extends Component {
        //console.log("GET /test : ", responseJson.code);
        //console.log(JSON.stringify(responseJson.spaceListing, null, 3));
        this.setState({
-         dataSource : responseJson.spaceListing
+         spinnerState: false,
+         dataSource : responseJson.spaceListing,
        });
-
        responseJson.code;
      })
      .catch((error) => {
@@ -99,8 +100,10 @@ export default class MyListView extends Component {
         <Title>SPACE</Title>
       </Header>
         <Content>
+        {renderIf(this.state.spinnerState)(
+          <Spinner color='#e74c3c' />
+        )}
           <List dataArray={this.state.dataSource}
-
               renderRow={(item) =>
                 <ListItem button onPress={() => {this._navigatePostInfo(this, item)}}>
                 <Text>My price is ${item.price} for a {item.type}. {"\n"}It is at {item.address} </Text>
