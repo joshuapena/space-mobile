@@ -7,14 +7,35 @@ var firebase = require ('firebase');
 export default class Hostspace extends Component {
   constructor(props){
     super(props);
-    this.state = {text : 'this text will be updated by typing', type : 'Garage', price : 1};
+    this.state = {text : 'this text will be updated by typing',
+    type : 'Garage',
+    price : 1,
+    hideButton: false
+  };
   }
 
   _navigateBack(){
   this.props.navigator.pop();
 }
 
+enableButton(){
+  console.log("edit text");
+  let myPrice=this.state.price;
+  let myAddress=this.state.address;
+  let myType=this.state.type;
+  let myCity = this.state.city;
+  let myState = this.state.state;
+  let myUsername = "";
+  if (myType && myAddress && myPrice && myCity && myState){ //Checks if no fields empty
+    this.setState({fieldsEmpty : false});
+  } else{
+    this.setState({fieldsEmpty : true});
+  }
+}
+
   _handlePress() {
+    var self = this;
+    this.setState({hideButton : true});
     var self = this;
     console.log('Pressed!');
 
@@ -43,6 +64,7 @@ export default class Hostspace extends Component {
           state: myState,
           type : myType,
           poster: myUsername,
+          available : "true"
         }
 
       if (myType && myAddress && myPrice && myCity && myState){ //Checks if no fields empty
@@ -50,6 +72,7 @@ export default class Hostspace extends Component {
         self.postTestData(myJson);
       } else{
         console.log("not saved to node");
+        self.setState({hideButton : false});
       }
     });
   }
@@ -109,21 +132,28 @@ export default class Hostspace extends Component {
 
                 <TextInput style={styles.options}
                   placeholder = "address"
-                  onChangeText={(address) => this.setState({address})}
+                  onChangeText={(address) => {
+                    this.setState({address});
+                    }
+                  }
                   value = {this.state.address}/>
 
                 <TextInput style={styles.options}
                   placeholder = "City"
-                  onChangeText={(city) => this.setState({city})}
+                  onChangeText={(city) => {
+                    this.setState({city})
+                }}
                   value = {this.state.city}/>
 
                 <TextInput style={styles.options}
                   placeholder = "State"
-                  onChangeText={(state) => this.setState({state})}
+                  onChangeText={(state) =>
+                    {this.setState({state: state})
+                  }}
                     value = {this.state.state}/>
 
-                <Button style={styles.options}
-                  onPress={() => { this._handlePress(); {this.props.myPropFunction}}}>
+                <Button disabled={this.state.hideButton} style={styles.options}
+                  onPress={() => { this._handlePress(); }}>
                   Submit New Space
                 </Button>
 

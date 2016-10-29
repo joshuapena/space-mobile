@@ -1,5 +1,5 @@
 /*
-View a list of all publicly viewable rides
+The space a user is currently checked into
 */
 
 
@@ -14,14 +14,12 @@ const xIcon = (<Icon name="times" size={30} color="#100" />);
 var renderIf = require('render-if');
 
 
-export default class MyListView extends Component {
+export default class MyCheckedSpace extends Component {
+
 
   constructor(props) {
     super(props);
-
-      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      this.state = {
-        dataSource: ds.cloneWithRows([]),
+    this.state = {
         spinnerState : true
       };
     }
@@ -131,6 +129,7 @@ export default class MyListView extends Component {
    );
  }
 }
+
 
 
 const styles = StyleSheet.create({

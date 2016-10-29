@@ -80,7 +80,8 @@ export default class Signup extends Component {
             var currentUser = firebase.auth().currentUser;
             firebase.database().ref ('users/' + currentUser.uid).set ({
                 email: currentUser.email,
-                username : username
+                username : username,
+                checkedIn : false
             });
             switchPage(destination);
         });

@@ -2,7 +2,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { View, AppRegistry, Text, Image, StyleSheet, Modal, TouchableHighlight, Navigator, TextInput} from 'react-native';
+import { View, AppRegistry, Text, Image, StyleSheet, Modal, TouchableHighlight, Navigator, TextInput, BackAndroid} from 'react-native';
 
 import Hostspace from './containers/Hostspace';
 import MyListView from './containers/MyListView';
@@ -11,7 +11,7 @@ import Login from './containers/Login';
 import Settings from './containers/Settings';
 import MyPosts from './containers/MyPosts';
 import MyMapView from './containers/MyMapView';
-
+// import MyCheckedSpace from './containers/MyCheckedSpace';
 import PostInfo from './containers/PostInfo';
 import EditPost from './containers/EditPost';
 
@@ -24,11 +24,26 @@ var config = {
 }
 firebase.initializeApp (config);
 
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  try{
+    if (_navigator.getCurrentRoutes().length === 1  ) {
+       return false;
+    }
+    _navigator.pop();
+    return true;
+  } catch (err){
+    console.log("unable to pop");
+  }
+});
+
 export default function native (platform) {
   let ParkingCheckout = React.createClass({
     renderScene (route, navigator){
       if(route.name == 'Hostspace') {
         return <Hostspace navigator={navigator} />
+      }
+      if(route.name == 'MyCheckedSpace') {
+        return <MyCheckedSpace navigator={navigator} />
       }
       if(route.name == 'Signup') {
         return <Signup navigator={navigator} />
