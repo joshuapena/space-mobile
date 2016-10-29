@@ -104,26 +104,9 @@ export default class MyCheckedSpace extends Component {
         <Title>SPACE</Title>
       </Header>
         <Content>
-        {renderIf(this.state.spinnerState)(
-          <Spinner color='#e74c3c' />
-        )}
-          <List dataArray={this.state.dataSource}
-              renderRow={(item) =>
-                <ListItem button onPress={() => {this._navigatePostInfo(this, item)}}>
-                <Text>My price is ${item.price} for a {item.type}. {"\n"}It is at {item.address} </Text>
-                </ListItem>
+         </Content>
 
-                }>
-          </List>
-        </Content>
 
-        <View>
-          <Button small onPress={() => {this._navigateSignUp()}}> Create New Space</Button>
-          <Button small onPress={() => {this._navigateSettings()}}> User Settings</Button>
-          <Button small onPress={() => {this._navigateMyPosts()}}> My Postings</Button>
-          <Button small onPress = {() => {this._navigateMyMapView()}}> Map View </Button>
-          <Button small onPress = {() => {this._navigateMyCheckedSpace()}}>My Space</Button>
-        </View>
     </Container>
 
    );

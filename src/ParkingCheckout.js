@@ -11,7 +11,7 @@ import Login from './containers/Login';
 import Settings from './containers/Settings';
 import MyPosts from './containers/MyPosts';
 import MyMapView from './containers/MyMapView';
-// import MyCheckedSpace from './containers/MyCheckedSpace';
+import MyCheckedSpace from './containers/MyCheckedSpace';
 import PostInfo from './containers/PostInfo';
 import EditPost from './containers/EditPost';
 

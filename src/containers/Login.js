@@ -5,7 +5,7 @@ Can navigate to Signup
 */
 
 import React, {Component} from 'react';
-import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native';
+import {Navigator, StyleSheet, Text, TextInput, View, Image, BackAndroid} from 'react-native';
 import Button from 'react-native-button';
 const dismissKeyboard = require('dismissKeyboard')
 
@@ -24,6 +24,16 @@ export default class Login extends Component {
 
 
     componentWillMount(){
+
+
+      var nav = this.props.navigator;
+      BackAndroid.addEventListener('hardwareBackPress', () => {
+        if (nav.getCurrentRoutes().length === 1  ) {
+           return false;
+        }
+        nav.pop();
+        return true;
+      });
       var self = this;
 
       //Checks if user is already logged in
@@ -32,7 +42,7 @@ export default class Login extends Component {
         if (user) {
           console.log("user is signed in at login screen");
           console.log(user.email);
-          self.props.navigator.replace({name: "MyListView"});
+          self.props.navigator.push({name: "MyListView"});
           change = true;
         } else {
           console.log("no one is signed in");
