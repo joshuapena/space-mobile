@@ -6,13 +6,11 @@ The space a user is currently checked into
 import React, {Component} from 'react';
 
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
-import {Container, Content, Thumbnail, Button, Header, Spinner, Title, List, ListItem, Footer, FooterTab } from 'native-base';
+import {Container, Content, Thumbnail, Button, Header, Spinner, Title, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
 
-const TimerMixin =  require('react-timer-mixin');
-import Icon from 'react-native-vector-icons/FontAwesome';
-const xIcon = (<Icon name="times" size={30} color="#100" />);
+
 var renderIf = require('render-if');
-
+var firebase = require('firebase');
 
 export default class MyCheckedSpace extends Component {
 
@@ -20,93 +18,72 @@ export default class MyCheckedSpace extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        spinnerState : true
+        spinnerState : true,
+        thisSpace : {}
       };
     }
 
-  _navigateSignUp(){
-    this.props.navigator.push({
-      name: 'Hostspace', // Matches route.name
-    })
-  }
 
-  _navigateSettings(){
-    this.props.navigator.push({
-      name: 'Settings', // Matches route.name
-    })
-  }
+  checkOut(){
+    console.log(this.state.thisSpace);
+    var self = this;
+    var postID = self.state.thisSpace.uid;
+    var currentUser = firebase.auth().currentUser;
 
-  _navigateMyPosts(){
-    this.props.navigator.push({
-      name: 'MyPosts', // Matches route.name
-    })
-  }
-
-  _navigatePostInfo(self, item){
-    console.log(item)
-    self.props.navigator.push({
-      name: 'PostInfo', // Matches route.name
-      item: item
-    })
-  }
-
-  _navigateMyMapView(){
-    this.props.navigator.push({
-      name: 'MyMapView', // Matches route.name
-    })
-  }
-
-  _navigateMyCheckedSpace(){
-    this.props.navigator.push({
-      name: 'MyCheckedSpace', // Matches route.name
-    })
+    firebase.database().ref('users/' + currentUser.uid).once("value").then(function(snapshot){
+      var checkedIn = snapshot.val().checkedIn;
+      // console.log(snapshot.val());
+      console.log(checkedIn);
+      if(checkedIn){
+        firebase.database().ref ('listings/' +postID).update({available : true}, function (){
+          firebase.database().ref('users/' + currentUser.uid ).update({
+            checkedIn : false, checkedSpace : false
+          }, self._navigateBack())
+        });
+      } else {
+        alert("you are not checked into a spot yet");
+      }
+    });
   }
 
 
-  getTestData() {
-   fetch('https://space-ucsc.herokuapp.com/viewList',)
-     .then((response) => response.json())
-     .then((responseJson) => {
-       //console.log("GET /test : ", responseJson.code);
-       //console.log(JSON.stringify(responseJson.spaceListing, null, 3));
-       this.setState({
-         spinnerState: false,
-         dataSource : responseJson.spaceListing,
-       });
-       responseJson.code;
-     })
-     .catch((error) => {
-       console.error(error);
-     });
- }
 
 
-  mixins: [TimerMixin]
-  componentDidMount(){
-    this.getTestData();
-    this.timer = setInterval( () => {
-      this.getTestData();
-    }, 3000)
-  }
-  componentWillUnmount() {
-    clearInterval(this.timer);
+  _navigateBack(){
+    this.props.navigator.pop();
   }
 
+  componentWillMount(){
+    var self = this;
+    var currentUser = firebase.auth().currentUser;
+    firebase.database().ref('users/' + currentUser.uid).once("value").then(function(snapshot){
+      let checked = snapshot.val().checkedSpace;
+      console.log("checkedSpace", checked);
+      firebase.database().ref('listings/'+ checked).once("value").then(function(snapshot){
+        console.log("checkedSpace", snapshot.val())
+        self.setState({thisSpace: snapshot.val()})
+      })
+  })
+}
 
  render() {
    return (
-
       <Container style={{backgroundColor: 'white'}}>
       <Header style={{backgroundColor: '#e74c3c'}}>
-        <Button transparent>
-          <Icon name='navicon' size={20} color='white'/>
-        </Button>
+      <Button transparent onPress={() => this._navigateBack()}>
+          <Icon name='ios-arrow-back' />
+      </Button>
         <Title>SPACE</Title>
       </Header>
         <Content>
+        <Text>{this.state.thisSpace.address}</Text>
+        <Text>{this.state.thisSpace.city}</Text>
+        <Text>{this.state.thisSpace.state}</Text>
+        <Text>{this.state.thisSpace.price}</Text>
+        <Text>{this.state.thisSpace.poster}</Text>
+        <Button onPress ={()=> {this.checkOut()}}>Checkout of this spot</Button>
+
          </Content>
-
-
     </Container>
 
    );

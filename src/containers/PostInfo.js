@@ -13,7 +13,6 @@ export default class PostInfo extends Component {
 
   _navigateBack(){
   this.props.navigator.pop();
-
 }
 
   componentWillMount(){
@@ -36,9 +35,21 @@ export default class PostInfo extends Component {
   checkIn(){
     var self = this;
     var postID = self.props.route.item.uid;
-    // console.log(postID);
-    firebase.database().ref ('listings/' +postID).update({available : false}, function (){
-      self._navigateBack();
+    var currentUser = firebase.auth().currentUser;
+
+    firebase.database().ref('users/' + currentUser.uid).once("value").then(function(snapshot){
+      var checkedIn = snapshot.val().checkedIn;
+      // console.log(snapshot.val());
+      console.log(checkedIn);
+      if(!checkedIn){
+        firebase.database().ref ('listings/' +postID).update({available : false}, function (){
+          firebase.database().ref('users/' + currentUser.uid ).update({
+            checkedIn : true, checkedSpace : postID
+          }, self._navigateBack())
+        });
+      } else {
+        alert("you are checked into a spot already");
+      }
     });
   }
 
@@ -56,7 +67,6 @@ export default class PostInfo extends Component {
                 <Text> Posted by {this.props.route.item.poster}.</Text>
                 <Text> They are charging ${this.props.route.item.price}.</Text>
                 <Text> Do you want a {this.props.route.item.type}?</Text>
-                <Text> Up for grabs?  {this.props.route.item.available}</Text>
                 <Button disabled={!this.props.route.item.available} onPress={() => this.checkIn()}>
                 Check into this parking space
                 </Button>
