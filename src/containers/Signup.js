@@ -2,8 +2,6 @@
 Signup page creates a new account on firebase
 Can navigate to MyListView
 Can navigate to login
-
-
 TODO
 Some of the error messages crash the app
 */
