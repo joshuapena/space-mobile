@@ -6,7 +6,7 @@ View a list of all publicly viewable rides
 import React, {Component} from 'react';
 
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
-import {Container, Content, Thumbnail, Button, Header, Spinner, Title, List, ListItem, Footer, FooterTab} from 'native-base';
+import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, Title, List, ListItem, Footer, FooterTab} from 'native-base';
 
 const TimerMixin =  require('react-timer-mixin');
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -115,8 +115,10 @@ export default class MyListView extends Component {
           <List dataArray={this.state.dataSource}
               renderRow={(item) =>
                 <ListItem button onPress={() => {this._navigatePostInfo(this, item)}}>
-                <Text>My price is ${item.price} for a {item.type}. {"\n"}It is at {item.address} </Text>
-                {item.available ? <Icon name="sign-in" style={{color: 'green'}}/> : <Icon name="car" style={{color: '#e74c3c'}}/> }
+                  <Card>
+                      <Text style={{fontSize: 20}}>My price is ${item.price} for a {item.type}. {"\n"}It is at {item.address} </Text>
+                      {item.available ? <Icon name="sign-in" color= 'green' size={20}/> : <Icon name="car" color='#e74c3c' size= {20}/> }
+                  </Card>
                 </ListItem>
 
                 }>
