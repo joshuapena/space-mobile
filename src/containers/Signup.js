@@ -79,7 +79,8 @@ export default class Signup extends Component {
             firebase.database().ref ('users/' + currentUser.uid).set ({
                 email: currentUser.email,
                 username : username,
-                checkedIn : false
+                checkedIn : false,
+                checkedSpace : false
             });
             switchPage(destination);
         });

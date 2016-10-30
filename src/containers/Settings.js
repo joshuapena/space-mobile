@@ -5,16 +5,6 @@ import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native'
 
 var firebase = require ('firebase');
 
-/*
-auth/invalid-email
-    Thrown if the email address is not valid.
-auth/user-disabled
-    Thrown if the user corresponding to the given email has been disabled.
-auth/user-not-found
-    Thrown if there is no user corresponding to the given email.
-auth/wrong-password
-*/
-
 export default class Settings extends Component {
     constructor (props) {
         super (props);
@@ -27,10 +17,11 @@ export default class Settings extends Component {
 
     logOutUser(switchPage, destination) {
         firebase.auth().signOut().then(function() {
-            alert ('logged out');
-            switchPage(destination);
+
+             alert ('logged out');
+            // switchPage(destination);
         }, function (error) {
-            alert ('error logging out');
+            // alert ('error logging out');
         });
     }
 
@@ -46,9 +37,22 @@ export default class Settings extends Component {
               <Content>
                   <View >
                       <Button onPress = {() => {this.logOutUser(
-                        this.props.navigator.resetTo,{name: 'Login'})}}>
+                        this.props.navigator.resetTo,{name: 'SpaceBootup'})}}>
                           Log out
                       </Button>
+
+                      <TextInput
+                          placeholder = "Change your username"
+                          onChangeText = {(username) => this.setState ({username})}
+                          value = {this.state.username}
+                      />
+
+                      <Button >
+                      Change username
+                      </Button>
+
+
+
                   </View>
               </Content>
             </Container>

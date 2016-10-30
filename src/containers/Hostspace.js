@@ -18,6 +18,7 @@ export default class Hostspace extends Component {
   this.props.navigator.pop();
 }
 
+
 enableButton(){
   console.log("edit text");
   let myPrice=this.state.price;
@@ -32,6 +33,7 @@ enableButton(){
     this.setState({fieldsEmpty : true});
   }
 }
+
 
   _handlePress() {
     var self = this;
@@ -64,7 +66,7 @@ enableButton(){
           state: myState,
           type : myType,
           poster: myUsername,
-          available : "true"
+          available : true
         }
 
       if (myType && myAddress && myPrice && myCity && myState){ //Checks if no fields empty
@@ -73,6 +75,7 @@ enableButton(){
       } else{
         console.log("not saved to node");
         self.setState({hideButton : false});
+
       }
     });
   }
@@ -90,6 +93,7 @@ enableButton(){
       firebase.database().ref ('listings/' + newPost.key).update({uid : newPost.key}, function (){
         self._navigateBack();
       });
+
   });
  }
 
@@ -152,8 +156,9 @@ enableButton(){
                   }}
                     value = {this.state.state}/>
 
-                <Button disabled={this.state.hideButton} style={styles.options}
+                <Button  style={styles.options}
                   onPress={() => { this._handlePress(); }}>
+
                   Submit New Space
                 </Button>
 

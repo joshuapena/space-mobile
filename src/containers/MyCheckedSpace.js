@@ -19,7 +19,8 @@ export default class MyCheckedSpace extends Component {
     super(props);
     this.state = {
         spinnerState : true,
-        thisSpace : {}
+        thisSpace : {},
+        dataExists : false
       };
     }
 
@@ -60,6 +61,16 @@ export default class MyCheckedSpace extends Component {
       let checked = snapshot.val().checkedSpace;
       console.log("checkedSpace", checked);
       firebase.database().ref('listings/'+ checked).once("value").then(function(snapshot){
+        if(!snapshot.val()){
+          console.log("no data");
+          self.setState({
+            dataExists: false,
+          });
+        } else{
+          self.setState({
+            dataExists: true,
+          });
+        }
         console.log("checkedSpace", snapshot.val())
         self.setState({thisSpace: snapshot.val()})
       })
@@ -76,12 +87,24 @@ export default class MyCheckedSpace extends Component {
         <Title>SPACE</Title>
       </Header>
         <Content>
-        <Text>{this.state.thisSpace.address}</Text>
-        <Text>{this.state.thisSpace.city}</Text>
-        <Text>{this.state.thisSpace.state}</Text>
-        <Text>{this.state.thisSpace.price}</Text>
-        <Text>{this.state.thisSpace.poster}</Text>
-        <Button onPress ={()=> {this.checkOut()}}>Checkout of this spot</Button>
+
+        {renderIf(!this.state.dataExists)(
+          <Text> There is no data</Text>
+        )}
+
+        {renderIf(this.state.dataExists)(
+          <View>
+          <Text>{this.state.thisSpace.address}</Text>
+          <Text>{this.state.thisSpace.city}</Text>
+          <Text>{this.state.thisSpace.state}</Text>
+          <Text>{this.state.thisSpace.price}</Text>
+          <Text>{this.state.thisSpace.poster}</Text>
+          <Button onPress ={()=> {this.checkOut()}}>Checkout of this spot</Button>
+          </View>
+        )}
+
+
+
 
          </Content>
     </Container>

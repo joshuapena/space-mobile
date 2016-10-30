@@ -14,6 +14,7 @@ import MyMapView from './containers/MyMapView';
 import MyCheckedSpace from './containers/MyCheckedSpace';
 import PostInfo from './containers/PostInfo';
 import EditPost from './containers/EditPost';
+import SpaceBootup from './containers/SpaceBootup';
 
 var firebase = require ('firebase');
 var config = {
@@ -69,17 +70,21 @@ export default function native (platform) {
       if(route.name == 'MyMapView'){
         return <MyMapView navigator={navigator} />
       }
+      if(route.name == 'SpaceBootup'){
+        return <SpaceBootup navigator={navigator} />
+      }
     },
     render(){
       return(
         <View style={{flex: 1}}>
           <Navigator
-          initialRoute={{'name' : 'Login'}}
+          initialRoute={{'name' : 'SpaceBootup'}}
           renderScene={ this.renderScene } />
         </View>
       )
     }
   });
+
   const styles = StyleSheet.create({
     garage: {
       flex: 1,

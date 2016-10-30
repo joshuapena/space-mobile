@@ -53,6 +53,7 @@ export default class PostInfo extends Component {
     });
   }
 
+
   render() {
       return (
           <Container style={{backgroundColor: 'white'}}>
@@ -70,6 +71,7 @@ export default class PostInfo extends Component {
                 <Button disabled={!this.props.route.item.available} onPress={() => this.checkIn()}>
                 Check into this parking space
                 </Button>
+
                 </View>
             </Content>
           </Container>

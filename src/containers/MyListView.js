@@ -42,13 +42,16 @@ export default class MyListView extends Component {
   }
 
   _navigateMyPosts(){
+    clearInterval(this.timer);
     this.props.navigator.push({
       name: 'MyPosts', // Matches route.name
     })
   }
 
   _navigatePostInfo(self, item){
-    console.log(item)
+    // console.log("the post you clicked", Object.keys.(item[0]));
+    // console.log("the post id ", item.keys)
+
     self.props.navigator.push({
       name: 'PostInfo', // Matches route.name
       item: item
@@ -74,10 +77,12 @@ export default class MyListView extends Component {
      .then((responseJson) => {
        //console.log("GET /test : ", responseJson.code);
        //console.log(JSON.stringify(responseJson.spaceListing, null, 3));
+      //  console.log("this is the responseJson", responseJson.spaceListing);
        this.setState({
          spinnerState: false,
-         dataSource : responseJson.spaceListing,
+         dataSource :  responseJson.spaceListing,
        });
+      //  console.log("this is the dataSource", this.state.dataSource);
        responseJson.code;
      })
      .catch((error) => {
@@ -112,6 +117,8 @@ export default class MyListView extends Component {
         {renderIf(this.state.spinnerState)(
           <Spinner color='#e74c3c' />
         )}
+
+        {renderIf(!this.state.spinnerState)(
           <List dataArray={this.state.dataSource}
               renderRow={(item) =>
                 <ListItem button onPress={() => {this._navigatePostInfo(this, item)}}>
@@ -120,9 +127,11 @@ export default class MyListView extends Component {
                       {item.available ? <Icon name="sign-in" color= 'green' size={20}/> : <Icon name="car" color='#e74c3c' size= {20}/> }
                   </Card>
                 </ListItem>
-
                 }>
           </List>
+          )}
+
+
         </Content>
 
         <View>

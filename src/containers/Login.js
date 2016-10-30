@@ -23,33 +23,33 @@ export default class Login extends Component {
     }
 
 
-    componentWillMount(){
-
-
-      var nav = this.props.navigator;
-      BackAndroid.addEventListener('hardwareBackPress', () => {
-        if (nav.getCurrentRoutes().length === 1  ) {
-           return false;
-        }
-        nav.pop();
-        return true;
-      });
-      var self = this;
-
-      //Checks if user is already logged in
-      firebase.auth().onAuthStateChanged(function(user) {
-        // goToPage(user)
-        if (user) {
-          console.log("user is signed in at login screen");
-          console.log(user.email);
-          self.props.navigator.push({name: "MyListView"});
-          change = true;
-        } else {
-          console.log("no one is signed in");
-          return;
-        }
-      });
-    }
+    // componentWillMount(){
+    //
+    //
+    //   var nav = this.props.navigator;
+    //   BackAndroid.addEventListener('hardwareBackPress', () => {
+    //     if (nav.getCurrentRoutes().length === 1  ) {
+    //        return false;
+    //     }
+    //     nav.pop();
+    //     return true;
+    //   });
+    //   var self = this;
+    //
+    //   //Checks if user is already logged in
+    //   firebase.auth().onAuthStateChanged(function(user) {
+    //     // goToPage(user)
+    //     if (user) {
+    //       console.log("user is signed in at login screen");
+    //       console.log(user.email);
+    //       self.props.navigator.push({name: "MyListView"});
+    //       change = true;
+    //     } else {
+    //       console.log("no one is signed in");
+    //       return;
+    //     }
+    //   });
+    // }
 
 
     logInOnPress(switchPage, destination) {
