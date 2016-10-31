@@ -5,7 +5,12 @@ import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native'
 export default class MyMapView extends Component {
 
   state = {
-    initialPosition: 'unknown',
+    initialPosition: {
+      coords: {
+        latitude:  36.9914,
+        longitude: 122.0609        
+      }
+    },
     lastPosition: 'unknown',
   };
 
@@ -14,9 +19,8 @@ export default class MyMapView extends Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        var initialPosition = JSON.stringify(position);
+        var initialPosition = position;
         this.setState({initialPosition});
-        console.log(this.state.initialPosition);
       },
       (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
@@ -44,15 +48,18 @@ export default class MyMapView extends Component {
   getLat(){
     return this.state.initialPosition.coords.latitude;
   }
+  getLong(){
+    return this.state.initialPosition.coords.longitude;
+  }
 
 	render(){
 		return (
 		  <MapView 
          initialRegion={{
-           latitude: 37.78825,
-           longitude: -122.4324,
+           latitude: this.getLat(),
+           longitude: this.getLong(),
            latitudeDelta: 0.0922,
-           longitudeDelta: 0.0421,
+           longitudeDelta: 0.0421
          }}
          style = {{flex : 1}}
        	  />
