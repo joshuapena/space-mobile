@@ -9,6 +9,9 @@ import {Navigator, StyleSheet, Text, TextInput, View, Image, BackAndroid} from '
 import Button from 'react-native-button';
 const dismissKeyboard = require('dismissKeyboard')
 
+// test
+import SweetAlert from 'sweetalert-react';
+
 var firebase = require ('firebase');
 
 
@@ -72,6 +75,7 @@ export default class Login extends Component {
     }
 
     render() {
+
         return (
             <View style={{flex: 1, backgroundColor: 'white'}}>
                 <Text style = {styles.welcome}>
@@ -94,9 +98,18 @@ export default class Login extends Component {
                       this.props.navigator.replace, {name: 'MyListView'}
                     )}}
                 />
-                <Button onPress = {() => {this.logInOnPress(
-                  this.props.navigator.replace, {name: 'MyListView'}
-                )}}>
+                <SweetAlert
+                        show={this.state.show}
+                        title="Demo"
+                        text="SweetAlert in React"
+                        onConfirm={() => this.setState({ show: false })}
+                      />
+                <Button onPress = {() => {
+                  this.setState({ show: true })
+                  this.logInOnPress(
+                    this.props.navigator.push, {name: 'MyListView'}
+                  )
+                }}>
                     Log in
                 </Button>
                 <Button onPress = {() => this._navigateCreate() }>
