@@ -5,7 +5,8 @@ View a list of all publicly viewable rides
 
 import React, {Component} from 'react';
 
-import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
+import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, TouchableHighlight, Modal,
+        TouchableOpacity,DrawerLayoutAndroid, ToolbarAndroid} from 'react-native';
 import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, Title, List, ListItem, Footer, FooterTab} from 'native-base';
 
 const TimerMixin =  require('react-timer-mixin');
@@ -16,6 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 var renderIf = require('render-if');
 
+var DrawerLayout = require('react-native-drawer-layout');
 
 export default class MyListView extends Component {
 
@@ -104,21 +106,36 @@ export default class MyListView extends Component {
 
 
  render() {
+  var navigationView = (
+      <View style={{flex: 1, backgroundColor: 'white'}}>
+        <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}> How to implement this?</Text>
+          <List>
+              <Button small onPress={() => {this._navigateSignUp()}}> Create New Space</Button>
+              <Button small onPress={() => {this._navigateSettings()}}> User Settings</Button>
+              <Button small onPress={() => {this._navigateMyPosts()}}> My Postings</Button>
+              <Button small onPress = {() => {this._navigateMyMapView()}}> Map View </Button>
+              <Button small onPress = {() => {this._navigateMyCheckedSpace()}}>My Space</Button>
+           
+          </List>
+      </View>
+    );
    return (
+      <View style={styles.containerToolbar}>
+        <DrawerLayoutAndroid
+          drawerWidth={200}
+          drawerPosition={DrawerLayoutAndroid.positions.Left}
+          ref = {'DRAWER'}
+          renderNavigationView={() => navigationView}>
 
-      <Container style={{backgroundColor: 'white'}}>
-      <Header style={{backgroundColor: '#e74c3c'}}>
-        <Button transparent>
-          <Icon name="navicon" />
-        </Button>
-        <Title>SPACE</Title>
-      </Header>
-        <Content>
-        {renderIf(this.state.spinnerState)(
-          <Spinner color='#e74c3c' />
-        )}
+          <Header style={{backgroundColor: '#e74c3c'}}>
+            <Button transparent>
+              <Icon name="navicon" />
+            </Button>
+            <Title>SPACE</Title>
+          </Header>
 
-        {renderIf(!this.state.spinnerState)(
+        
+
           <List dataArray={this.state.dataSource}
               renderRow={(item) =>
                 <ListItem button onPress={() => {this._navigatePostInfo(this, item)}}>
@@ -129,19 +146,9 @@ export default class MyListView extends Component {
                 </ListItem>
                 }>
           </List>
-          )}
-
-
-        </Content>
-
-        <View>
-          <Button small onPress={() => {this._navigateSignUp()}}> Create New Space</Button>
-          <Button small onPress={() => {this._navigateSettings()}}> User Settings</Button>
-          <Button small onPress={() => {this._navigateMyPosts()}}> My Postings</Button>
-          <Button small onPress = {() => {this._navigateMyMapView()}}> Map View </Button>
-          <Button small onPress = {() => {this._navigateMyCheckedSpace()}}>My Space</Button>
-        </View>
-    </Container>
+            
+        </DrawerLayoutAndroid>
+     </View>
 
    );
  }
@@ -149,15 +156,15 @@ export default class MyListView extends Component {
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   welcome: {
     fontSize: 50,
     textAlign: 'center',
     margin: 10,
     marginTop: 100,
+  },
+  containerToolbar: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
   },
 });
