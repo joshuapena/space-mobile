@@ -1,6 +1,12 @@
 import MapView from 'react-native-maps';
 import React, {Component} from 'react';
-import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native';
+import {Navigator, StyleSheet, Text, TextInput, View, Image, TouchableHighlight, Modal,
+        TouchableOpacity,DrawerLayoutAndroid, ToolbarAndroid} from 'react-native';
+import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, Title, List, Icon, 
+        ListItem, Footer, FooterTab, InputGroup, Input} from 'native-base';
+
+
+var DrawerLayout = require('react-native-drawer-layout');
 
 export default class MyMapView extends Component {
 
@@ -53,16 +59,56 @@ export default class MyMapView extends Component {
   }
 
 	render(){
+    var navigationView = (
+      <View style={{flex: 1, backgroundColor: 'white'}}>
+        <Text style={{margin: 10, fontSize: 20, textAlign: 'center'}}> SPACE </Text>
+          
+      </View>
+    );
 		return (
-		  <MapView 
-         initialRegion={{
-           latitude: this.getLat(),
-           longitude: this.getLong(),
-           latitudeDelta: 0.0922,
-           longitudeDelta: 0.0421
-         }}
-         style = {{flex : 1}}
-       	  />
-			)
+      <View style={styles.containerToolbar}>
+        <DrawerLayoutAndroid
+          drawerWidth={200}
+          drawerPosition={DrawerLayoutAndroid.positions.Left}
+          ref = {'DRAWER'}
+          renderNavigationView={() => navigationView}>
+
+          <Header style={{backgroundColor: '#e74c3c'}}>
+            <Button transparent onPress={() => this. _navigateBack()}>
+              <Icon name='ios-arrow-back' />
+            </Button>
+            <Title> SPACE MAP</Title>
+          </Header>
+          
+          <InputGroup borderType='regular' >
+            <Input placeholder='Type your location here'/>
+          </InputGroup>
+		      
+          <MapView 
+            initialRegion={{
+              latitude: this.getLat(),
+              longitude: this.getLong(),
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421
+            }}
+            style = {{flex : 1}}
+          />
+        </DrawerLayoutAndroid>
+     </View>
+			);
 	}
 }
+
+const styles = StyleSheet.create({
+  welcome: {
+    fontSize: 50,
+    textAlign: 'center',
+    margin: 10,
+    marginTop: 100,
+  },
+  containerToolbar: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+  },
+});

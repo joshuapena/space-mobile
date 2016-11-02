@@ -108,7 +108,7 @@ export default class MyListView extends Component {
  render() {
   var navigationView = (
       <View style={{flex: 1, backgroundColor: 'white'}}>
-        <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}> How to implement this?</Text>
+        <Text style={{margin: 10, fontSize: 50, textAlign: 'center'}}> SPACE </Text>
           <List>
               <Button small onPress={() => {this._navigateSignUp()}}> Create New Space</Button>
               <Button small onPress={() => {this._navigateSettings()}}> User Settings</Button>
