@@ -107,8 +107,8 @@ export default class MyListView extends Component {
 
  render() {
   var navigationView = (
-      <View style={{flex: 1, backgroundColor: 'white'}}>
-        <Text style={{margin: 10, fontSize: 50, textAlign: 'center'}}> SPACE </Text>
+      <View style={{flex: 1, backgroundColor: '#25383C'}}>
+        <Text style={{margin: 10, fontSize: 50, textAlign: 'center', color: 'white'}}> SPACE </Text>
           <List>
               <Button small onPress={() => {this._navigateSignUp()}}> Create New Space</Button>
               <Button small onPress={() => {this._navigateSettings()}}> User Settings</Button>
@@ -128,7 +128,7 @@ export default class MyListView extends Component {
           renderNavigationView={() => navigationView}>
 
           <Header style={{backgroundColor: '#e74c3c'}}>
-            <Button transparent>
+            <Button transparent onPress={() => this.refs['DRAWER'].openDrawer()}>
               <Icon name="navicon" />
             </Button>
             <Title>SPACE</Title>
