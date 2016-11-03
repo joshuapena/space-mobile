@@ -34,7 +34,7 @@ export default class PostInfo extends Component {
     });
   }
 
-  getPostLocation (fn) {
+  getPostLocation() {
     var address = this.props.route.item.address;
     var city = this.props.route.item.city;
     var state = this.props.route.item.state;
@@ -54,7 +54,6 @@ export default class PostInfo extends Component {
         console.log ('LNG : ' + data.results[0].geometry.location.lng);
         lat = data.results[0].geometry.location.lat;
         lng = data.results[0].geometry.location.lng;
-        return fn (data);
       })
     }).catch (function (err) {
       console.log ('fetch error');
@@ -88,6 +87,7 @@ export default class PostInfo extends Component {
 
 
   render() {
+    this.getPostLocation();
     alert (lat + "      " + lng);
       return (
           <Container style={{backgroundColor: 'white'}}>
