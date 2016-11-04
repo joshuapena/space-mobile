@@ -11,6 +11,7 @@ import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, 
 
 const TimerMixin =  require('react-timer-mixin');
 import Icon from 'react-native-vector-icons/FontAwesome';
+var firebase = require ('firebase');
 // const xIcon = (<Icon name="times" size={30} color="#100" />);
 // const navIcon = (<Icon name="navicon" size={30} color="#123123"/>);
 // const back = (<Icon name="ios-arrow-back" size={30} color="#fff"/>);
@@ -53,10 +54,18 @@ export default class MyListView extends Component {
   _navigatePostInfo(self, item){
     // console.log("the post you clicked", Object.keys.(item[0]));
     // console.log("the post id ", item.keys)
-
+    var lat;
+    var lng;
+    var ref = firebase.database().ref("listings/" + item.uid);
+    ref.once("value").then(function(snapshot){
+      lat = snapshot.lat;
+      lng = snapshot.lng;
+    });
     self.props.navigator.push({
       name: 'PostInfo', // Matches route.name
-      item: item
+      item: item,
+      lat: lat,
+      lng: lng
     })
   }
 

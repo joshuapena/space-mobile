@@ -74,8 +74,8 @@ export default class PostInfo extends Component {
                 </Button>
                 <MapView
                 initialRegion={{
-                  latitude: this.state.lat,
-                  longitude: this.state.lng,
+                  latitude: this.props.route.item.lat,
+                  longitude: this.props.route.item.lng,
                   latitudeDelta: 0.0922,
                   longitudeDelta: 0.0421,
                 }}
