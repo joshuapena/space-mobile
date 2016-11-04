@@ -5,17 +5,10 @@ import MapView from 'react-native-maps';
 
 var firebase = require('firebase');
 
-var lat = 0;
-var lng = 0;
-
 
 export default class PostInfo extends Component {
   constructor (props) {
       super (props);
-      this.getPostLocation (function (data) {
-        lat = data.results[0].geometry.location.lat;
-        lng = data.results[0].geometry.location.lng; 
-      });
       this.state = {text : 'this text will be updated by typing', lat : 0, lng : 0};
   }
 
@@ -34,35 +27,8 @@ export default class PostInfo extends Component {
     });
   }
 
-  getPostLocation() {
-    var address = this.props.route.item.address;
-    var city = this.props.route.item.city;
-    var state = this.props.route.item.state;
-    var regex = new RegExp ('\\s+', 'g');
-    var googleAddress = address.replace (regex, "+") + ',+' + city.replace (regex, '+') + ',+' + state;
-    var googleURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + googleAddress + '&key=AIzaSyB57uuwSaQA6dFY65Xj8tRAmubfAa27hYg';
-    console.log (googleURL);
-    fetch (googleURL).then (function (response) {
-      if (response.status !== 200) {
-        console.log ('error with fetch call, code : ' + response.status);
-        return;
-      }
-      response.json().then (function (data) {
-        console.log (data.status);
-        console.log (data.results[0].formatted_address);
-        console.log ('LAT : ' + data.results[0].geometry.location.lat);
-        console.log ('LNG : ' + data.results[0].geometry.location.lng);
-        lat = data.results[0].geometry.location.lat;
-        lng = data.results[0].geometry.location.lng;
-      })
-    }).catch (function (err) {
-      console.log ('fetch error');
-    });
-  }
-
   componentDidMount(){
     console.log(this.props.route.item);
-
   }
 
   checkIn(){
@@ -87,8 +53,6 @@ export default class PostInfo extends Component {
 
 
   render() {
-    this.getPostLocation();
-    alert (lat + "      " + lng);
       return (
           <Container style={{backgroundColor: 'white'}}>
           <Header style={{backgroundColor: '#e74c3c'}}>
@@ -110,8 +74,8 @@ export default class PostInfo extends Component {
                 </Button>
                 <MapView
                 initialRegion={{
-                  latitude: lat,
-                  longitude: lng,
+                  latitude: this.state.lat,
+                  longitude: this.state.lng,
                   latitudeDelta: 0.0922,
                   longitudeDelta: 0.0421,
                 }}

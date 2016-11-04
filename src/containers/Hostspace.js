@@ -26,6 +26,8 @@ enableButton(){
   let myType=this.state.type;
   let myCity = this.state.city;
   let myState = this.state.state;
+  //let mLat = this.state.lat;
+  //let mLong = this.state.long;
   let myUsername = "";
   if (myType && myAddress && myPrice && myCity && myState){ //Checks if no fields empty
     this.setState({fieldsEmpty : false});
@@ -46,6 +48,8 @@ enableButton(){
     let myType=this.state.type;
     let myCity = this.state.city;
     let myState = this.state.state;
+    //let mLat = this.state.lat;
+    //let mLong = this.state.long;
     let myUsername = "";
 
     let currentUser = firebase.auth().currentUser;
@@ -60,27 +64,74 @@ enableButton(){
       // console.log("this is a key", key);
 
       var myJson = {
-          price: myPrice,
-          address: myAddress,
-          city: myCity,
-          state: myState,
-          type : myType,
-          poster: myUsername,
-          available : true
-        }
-
-      if (myType && myAddress && myPrice && myCity && myState){ //Checks if no fields empty
-        console.log(myJson.body);
-        self.postTestData(myJson);
-      } else{
-        console.log("not saved to node");
-        self.setState({hideButton : false});
-
+        price: myPrice,
+        address: myAddress,
+        city: myCity,
+        state: myState,
+        type : myType,
+        poster: myUsername,
+        available : true
       }
+
+      var regex = new RegExp ('\\s+', 'g');
+      var googleAddress = myAddress.replace (regex, "+") + ',+' + myCity.replace (regex, '+') + ',+' + myState;
+      var googleURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + googleAddress + '&key=AIzaSyB57uuwSaQA6dFY65Xj8tRAmubfAa27hYg';
+      console.log (googleURL);
+      /////////////////////////
+      fetch (googleURL).then (function (response) {
+        if (response.status !== 200) {
+          alert ('error with fetch call, code : ' + response.status);
+          return;
+        }
+        response.json().then (function (data) {
+          if (data.status == 'OK') {
+            if (data.results[0].geometry.location_type != 'ROOFTOP') {
+              alert ('Invalid Address -- somewhat bogus address');
+            } else {
+              if (myType && myAddress && myPrice && myCity && myState) { //Checks if no fields empty
+                console.log(myJson.body);
+                self.postTestData(myJson, data);
+              } else {
+                console.log("not saved to node");
+                self.setState({hideButton : false});
+              }
+            }
+          } else {
+            alert ('Invalid Address -- completely bogus address');
+          }
+
+        })
+      }).catch (function (err) {
+        console.log ('fetch error');
+      });
+      /////////////////////////
     });
   }
 
-  postTestData(myPost) {
+  /*
+    getPostLocation() {
+    var address = this.props.route.item.address;
+    var city = this.props.route.item.city;
+    var state = this.props.route.item.state;
+    var regex = new RegExp ('\\s+', 'g');
+    var googleAddress = address.replace (regex, "+") + ',+' + city.replace (regex, '+') + ',+' + state;
+    var googleURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + googleAddress + '&key=AIzaSyB57uuwSaQA6dFY65Xj8tRAmubfAa27hYg';
+    console.log (googleURL);
+    fetch (googleURL).then (function (response) {
+      if (response.status !== 200) {
+        console.log ('error with fetch call, code : ' + response.status);
+        return;
+      }
+      response.json().then (function (data) {
+        lat = data.results[0].geometry.location.lat;
+        lng = data.results[0].geometry.location.lng;
+      })
+    }).catch (function (err) {
+      console.log ('fetch error');
+    });
+  }
+  */
+  postTestData(myPost, locationData) {
     var self = this;
     console.log("posting data");
     var currentUser = firebase.auth().currentUser;
@@ -90,15 +141,18 @@ enableButton(){
       var updateObj = {};
       updateObj[newPost.key] = true;
       firebase.database().ref ('users/' + currentUser.uid +'/listing').update(updateObj);
+      var lat_ = locationData.results[0].geometry.location.lat;
+      var lng_ = locationData.results[0].geometry.location.lng;
+      firebase.database().ref ('listings/' + newPost.key).update({lat : lat_, lng : lng_});
       firebase.database().ref ('listings/' + newPost.key).update({uid : newPost.key}, function (){
         self._navigateBack();
       });
-
-  });
- }
+    });
+  }
 
 
   render(){
+
     return(
       <Container style={{backgroundColor: 'white'}}>
         <Header style={{backgroundColor: '#e74c3c'}}>
