@@ -23,9 +23,9 @@ export default class Hostspace extends Component {
 
 enableButton(){
   console.log("edit text");
-  let myPrice=this.state.price;
-  let myAddress=this.state.address;
-  let myType=this.state.type;
+  let myPrice = this.state.price;
+  let myAddress = this.state.address;
+  let myType = this.state.type;
   let myCity = this.state.city;
   let myState = this.state.us_state;
   //let mLat = this.state.lat;
@@ -40,8 +40,8 @@ enableButton(){
 
 
   _handlePress() {
-    var self = this;
-    this.setState({hideButton : true});
+    this.setState({hideButton : true}); //Set submit to spinner 
+
     var self = this;
     console.log('Pressed!');
 
@@ -83,12 +83,14 @@ enableButton(){
       fetch (googleURL).then (function (response) {
         if (response.status !== 200) {
           alert ('error with fetch call, code : ' + response.status);
+          self.setState({hideButton : false});
           return;
         }
         response.json().then (function (data) {
           if (data.status == 'OK') {
             if (data.results[0].geometry.location_type != 'ROOFTOP') {
               alert ('Invalid Address -- somewhat bogus address');
+              self.setState({hideButton : false});
             } else {
               if (myType && myAddress && myPrice && myCity && myState) { //Checks if no fields empty
                 console.log(myJson.body);
@@ -100,6 +102,7 @@ enableButton(){
             }
           } else {
             alert ('Invalid Address -- completely bogus address');
+            self.setState({hideButton : false});
           }
 
         })
