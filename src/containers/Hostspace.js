@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TouchableHighlight, Slider, Picker, TextInput, View, Image} from 'react-native';
-import {Container, Content, Button, Thumbnail, Header, Icon, Title, List, ListItem, Footer, FooterTab } from 'native-base';
+import {Container, Content, Button, Thumbnail, Header,Spinner, Icon, Title, List, ListItem, Footer, FooterTab } from 'native-base';
 
 var firebase = require ('firebase');
 
@@ -11,7 +11,8 @@ export default class Hostspace extends Component {
     type : 'Garage',
     us_state : 'Alabama',
     price : 1,
-    hideButton: false
+    hideButton : false,
+    fieldsEmpty : true,
   };
   }
 
@@ -31,9 +32,9 @@ enableButton(){
   //let mLong = this.state.long;
   let myUsername = "";
   if (myType && myAddress && myPrice && myCity && myState){ //Checks if no fields empty
-    this.setState({fieldsEmpty : false});
+    this._handlePress();
   } else{
-    this.setState({fieldsEmpty : true});
+    alert ('please fill out all fields');
   }
 }
 
@@ -260,11 +261,11 @@ enableButton(){
                   <Picker.Item label="Wyoming"        value="Wyoming" />
                 </Picker>
 
-                <Button large block 
-                  onPress={() => { this._handlePress(); }}>
-                  Submit New Space
-                </Button>
-
+                  {this.state.hideButton ?
+                     <Spinner color='#e74c3c'/> :
+                     <Button large block 
+                       onPress={() => {this.enableButton(); }}> Submit New Space </Button>}
+          
               </View>
           </Content>
       </Container>
