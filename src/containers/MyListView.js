@@ -158,9 +158,13 @@ export default class MyListView extends Component {
               renderRow={(item) =>
                 <ListItem>
                   <Card>
-                    <Card backgroundColor='green'>
+                    {item.available ?
+                      <Card backgroundColor='green'>
                       <Text style={{fontSize: 20, color: 'white'}}> {item.address}</Text>
-                    </Card>
+                      </Card> :
+                      <Card backgroundColor='#e74c3c'>
+                      <Text style={{fontSize: 20, color: 'white'}}> {item.address}</Text>
+                      </Card>}
                     <CardItem button onPress={() => {this._navigatePostInfo(this, item)}}>
 
                       <Grid>
