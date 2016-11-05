@@ -7,7 +7,9 @@ import React, {Component} from 'react';
 
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, TouchableHighlight, Modal,
         TouchableOpacity,DrawerLayoutAndroid, ToolbarAndroid} from 'react-native';
-import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, Title, List, ListItem, Footer, FooterTab} from 'native-base';
+
+import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, Grid, Col,
+        Title, List, ListItem, Footer, FooterTab} from 'native-base';
 
 const TimerMixin =  require('react-timer-mixin');
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -20,6 +22,7 @@ var renderIf = require('render-if');
 
 var DrawerLayout = require('react-native-drawer-layout');
 
+
 export default class MyListView extends Component {
 
   constructor(props) {
@@ -28,7 +31,7 @@ export default class MyListView extends Component {
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
       this.state = {
         dataSource: ds.cloneWithRows([]),
-        spinnerState : true
+        spinnerState : true,
       };
     }
 
@@ -119,12 +122,18 @@ export default class MyListView extends Component {
       <View style={{flex: 1, backgroundColor: '#25383C'}}>
         <Text style={{margin: 10, fontSize: 50, textAlign: 'center', color: 'white'}}> SPACE </Text>
           <List>
-              <Button small onPress={() => {this._navigateSignUp()}}> Create New Space</Button>
-              <Button small onPress={() => {this._navigateSettings()}}> User Settings</Button>
-              <Button small onPress={() => {this._navigateMyPosts()}}> My Postings</Button>
-              <Button small onPress = {() => {this._navigateMyMapView()}}> Map View </Button>
-              <Button small onPress = {() => {this._navigateMyCheckedSpace()}}>My Space</Button>
-           
+              <ListItem>
+                <Button transparent large color='#3498db' onPress={() => {this._navigateSignUp()}}> Create Space </Button>
+              </ListItem>
+              <ListItem>
+                <Button transparent large color='#3498db'onPress={() => {this._navigateMyPosts()}}> My Postings </Button>
+              </ListItem>
+              <ListItem>
+                <Button transparent large color='#3498db' onPress={() => {this._navigateMyCheckedSpace()}}> My Space </Button>
+              </ListItem> 
+              <ListItem>
+                <Button transparent large color='#3498db' onPress={() => {this._navigateSettings()}}> Settings </Button>
+              </ListItem> 
           </List>
       </View>
     );
@@ -138,19 +147,42 @@ export default class MyListView extends Component {
 
           <Header style={{backgroundColor: '#e74c3c'}}>
             <Button transparent onPress={() => this.refs['DRAWER'].openDrawer()}>
-              <Icon name="navicon" />
+              <Icon name="navicon" size={20} color="white"/>
             </Button>
             <Title>SPACE</Title>
+            <Button transparent onPress={() => {this._navigateMyMapView()}}> Map View </Button>
           </Header>
 
         
-
           <List dataArray={this.state.dataSource}
               renderRow={(item) =>
-                <ListItem button onPress={() => {this._navigatePostInfo(this, item)}}>
+                <ListItem>
                   <Card>
-                      <Text style={{fontSize: 20}}>My price is ${item.price} for a {item.type}. {"\n"}It is at {item.address} </Text>
-                      {item.available ? <Icon name="sign-in" color= 'green' size={20}/> : <Icon name="car" color='#e74c3c' size= {20}/> }
+                    {item.available ?
+                      <Card backgroundColor='green'>
+                      <Text style={{fontSize: 20, color: 'white'}}> {item.address}</Text>
+                      </Card> :
+                      <Card backgroundColor='#e74c3c'>
+                      <Text style={{fontSize: 20, color: 'white'}}> {item.address}</Text>
+                      </Card>}
+                    <CardItem button onPress={() => {this._navigatePostInfo(this, item)}}>
+
+                      <Grid>
+                        <Col> 
+                          <Text style={{fontSize: 20}}>
+                            Price: ${item.price}{"\n"} 
+                            Type: {item.type}   {"\n"}  
+                          </Text>
+                        </Col>
+
+                        <Col alignItems='center'>
+                            {item.available ? 
+                            <Icon name="sign-in" color= 'green' size={50}/> :
+                            <Icon name="car" color='#e74c3c' size= {50}/> }
+                        </Col>
+                      </Grid>
+
+                    </CardItem>
                   </Card>
                 </ListItem>
                 }>
@@ -175,5 +207,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'stretch',
+    backgroundColor: 'white',
   },
 });
