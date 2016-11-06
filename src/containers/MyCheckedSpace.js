@@ -6,7 +6,8 @@ The space a user is currently checked into
 import React, {Component} from 'react';
 
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
-import {Container, Content, Thumbnail, Button, Header, Spinner, Title, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
+import {Container, Content, Thumbnail, Button, Header, Spinner, Title, Grid, Col, Row, 
+        List, ListItem, Footer, FooterTab, Icon } from 'native-base';
 
 
 var renderIf = require('render-if');
@@ -99,13 +100,9 @@ export default class MyCheckedSpace extends Component {
           <Text>{this.state.thisSpace.state}</Text>
           <Text>{this.state.thisSpace.price}</Text>
           <Text>{this.state.thisSpace.poster}</Text>
-          <Button onPress ={()=> {this.checkOut()}}>Checkout of this spot</Button>
+          <Button rounded large onPress ={()=> {this.checkOut()}}> Checkout </Button>
           </View>
         )}
-
-
-
-
          </Content>
     </Container>
 
