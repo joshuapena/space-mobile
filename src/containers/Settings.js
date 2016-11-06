@@ -35,13 +35,13 @@ export default class Settings extends Component {
               <Title>Settings</Title>
             </Header>
               <Content>
-                  <View>
+                  <View style={{margin:10}}>
                       <TextInput
                         placeholder = "Change your username"
                         onChangeText = {(username) => this.setState ({username})}
                         value = {this.state.username}
                       />
-                      <Button large block >
+                      <Button large block>
                         Change username
                       </Button>
                       <Button large block onPress = {() => {this.logOutUser(
