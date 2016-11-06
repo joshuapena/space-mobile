@@ -117,7 +117,7 @@ export default class Signup extends Component {
                 />
                 <Button onPress = {() => this.signUpOnPress(this.props.navigator.push,
                   {name: 'MyListView'})}
-                > sign up
+                > Sign up
                 </Button>
                 <Button onPress = {() => this._navigateBack()}>
                   Already have an account? Log in
