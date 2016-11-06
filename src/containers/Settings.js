@@ -35,23 +35,19 @@ export default class Settings extends Component {
               <Title>Settings</Title>
             </Header>
               <Content>
-                  <View >
-                      <Button onPress = {() => {this.logOutUser(
-                        this.props.navigator.resetTo,{name: 'SpaceBootup'})}}>
-                          Log out
-                      </Button>
-
+                  <View>
                       <TextInput
-                          placeholder = "Change your username"
-                          onChangeText = {(username) => this.setState ({username})}
-                          value = {this.state.username}
+                        placeholder = "Change your username"
+                        onChangeText = {(username) => this.setState ({username})}
+                        value = {this.state.username}
                       />
-
-                      <Button >
-                      Change username
+                      <Button large block >
+                        Change username
                       </Button>
-
-
+                      <Button large block onPress = {() => {this.logOutUser(
+                        this.props.navigator.resetTo,{name: 'SpaceBootup'})}}>
+                        Log out
+                      </Button>
 
                   </View>
               </Content>
