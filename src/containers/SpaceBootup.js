@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TouchableHighlight, Slider, Picker, TextInput, View, Image, BackAndroid} from 'react-native';
-import {Container, Content, Spinner } from 'native-base';
+import {Container, Content, Spinner} from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 var firebase = require('firebase');
 
@@ -47,7 +48,7 @@ export default class SpaceBootup extends Component {
           <Content>
               <View>
               <Text style={styles.welcome}>
-                Space
+                Sp<Icon name="rocket" size={30} color="#e74c3c"/>ce
               </Text>
               <Spinner color='#e74c3c'/>
               </View>
