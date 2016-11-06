@@ -86,10 +86,12 @@ export default class PostInfo extends Component {
         <Title>{this.props.route.item.address}</Title>
       </Header>
         <Content>
-            <View >
-              <Text> Posted by {this.props.route.item.poster}.</Text>
-              <Text> They are charging ${this.props.route.item.price}.</Text>
+            <View style={{margin:10}}>
+            <Card style={{paddingBottom:10}}>
+              <Text style={styles.info}> Posted by {this.props.route.item.poster}.</Text>
+              <Text> {this.props.route.item.poster} is asking ${this.props.route.item.price}.</Text>
               <Text> Do you want a {this.props.route.item.type}?</Text>
+            </Card>
             <Card>
               <CardItem>
                 <MapView
@@ -99,7 +101,7 @@ export default class PostInfo extends Component {
                   latitudeDelta: 0.0922,
                   longitudeDelta: 0.0421,
                 }}
-                style = {{height : 200}}
+                style = {{height : 300}}
                 >
                 <MapView.Marker
                 coordinate = {{latitude: this.props.route.item.lat, longitude: this.props.route.item.lng}}
@@ -112,13 +114,13 @@ export default class PostInfo extends Component {
             <Grid>
               <Row justifyContent='center'>
                   <Button large rounded disabled={!this.props.route.item.available} onPress={() => this.checkSpace()}>
-                    <Text style={{fontSize:20, color:'white'}}> Check In </Text>
+                    <Text style={styles.buttonText}> Check In </Text>
                   </Button>
                   <Button large rounded disabled={this.props.route.item.available} onPress={() => this.checkSpace()}>
-                    <Text style={{fontSize:20, color:'white'}}> Check Out </Text>
+                    <Text style={styles.buttonText}> Check Out </Text>
                   </Button> 
                   <Button large rounded onPress={() => this.forceUpdate()}>
-                    <Text style={{fontSize:20, color:'white'}}> Refresh </Text>
+                    <Text style={styles.buttonText}> Refresh </Text>
                   </Button>
               </Row>
             </Grid> 
@@ -130,3 +132,14 @@ export default class PostInfo extends Component {
       )
   }
 }
+
+const styles = StyleSheet.create({
+  info: {
+    color:'#3498db',
+    fontSize: 25,
+  },
+  buttonText: {
+    color:'white',
+    fontSize:20, 
+  },
+});
