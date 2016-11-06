@@ -164,7 +164,7 @@ enableButton(){
           <Button transparent onPress={() => this. _navigateBack()}>
               <Icon name='ios-arrow-back' />
           </Button>
-          <Title>Host a space</Title>
+          <Title>Host A Space</Title>
         </Header>
           <Content>
               <View>
