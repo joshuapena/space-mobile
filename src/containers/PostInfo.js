@@ -98,8 +98,8 @@ export default class PostInfo extends Component {
                 initialRegion={{
                   latitude: this.props.route.item.lat,
                   longitude: this.props.route.item.lng,
-                  latitudeDelta: 0.0922,
-                  longitudeDelta: 0.0421,
+                  latitudeDelta: 0.005,
+                  longitudeDelta: 0.005,
                 }}
                 style = {{height : 300}}
                 >
