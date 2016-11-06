@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, BackAndroid} from 'react-native';
-import {Container, Content, Thumbnail, Button, Header, Title, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
+import {Container, Content, Thumbnail, Button, Header, Title, Grid, Col, Row, Card, CardItem, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
 import MapView from 'react-native-maps';
 
 var firebase = require('firebase');
@@ -31,7 +31,7 @@ export default class PostInfo extends Component {
     console.log(this.props.route.item);
   }
 
-  checkIn(){
+  checkSpace(){
     var self = this;
     var postID = self.props.route.item.uid;
     var currentUser = firebase.auth().currentUser;
@@ -45,7 +45,15 @@ export default class PostInfo extends Component {
             checkedIn : true, checkedSpace : postID
           }, self._navigateBack())
         });
-      } else {
+      }
+      else if(checkedIn){
+      firebase.database().ref ('listings/' +postID).update({available : true}, function (){
+        firebase.database().ref('users/' + currentUser.uid ).update({
+          checkedIn : false, checkedSpace : false
+        }, self._navigateBack())
+      });
+      }
+      else {
         alert("you are checked into a spot already");
       }
     });
@@ -68,26 +76,22 @@ export default class PostInfo extends Component {
 +          />
 +          </MapView>
 */
-  render() {
-      return (
-          <Container style={{backgroundColor: 'white'}}>
-          <Header style={{backgroundColor: '#e74c3c'}}>
-            <Button transparent onPress={() => this._navigateBack()}>
-                <Icon name='ios-arrow-back' />
-            </Button>
-            <Title>{this.props.route.item.address}</Title>
-          </Header>
-            <Content>
-                <View >
-                <Text> Posted by {this.props.route.item.poster}.</Text>
-                <Text> They are charging ${this.props.route.item.price}.</Text>
-                <Text> Do you want a {this.props.route.item.type}?</Text>
-                <Button disabled={!this.props.route.item.available} onPress={() => this.checkIn()}>
-                Check into this parking space
-                </Button>
-                <Button onPress = {() => this.forceUpdate()}>
-                Refresh map
-                </Button>
+  render(){
+    return(
+      <Container style={{backgroundColor: 'white'}}>
+      <Header style={{backgroundColor: '#e74c3c'}}>
+        <Button transparent onPress={() => this._navigateBack()}>
+            <Icon name='ios-arrow-back' />
+        </Button>
+        <Title>{this.props.route.item.address}</Title>
+      </Header>
+        <Content>
+            <View >
+              <Text> Posted by {this.props.route.item.poster}.</Text>
+              <Text> They are charging ${this.props.route.item.price}.</Text>
+              <Text> Do you want a {this.props.route.item.type}?</Text>
+            <Card>
+              <CardItem>
                 <MapView
                 initialRegion={{
                   latitude: this.props.route.item.lat,
@@ -95,7 +99,7 @@ export default class PostInfo extends Component {
                   latitudeDelta: 0.0922,
                   longitudeDelta: 0.0421,
                 }}
-                style = {{height : 500}}
+                style = {{height : 200}}
                 >
                 <MapView.Marker
                 coordinate = {{latitude: this.props.route.item.lat, longitude: this.props.route.item.lng}}
@@ -103,9 +107,26 @@ export default class PostInfo extends Component {
                 description = {this.props.route.item.type}
                 />
                 </MapView>
-              </View>
-            </Content>
-          </Container>
+            </CardItem>
+            <CardItem>
+            <Grid>
+              <Row justifyContent='center'>
+                  <Button large rounded disabled={!this.props.route.item.available} onPress={() => this.checkSpace()}>
+                    <Text style={{fontSize:20, color:'white'}}> Check In </Text>
+                  </Button>
+                  <Button large rounded disabled={this.props.route.item.available} onPress={() => this.checkSpace()}>
+                    <Text style={{fontSize:20, color:'white'}}> Check Out </Text>
+                  </Button> 
+                  <Button large rounded onPress={() => this.forceUpdate()}>
+                    <Text style={{fontSize:20, color:'white'}}> Refresh </Text>
+                  </Button>
+              </Row>
+            </Grid> 
+            </CardItem>
+            </Card>
+          </View>
+        </Content>
+      </Container>
       )
   }
 }

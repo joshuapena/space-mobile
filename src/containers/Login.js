@@ -100,7 +100,7 @@ export default class Login extends Component {
                     Log in
                 </Button>
                 <Button onPress = {() => this._navigateCreate() }>
-                    Create an account instead
+                    Create an account
                 </Button>
             </View>
         )
