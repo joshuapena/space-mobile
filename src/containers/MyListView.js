@@ -8,7 +8,7 @@ import React, {Component} from 'react';
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, TouchableHighlight, Modal,
         TouchableOpacity,DrawerLayoutAndroid, ToolbarAndroid} from 'react-native';
 
-import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, Grid, Col,
+import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, Grid, Col, Row,
         Title, List, ListItem, Footer, FooterTab} from 'native-base';
 
 const TimerMixin =  require('react-timer-mixin');
@@ -35,7 +35,7 @@ export default class MyListView extends Component {
       };
     }
 
-  _navigateSignUp(){
+  _navigateHostspace(){
     this.props.navigator.push({
       name: 'Hostspace', // Matches route.name
     })
@@ -121,18 +121,27 @@ export default class MyListView extends Component {
   var navigationView = (
       <View style={{flex: 1, backgroundColor: '#25383C'}}>
         <Text style={{margin: 10, fontSize: 50, textAlign: 'center', color: 'white'}}> SPACE </Text>
+        <View style={{alignItems:'center', paddingBottom:15}}>
+          <Icon name='user' style={{fontSize: 50, color: '#3498db'}}/>
+          <Text style={{fontSize: 20, color: '#3498db'}}> User </Text>
+        </View>
           <List>
               <ListItem>
-                <Button transparent large color='#3498db' onPress={() => {this._navigateSignUp()}}> Create Space </Button>
+                <Icon name="plus-circle" size={30} color="#3498db"/>
+                <Button transparent color='#3498db' onPress={() => {this._navigateHostspace()}}> 
+                 Create Space </Button>
               </ListItem>
               <ListItem>
-                <Button transparent large color='#3498db'onPress={() => {this._navigateMyPosts()}}> My Postings </Button>
+                <Icon name="sign-out" size={30} color="#3498db"/>
+                <Button transparent color='#3498db'onPress={() => {this._navigateMyPosts()}}> My Postings </Button>
               </ListItem>
               <ListItem>
-                <Button transparent large color='#3498db' onPress={() => {this._navigateMyCheckedSpace()}}> My Space </Button>
+                <Icon name="car" size={30} color="#3498db"/>
+                <Button transparent color='#3498db' onPress={() => {this._navigateMyCheckedSpace()}}> My Space </Button>
               </ListItem> 
               <ListItem>
-                <Button transparent large color='#3498db' onPress={() => {this._navigateSettings()}}> Settings </Button>
+                <Icon name="cog" size={30} color="#3498db"/>
+                <Button transparent color='#3498db' onPress={() => {this._navigateSettings()}}> Settings </Button>
               </ListItem> 
           </List>
       </View>
@@ -150,7 +159,9 @@ export default class MyListView extends Component {
               <Icon name="navicon" size={20} color="white"/>
             </Button>
             <Title>SPACE</Title>
-            <Button transparent onPress={() => {this._navigateMyMapView()}}> Map View </Button>
+            <Button transparent onPress={() => {this._navigateMyMapView()}}> 
+              <Icon name="map-o" size={25} color="white"/>
+            </Button>
           </Header>
 
         
@@ -171,7 +182,10 @@ export default class MyListView extends Component {
                         <Col> 
                           <Text style={{fontSize: 20}}>
                             Price: ${item.price}{"\n"} 
-                            Type: {item.type}   {"\n"}  
+                            Type: {item.type}   {"\n"} 
+                            Status: {item.available ? 
+                              <Text>Open</Text> : 
+                              <Text>Occupied</Text>} 
                           </Text>
                         </Col>
 
@@ -187,16 +201,19 @@ export default class MyListView extends Component {
                 </ListItem>
                 }>
           </List>
-            
         </DrawerLayoutAndroid>
      </View>
-
    );
  }
 }
 
 
 const styles = StyleSheet.create({
+  drawerOption: {
+    color:'#3498db',
+    fontSize: 25,
+    margin: 20,
+  },
   welcome: {
     fontSize: 50,
     textAlign: 'center',
