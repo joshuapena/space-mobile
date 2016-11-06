@@ -6,7 +6,7 @@ Can navigate back to MyListViews
 
 import React, {Component} from 'react';
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
-import { Container, Content, Thumbnail, Button, Icon, Header, Spinner, Title, List, ListItem, Footer, FooterTab } from 'native-base';
+import {Container, Content, Thumbnail, Button, Icon, Grid, Col, Row, Header, Spinner, Title, List, ListItem, Footer, FooterTab} from 'native-base';
 
 var renderIf = require('render-if');
 
@@ -132,7 +132,12 @@ export default class MyPosts extends Component {
       )}
 
       {renderIf(!this.state.dataExists)(
-        <Text> There is no data</Text>
+        <Grid>
+          <Col alignItems='center'>
+            <Icon name='ios-help-circle-outline' style={{fontSize: 200, color: '#e74c3c'}}/>
+            <Text>Looks like you don't have any postings.</Text>
+          </Col>
+        </Grid>
       )}
         <List dataArray={this.state.dataArray}
             renderRow={(item) =>
