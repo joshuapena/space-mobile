@@ -59,23 +59,6 @@ export default class PostInfo extends Component {
     });
   }
 
-  /*
-  +          <MapView
-+            initialRegion={{
-+              latitude: 37.78825,
-+              longitude: -122.4324,
-+              latitudeDelta: 0.0922,
-+              longitudeDelta: 0.0421,
-+            }}
-+            style = {{flex : 1}}
-+          >
-+          <MapView.Marker
-+            coordinate = {{latitude: 37.78825, longitude: -122.4324}}
-+            title = {"SF"}
-+            description = {"description"}
-+          />
-+          </MapView>
-*/
   render(){
     return(
       <Container style={{backgroundColor: 'white'}}>
@@ -107,6 +90,7 @@ export default class PostInfo extends Component {
                 coordinate = {{latitude: this.props.route.item.lat, longitude: this.props.route.item.lng}}
                 title = {this.props.route.item.address}
                 description = {this.props.route.item.type}
+                pinColor = {this.props.route.item.available ? '#00ff00' : '#ff0000'}
                 />
                 </MapView>
             </CardItem>

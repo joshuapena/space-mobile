@@ -7,6 +7,9 @@ import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, 
 
 
 var DrawerLayout = require('react-native-drawer-layout');
+var firebase = require('firebase');
+
+var markersList = null;
 
 export default class MyMapView extends Component {
 
@@ -25,11 +28,26 @@ export default class MyMapView extends Component {
         longitude: -122.0609        
       }
     },
-    markers: this.props.route.listArray,
     lastPosition: 'unknown',
   };
 
   watchID: ?number = null;
+
+  componentWillMount() {
+    theList = [];
+    var ref = firebase.database().ref ('listings');
+    ref.orderByKey().on ('child_added', function (snapshot) {
+      markerList.push ({        
+        uid: snapshot.val().uid,             
+        username: snapshot.val().poster,
+        description: snapshot.val().address + '\n' + snapshot.val().city + '\n' + snapshot.val().state,
+        type: snapshot.val().type,
+        latitude: snapshot.val().lat, 
+        longitude: snapshot.val().lng,
+        availability: snapshot.val().available
+      });
+    });
+  }
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
@@ -48,11 +66,15 @@ export default class MyMapView extends Component {
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
+  }
+
+
+  componentWillUpdate() {
 
   }
 
 	_navigateBack(){
-      this.props.navigator.replacePreviousAndPop ({name : 'MyListView'});
+      this.props.navigator.pop();
     }
 
   _navigateListView(){
@@ -103,13 +125,14 @@ export default class MyMapView extends Component {
             }}
             style = {{flex : 1}}
           >
-          {this.props.route.listArray.map (marker => (
+          {markerList.map (marker => (
           <MapView.Marker
             key = {marker.uid}
             coordinate = {{latitude: marker.latitude, longitude: marker.longitude}}
             title = {marker.type}
             description = {marker.description}
             pinColor = {marker.availability ? '#00ff00' : '#ff0000'}
+            onPress = {() => alert ('pressed')}
             />
           ))}
           </MapView>
