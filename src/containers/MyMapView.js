@@ -9,7 +9,7 @@ import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, 
 var DrawerLayout = require('react-native-drawer-layout');
 var firebase = require('firebase');
 
-var markersList = null;
+var markerList = null;
 
 export default class MyMapView extends Component {
 
@@ -34,7 +34,7 @@ export default class MyMapView extends Component {
   watchID: ?number = null;
 
   componentWillMount() {
-    theList = [];
+    markerList = [];
     var ref = firebase.database().ref ('listings');
     ref.orderByKey().on ('child_added', function (snapshot) {
       markerList.push ({        
@@ -132,7 +132,9 @@ export default class MyMapView extends Component {
             title = {marker.type}
             description = {marker.description}
             pinColor = {marker.availability ? '#00ff00' : '#ff0000'}
-            onPress = {() => alert ('pressed')}
+            onPress = {() =>     this.props.navigator.push({
+      name: 'Settings', // Matches route.name
+    })}
             />
           ))}
           </MapView>
