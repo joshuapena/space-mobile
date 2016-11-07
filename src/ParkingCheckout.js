@@ -68,7 +68,7 @@ export default function native (platform) {
         return <EditPost navigator={navigator} route={route} />
       }
       if(route.name == 'MyMapView'){
-        return <MyMapView navigator={navigator} />
+        return <MyMapView navigator={navigator} route = {route}/>
       }
       if(route.name == 'SpaceBootup'){
         return <SpaceBootup navigator={navigator} />

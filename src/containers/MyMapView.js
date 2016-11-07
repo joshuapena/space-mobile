@@ -10,10 +10,18 @@ var DrawerLayout = require('react-native-drawer-layout');
 
 export default class MyMapView extends Component {
 
+  /*
+  <MapView.Marker
+  coordinate = {{latitude: this.props.route.item.lat, longitude: this.props.route.item.lng}}
+  title = {this.props.route.item.address}
+  description = {this.props.route.item.type}
+  />
+  */
+
   state = {
     initialPosition: {
       coords: {
-        latitude:  36.9914,
+        latitude: 36.9914,
         longitude: 122.0609        
       }
     },
@@ -59,6 +67,11 @@ export default class MyMapView extends Component {
   }
 
 	render(){
+    var listArray = this.props.route.listArray;
+    alert (listArray[0]);
+    for (var i = 0; i < listArray.length; i++) {
+      alert ('INFO ' + listArray[i]);
+    }
     var navigationView = (
       <View style={{flex: 1, backgroundColor: 'white'}}>
         <Text style={{margin: 10, fontSize: 20, textAlign: 'center'}}> SPACE </Text>
@@ -93,6 +106,9 @@ export default class MyMapView extends Component {
             }}
             style = {{flex : 1}}
           />
+
+
+          
         </DrawerLayoutAndroid>
      </View>
 			);

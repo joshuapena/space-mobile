@@ -22,6 +22,12 @@ var renderIf = require('render-if');
 
 var DrawerLayout = require('react-native-drawer-layout');
 
+/* this listArray element queries firebase and appends all
+ * latitude and longitude pairs into it. It is used in this
+ * fashion because currently there exists no other options 
+ * to retrieve that data :(
+ */
+var listArray = []; 
 
 export default class MyListView extends Component {
 
@@ -72,9 +78,10 @@ export default class MyListView extends Component {
     })
   }
 
-  _navigateMyMapView(){
-    this.props.navigator.push({
+  _navigateMyMapView(self){
+    self.props.navigator.push({
       name: 'MyMapView', // Matches route.name
+      listArray: listArray,
     })
   }
 
@@ -104,6 +111,12 @@ export default class MyListView extends Component {
      });
  }
 
+componentWillMount() {
+  var ref = firebase.database().ref ('listings');
+  ref.orderByKey().on ('child_added', function (snapshot) {
+    listArray.push ([snapshot.val().lat, snapshot.val().lng]);
+  });
+}
 
   mixins: [TimerMixin]
   componentDidMount(){
@@ -159,7 +172,7 @@ export default class MyListView extends Component {
               <Icon name="navicon" size={20} color="white"/>
             </Button>
             <Title>SPACE</Title>
-            <Button transparent onPress={() => {this._navigateMyMapView()}}> 
+            <Button transparent onPress={() => {this._navigateMyMapView(this)}}> 
               <Icon name="map-o" size={25} color="white"/>
             </Button>
           </Header>
