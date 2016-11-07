@@ -37,15 +37,7 @@ export default class MyMapView extends Component {
     markerList = [];
     var ref = firebase.database().ref ('listings');
     ref.orderByKey().on ('child_added', function (snapshot) {
-      markerList.push ({        
-        uid: snapshot.val().uid,             
-        username: snapshot.val().poster,
-        description: snapshot.val().address + '\n' + snapshot.val().city + '\n' + snapshot.val().state,
-        type: snapshot.val().type,
-        latitude: snapshot.val().lat, 
-        longitude: snapshot.val().lng,
-        availability: snapshot.val().available
-      });
+      markerList.push (snapshot.val());
     });
   }
 
@@ -128,13 +120,16 @@ export default class MyMapView extends Component {
           {markerList.map (marker => (
           <MapView.Marker
             key = {marker.uid}
-            coordinate = {{latitude: marker.latitude, longitude: marker.longitude}}
+            coordinate = {{latitude: marker.lat, longitude: marker.lng}}
             title = {marker.type}
-            description = {marker.description}
-            pinColor = {marker.availability ? '#00ff00' : '#ff0000'}
-            onPress = {() =>     this.props.navigator.push({
-      name: 'Settings', // Matches route.name
-    })}
+            description = {marker.address + '\n' + marker.city + '\n' + marker.state}
+            pinColor = {marker.available ? '#00ff00' : '#ff0000'}
+            onPress = {() => this.props.navigator.push({
+            name: 'PostInfo',
+            item: marker,
+            lat: marker.lat,
+            lng: marker.lng
+            })}
             />
           ))}
           </MapView>

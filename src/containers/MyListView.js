@@ -61,8 +61,8 @@ export default class MyListView extends Component {
   _navigatePostInfo(self, item){
     // console.log("the post you clicked", Object.keys.(item[0]));
     // console.log("the post id ", item.keys)
-    var lat;
-    var lng;
+    var lat = 0;
+    var lng = 0;
     var ref = firebase.database().ref("listings/" + item.uid);
     ref.once("value").then(function(snapshot){
       lat = snapshot.lat;

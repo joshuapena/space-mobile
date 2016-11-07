@@ -87,10 +87,10 @@ export default class PostInfo extends Component {
                 style = {{height : 300}}
                 >
                 <MapView.Marker
-                coordinate = {{latitude: this.props.route.item.lat, longitude: this.props.route.item.lng}}
-                title = {this.props.route.item.address}
-                description = {this.props.route.item.type}
-                pinColor = {this.props.route.item.available ? '#00ff00' : '#ff0000'}
+                  coordinate = {{latitude: this.props.route.item.lat, longitude: this.props.route.item.lng}}
+                  title = {this.props.route.item.address}
+                  description = {this.props.route.item.type}
+                  pinColor = {this.props.route.item.available ? '#00ff00' : '#ff0000'}
                 />
                 </MapView>
             </CardItem>
