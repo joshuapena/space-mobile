@@ -13,8 +13,8 @@ export default class PostInfo extends Component {
   }
 
   _navigateBack(){
-  this.props.navigator.pop();
-}
+    this.props.navigator.replacePreviousAndPop ({name : 'MyListView'});
+  }
 
   componentWillMount(){
     var nav = this.props.navigator;

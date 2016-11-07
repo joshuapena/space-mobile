@@ -22,9 +22,10 @@ export default class MyMapView extends Component {
     initialPosition: {
       coords: {
         latitude: 36.9914,
-        longitude: 122.0609        
+        longitude: -122.0609        
       }
     },
+    markers: this.props.route.listArray,
     lastPosition: 'unknown',
   };
 
@@ -47,10 +48,11 @@ export default class MyMapView extends Component {
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
+
   }
 
 	_navigateBack(){
-      this.props.navigator.pop()
+      this.props.navigator.replacePreviousAndPop ({name : 'MyListView'});
     }
 
   _navigateListView(){
@@ -67,11 +69,6 @@ export default class MyMapView extends Component {
   }
 
 	render(){
-    var listArray = this.props.route.listArray;
-    alert (listArray[0]);
-    for (var i = 0; i < listArray.length; i++) {
-      alert ('INFO ' + listArray[i]);
-    }
     var navigationView = (
       <View style={{flex: 1, backgroundColor: 'white'}}>
         <Text style={{margin: 10, fontSize: 20, textAlign: 'center'}}> SPACE </Text>
@@ -105,10 +102,18 @@ export default class MyMapView extends Component {
               longitudeDelta: 0.0421
             }}
             style = {{flex : 1}}
-          />
+          >
+          {this.props.route.listArray.map (marker => (
+          <MapView.Marker
+            key = {marker.uid}
+            coordinate = {{latitude: marker.latitude, longitude: marker.longitude}}
+            title = {marker.type}
+            description = {marker.description}
+            pinColor = {marker.availability ? '#00ff00' : '#ff0000'}
+            />
+          ))}
+          </MapView>
 
-
-          
         </DrawerLayoutAndroid>
      </View>
 			);

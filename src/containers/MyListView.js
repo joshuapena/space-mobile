@@ -28,6 +28,7 @@ var DrawerLayout = require('react-native-drawer-layout');
  * to retrieve that data :(
  */
 var listArray = []; 
+var listHash = {};
 
 export default class MyListView extends Component {
 
@@ -82,6 +83,7 @@ export default class MyListView extends Component {
     self.props.navigator.push({
       name: 'MyMapView', // Matches route.name
       listArray: listArray,
+      listHash: listHash
     })
   }
 
@@ -111,12 +113,22 @@ export default class MyListView extends Component {
      });
  }
 
-componentWillMount() {
-  var ref = firebase.database().ref ('listings');
-  ref.orderByKey().on ('child_added', function (snapshot) {
-    listArray.push ([snapshot.val().lat, snapshot.val().lng]);
-  });
-}
+  componentWillMount() {
+    listArray = [];
+    listHash = {};
+    var ref = firebase.database().ref ('listings');
+    ref.orderByKey().on ('child_added', function (snapshot) {
+      listArray.push ({        
+                      uid: snapshot.val().uid,             
+                      username: snapshot.val().poster,
+                      description: snapshot.val().address + '\n' + snapshot.val().city + '\n' + snapshot.val().state,
+                      type: snapshot.val().type,
+                      latitude: snapshot.val().lat, 
+                      longitude: snapshot.val().lng,
+                      availability: snapshot.val().available
+                   });
+    });
+  }
 
   mixins: [TimerMixin]
   componentDidMount(){
