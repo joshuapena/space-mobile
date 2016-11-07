@@ -67,8 +67,6 @@ export default class MyListView extends Component {
     self.props.navigator.push({
       name: 'PostInfo', // Matches route.name
       item: item,
-      lat: lat,
-      lng: lng
     })
   }
 
@@ -128,7 +126,7 @@ export default class MyListView extends Component {
           <List>
               <ListItem>
                 <Icon name="plus-circle" size={30} color="#3498db"/>
-                <Button transparent color='#3498db' onPress={() => {this._navigateHostspace()}}> 
+                <Button transparent color='#3498db' onPress={() => {this._navigateHostspace()}}>
                  Create Space </Button>
               </ListItem>
               <ListItem>
@@ -138,11 +136,11 @@ export default class MyListView extends Component {
               <ListItem>
                 <Icon name="car" size={30} color="#3498db"/>
                 <Button transparent color='#3498db' onPress={() => {this._navigateMyCheckedSpace()}}> My Space </Button>
-              </ListItem> 
+              </ListItem>
               <ListItem>
                 <Icon name="cog" size={30} color="#3498db"/>
                 <Button transparent color='#3498db' onPress={() => {this._navigateSettings()}}> Settings </Button>
-              </ListItem> 
+              </ListItem>
           </List>
       </View>
     );
@@ -159,12 +157,12 @@ export default class MyListView extends Component {
               <Icon name="navicon" size={20} color="white"/>
             </Button>
             <Title>SPACE</Title>
-            <Button transparent onPress={() => {this._navigateMyMapView()}}> 
+            <Button transparent onPress={() => {this._navigateMyMapView()}}>
               <Icon name="map-o" size={25} color="white"/>
             </Button>
           </Header>
 
-        
+
           <List dataArray={this.state.dataSource}
               renderRow={(item) =>
                 <ListItem>
@@ -179,18 +177,18 @@ export default class MyListView extends Component {
                     <CardItem button onPress={() => {this._navigatePostInfo(this, item)}}>
 
                       <Grid>
-                        <Col> 
+                        <Col>
                           <Text style={{fontSize: 20}}>
-                            Price: ${item.price}{"\n"} 
-                            Type: {item.type}   {"\n"} 
-                            Status: {item.available ? 
-                              <Text>Open</Text> : 
-                              <Text>Occupied</Text>} 
+                            Price: ${item.price}{"\n"}
+                            Type: {item.type}   {"\n"}
+                            Status: {item.available ?
+                              <Text>Open</Text> :
+                              <Text>Occupied</Text>}
                           </Text>
                         </Col>
 
                         <Col alignItems='center'>
-                            {item.available ? 
+                            {item.available ?
                             <Icon name="sign-in" color= 'green' size={50}/> :
                             <Icon name="car" color='#e74c3c' size= {50}/> }
                         </Col>

@@ -50,7 +50,7 @@ export default function native (platform) {
         return <Signup navigator={navigator} />
       }
       if(route.name == 'MyListView') {
-        return <MyListView navigator={navigator} />
+        return <MyListView navigator={navigator} route={route}/>
       }
       if(route.name == 'Login') {
         return <Login navigator={navigator} />

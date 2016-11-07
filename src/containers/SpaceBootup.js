@@ -29,13 +29,18 @@ export default class SpaceBootup extends Component {
       if (user) {
         console.log("user is signed in at login screen");
         console.log(user.email);
-        self.props.navigator.push({name: "MyListView"});
+        let thisUser = firebase.auth().currentUser.uid;
+        console.log("this user ", thisUser);
+        firebase.database().ref('users/' + thisUser).once("value").then(function(snapshot){
+          console.log("snapshot", snapshot.val());
+          self.props.navigator.push({name: "MyListView"});
+        })
         // setTimeout(()=>{self.props.navigator.push({name: "MyListView"})}, 1000);
-        change = true;
       } else {
+        self.props.navigator.popToTop();
         console.log("no one is signed in");
-        self.props.navigator.push({name: "Login"});
-        // setTimeout(()=>{self.props.navigator.push({name: "Login"})}, 1000);
+        // self.props.navigator.push({name: "Login"});
+        setTimeout(()=>{self.props.navigator.push({name: "Login"})}, 1000);
         return;
       }
     });
