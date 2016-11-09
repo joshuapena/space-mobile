@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, BackAndroid} from 'react-native';
+import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, BackAndroid, Alert} from 'react-native';
 import {Container, Content, Thumbnail, Button, Header, Title, Grid, Col, Row, Card, CardItem, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
 import MapView from 'react-native-maps';
 
@@ -90,7 +90,7 @@ export default class PostInfo extends Component {
                     <Text style={styles.buttonText}> Check In </Text>
                   </Button>
               </Row>
-            </Grid> 
+            </Grid>
             </CardItem>
             </Card>
           </View>
@@ -107,6 +107,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color:'white',
-    fontSize:20, 
+    fontSize:20,
   },
 });

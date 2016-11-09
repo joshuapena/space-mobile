@@ -8,7 +8,7 @@ Some of the error messages crash the app
 
 
 import React, {Component} from 'react';
-import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native';
+import {Navigator, StyleSheet, Text, TextInput, View, Image, Alert} from 'react-native';
 import Button from 'react-native-button';
 
 const dismissKeyboard = require('dismissKeyboard')

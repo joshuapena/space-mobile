@@ -1,7 +1,7 @@
 import MapView from 'react-native-maps';
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TextInput, View, Image, TouchableHighlight, Modal,
-        TouchableOpacity,DrawerLayoutAndroid, ToolbarAndroid} from 'react-native';
+        TouchableOpacity,DrawerLayoutAndroid, ToolbarAndroid, Alert} from 'react-native';
 import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, Title, List, Icon,
         ListItem, Footer, FooterTab, InputGroup, Input} from 'native-base';
 

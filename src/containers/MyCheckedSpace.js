@@ -5,7 +5,7 @@ The space a user is currently checked into
 
 import React, {Component} from 'react';
 
-import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
+import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, Alert} from 'react-native';
 import {Container, Content, Thumbnail, Button, Header, Spinner, Title, Grid, Col, Row,
         List, ListItem, Footer, FooterTab, Icon } from 'native-base';
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Container, Content, Button, Thumbnail, Header, Icon, Title, List, ListItem, Footer, FooterTab } from 'native-base';
-import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native';
+import {Navigator, StyleSheet, Text, TextInput, View, Image, Alert} from 'react-native';
 // import Button from 'react-native-button';
 
 var firebase = require ('firebase');
