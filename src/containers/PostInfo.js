@@ -86,7 +86,7 @@ export default class PostInfo extends Component {
             <CardItem>
             <Grid>
               <Row justifyContent='center'>
-                  <Button large rounded disabled={!this.props.route.item.available} onPress={() => this.checkSpace()}>
+                  <Button large block disabled={!this.props.route.item.available} onPress={() => this.checkSpace()}>
                     <Text style={styles.buttonText}> Check In </Text>
                   </Button>
               </Row>
