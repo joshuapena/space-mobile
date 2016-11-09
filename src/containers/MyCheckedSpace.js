@@ -5,8 +5,8 @@ The space a user is currently checked into
 
 import React, {Component} from 'react';
 
-import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
-import {Container, Content, Thumbnail, Button, Header, Spinner, Title, Grid, Col, Row, 
+import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, Alert} from 'react-native';
+import {Container, Content, Thumbnail, Button, Header, Spinner, Title, Grid, Col, Row,
         List, ListItem, Footer, FooterTab, Icon } from 'native-base';
 
 
@@ -48,7 +48,10 @@ export default class MyCheckedSpace extends Component {
           }, self._navigateBack())
         });
       } else {
-        alert("you are not checked into a spot yet");
+        Alert.alert (
+          'An error occured',
+          'you are not checked into a spot yet'
+        );
       }
     });
   }

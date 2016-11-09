@@ -8,7 +8,7 @@ Some of the error messages crash the app
 
 
 import React, {Component} from 'react';
-import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native';
+import {Navigator, StyleSheet, Text, TextInput, View, Image, Alert} from 'react-native';
 import Button from 'react-native-button';
 
 const dismissKeyboard = require('dismissKeyboard')
@@ -46,33 +46,54 @@ export default class Signup extends Component {
         let username = this.state.username;
 
         if(!email || !password || !passwordConfirm || !username) {
-          alert ('please fill out all fields');
+          Alert.alert (
+            'Error Signing Up',
+            'please fill out all fields'
+          );
           return;
         }
 
         if(password !== passwordConfirm){
-          alert ('passwords do not match');
+          Alert.alert (
+            'Error Signing Up',
+            'passwords do not match'
+          );
           return;
         }
         var user = firebase.auth().createUserWithEmailAndPassword (email, password).catch (function (error) {
             switch (error.code) {
                 case "auth/email-already-in-use":
-                    alert ('email already in use');
+                    Alert.alert (
+                      'Error Signing Up',
+                      'email already in use'
+                    );
                     break;
 
                 case "auth/invalid-email":
-                    alert ('please enter a valid email');
+                    Alert.alert (
+                      'Error Signing Up',
+                      'please enter a valid email'
+                    );
                     break;
 
                 case "auth/operation-not-allowed":
-                    alert ('your account has been disabled');
+                    Alert.alert (
+                      'Error Signing Up',
+                      'your account has been disabled'
+                    );
                     break;
 
                 case "auth/weak-password":
-                    alert ('please enter a stronger password');
+                    Alert.alert (
+                      'Error Signing Up',
+                      'please enter a stronger password'
+                    );
                     break;
                 default:
-                    alert ('error creating account :/');
+                    Alert.alert (
+                      'Error Signing Up',
+                      'error creating account'
+                    );
             }
         }).then (function() {
             var currentUser = firebase.auth().currentUser;

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, BackAndroid} from 'react-native';
+import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, BackAndroid, Alert} from 'react-native';
 import {Container, Content, Thumbnail, Button, Header, Title, Grid, Col, Row, Card, CardItem, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
 import MapView from 'react-native-maps';
 
@@ -43,18 +43,7 @@ export default class PostInfo extends Component {
           }, self._navigateBack());
         });
       } else {
-        firebase.database().ref ('listings/' + postId + '/checkedUser').once ('value').then (function (posterSnapshot) {
-          const posterEmail = posterSnapshot.val();
-          if (posterEmail != currentUser.email) {
-            alert ('Error: you are not checked into this space\n' + posterEmail);
-          } else {
-            firebase.database().ref ('listings/' + postId).update ({available : true, checkedUser: false}, function() {
-              firebase.database().ref ('users/' + currentUser.uid).update ({
-                checkedIn : false, checkedSpace : false
-              }, self._navigateBack());
-            });
-          }
-        });
+        alert ('Error: you are already checked into a space');
       }
     });
   }
@@ -97,17 +86,11 @@ export default class PostInfo extends Component {
             <CardItem>
             <Grid>
               <Row justifyContent='center'>
-                  <Button large rounded disabled={!this.props.route.item.available} onPress={() => this.checkSpace()}>
+                  <Button large block disabled={!this.props.route.item.available} onPress={() => this.checkSpace()}>
                     <Text style={styles.buttonText}> Check In </Text>
                   </Button>
-                  <Button large rounded disabled={this.props.route.item.available} onPress={() => this.checkSpace()}>
-                    <Text style={styles.buttonText}> Check Out </Text>
-                  </Button> 
-                  <Button large rounded onPress={() => this.forceUpdate()}>
-                    <Text style={styles.buttonText}> Refresh </Text>
-                  </Button>
               </Row>
-            </Grid> 
+            </Grid>
             </CardItem>
             </Card>
           </View>
@@ -124,6 +107,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color:'white',
-    fontSize:20, 
+    fontSize:20,
   },
 });

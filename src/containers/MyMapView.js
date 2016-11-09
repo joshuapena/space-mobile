@@ -1,8 +1,8 @@
 import MapView from 'react-native-maps';
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TextInput, View, Image, TouchableHighlight, Modal,
-        TouchableOpacity,DrawerLayoutAndroid, ToolbarAndroid} from 'react-native';
-import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, Title, List, Icon, 
+        TouchableOpacity,DrawerLayoutAndroid, ToolbarAndroid, Alert} from 'react-native';
+import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, Title, List, Icon,
         ListItem, Footer, FooterTab, InputGroup, Input} from 'native-base';
 
 
@@ -25,7 +25,7 @@ export default class MyMapView extends Component {
     initialPosition: {
       coords: {
         latitude: 36.9914,
-        longitude: -122.0609        
+        longitude: -122.0609
       }
     },
     lastPosition: 'unknown',
@@ -47,7 +47,12 @@ export default class MyMapView extends Component {
         var initialPosition = position;
         this.setState({initialPosition});
       },
-      (error) => alert(JSON.stringify(error)),
+      (error) => {
+        Alert.alert (
+          'Error mounting',
+          JSON.stringify(error)
+        );
+      },
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
     this.watchID = navigator.geolocation.watchPosition((position) => {
@@ -86,7 +91,7 @@ export default class MyMapView extends Component {
     var navigationView = (
       <View style={{flex: 1, backgroundColor: 'white'}}>
         <Text style={{margin: 10, fontSize: 20, textAlign: 'center'}}> SPACE </Text>
-          
+
       </View>
     );
 		return (
@@ -103,12 +108,12 @@ export default class MyMapView extends Component {
             </Button>
             <Title> SPACE MAP</Title>
           </Header>
-          
+
           <InputGroup borderType='regular' >
             <Input placeholder='Type your location here'/>
           </InputGroup>
-		      
-          <MapView 
+
+          <MapView
             initialRegion={{
               latitude: this.getLat(),
               longitude: this.getLong(),
@@ -132,6 +137,12 @@ export default class MyMapView extends Component {
             })}
             />
           ))}
+          <MapView.Marker
+            key = {"your location"}
+            coordinate = {{latitude: this.getLat(), longitude: this.getLong()}}
+            title = {"You are here"}
+            pinColor = {"#6600ff"}
+            />
           </MapView>
 
         </DrawerLayoutAndroid>
