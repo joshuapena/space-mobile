@@ -10,13 +10,22 @@ var DrawerLayout = require('react-native-drawer-layout');
 
 export default class MyMapView extends Component {
 
+  /*
+  <MapView.Marker
+  coordinate = {{latitude: this.props.route.item.lat, longitude: this.props.route.item.lng}}
+  title = {this.props.route.item.address}
+  description = {this.props.route.item.type}
+  />
+  */
+
   state = {
     initialPosition: {
       coords: {
-        latitude:  36.9914,
-        longitude: 122.0609        
+        latitude: 36.9914,
+        longitude: -122.0609        
       }
     },
+    markers: this.props.route.listArray,
     lastPosition: 'unknown',
   };
 
@@ -39,10 +48,11 @@ export default class MyMapView extends Component {
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
+
   }
 
 	_navigateBack(){
-      this.props.navigator.pop()
+      this.props.navigator.replacePreviousAndPop ({name : 'MyListView'});
     }
 
   _navigateListView(){
@@ -92,7 +102,18 @@ export default class MyMapView extends Component {
               longitudeDelta: 0.0421
             }}
             style = {{flex : 1}}
-          />
+          >
+          {this.props.route.listArray.map (marker => (
+          <MapView.Marker
+            key = {marker.uid}
+            coordinate = {{latitude: marker.latitude, longitude: marker.longitude}}
+            title = {marker.type}
+            description = {marker.description}
+            pinColor = {marker.availability ? '#00ff00' : '#ff0000'}
+            />
+          ))}
+          </MapView>
+
         </DrawerLayoutAndroid>
      </View>
 			);
