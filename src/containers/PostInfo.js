@@ -100,12 +100,6 @@ export default class PostInfo extends Component {
                   <Button large rounded disabled={!this.props.route.item.available} onPress={() => this.checkSpace()}>
                     <Text style={styles.buttonText}> Check In </Text>
                   </Button>
-                  <Button large rounded disabled={this.props.route.item.available} onPress={() => this.checkSpace()}>
-                    <Text style={styles.buttonText}> Check Out </Text>
-                  </Button> 
-                  <Button large rounded onPress={() => this.forceUpdate()}>
-                    <Text style={styles.buttonText}> Refresh </Text>
-                  </Button>
               </Row>
             </Grid> 
             </CardItem>
