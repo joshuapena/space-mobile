@@ -132,6 +132,12 @@ export default class MyMapView extends Component {
             })}
             />
           ))}
+          <MapView.Marker
+            key = {"your location"}
+            coordinate = {{latitude: this.getLat(), longitude: this.getLong()}}
+            title = {"You are here"}
+            pinColor = {"#6600ff"}
+            />
           </MapView>
 
         </DrawerLayoutAndroid>
