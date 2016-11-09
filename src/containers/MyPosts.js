@@ -36,6 +36,11 @@ export default class MyPosts extends Component {
       name: 'Hostspace', // Matches route.name
     })
   }
+  _navigateHostspace(){
+    this.props.navigator.push({
+      name: 'Hostspace', // Matches route.name
+    })
+  }
 
   _navigateSettings(){
     this.props.navigator.push({
@@ -136,6 +141,9 @@ export default class MyPosts extends Component {
           <Col alignItems='center'>
             <Icon name='ios-help-circle-outline' style={{fontSize: 200, color: '#e74c3c'}}/>
             <Text>Looks like you don't have any postings.</Text>
+            <Text>Want to Create a Space?</Text> 
+            <Button large block transparent color='#3498db' onPress={() => {this._navigateHostspace()}}>
+             Create a Space </Button>
           </Col>
         </Grid>
       )}

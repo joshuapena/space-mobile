@@ -120,6 +120,7 @@ export default class MyListView extends Component {
       this.getTestData();
     }, 3000)
   }
+
   componentWillUnmount() {
     clearInterval(this.timer);
   }
