@@ -33,28 +33,28 @@ export default class PostInfo extends Component {
 
   checkSpace(){
     var self = this;
-    var postID = self.props.route.item.uid;
+    var postId = self.props.route.item.uid;
     var currentUser = firebase.auth().currentUser;
-
-    firebase.database().ref('users/' + currentUser.uid).once("value").then(function(snapshot){
-      var checkedIn = snapshot.val().checkedIn;
-      console.log(checkedIn);
-      if(!checkedIn){
-        firebase.database().ref ('listings/' +postID).update({available : false}, function (){
-          firebase.database().ref('users/' + currentUser.uid ).update({
-            checkedIn : true, checkedSpace : postID
-          }, self._navigateBack())
+    firebase.database().ref ('users/' + currentUser.uid).once ('value').then (function (snapshot) {
+      if (!snapshot.val().checkedIn) {
+        firebase.database().ref ('listings/' + postId).update ({available : false, checkedUser : currentUser.email}, function() {
+          firebase.database().ref ('users/' + currentUser.uid).update ({
+            checkedIn : true, checkedSpace : postId
+          }, self._navigateBack());
         });
-      }
-      else if(checkedIn){
-      firebase.database().ref ('listings/' +postID).update({available : true}, function (){
-        firebase.database().ref('users/' + currentUser.uid ).update({
-          checkedIn : false, checkedSpace : false
-        }, self._navigateBack())
-      });
-      }
-      else {
-        alert("you are checked into a spot already");
+      } else {
+        firebase.database().ref ('listings/' + postId + '/checkedUser').once ('value').then (function (posterSnapshot) {
+          const posterEmail = posterSnapshot.val();
+          if (posterEmail != currentUser.email) {
+            alert ('Error: you are not checked into this space\n' + posterEmail);
+          } else {
+            firebase.database().ref ('listings/' + postId).update ({available : true, checkedUser: false}, function() {
+              firebase.database().ref ('users/' + currentUser.uid).update ({
+                checkedIn : false, checkedSpace : false
+              }, self._navigateBack());
+            });
+          }
+        });
       }
     });
   }
@@ -78,20 +78,20 @@ export default class PostInfo extends Component {
             <Card>
               <CardItem>
                 <MapView
-                initialRegion={{
-                  latitude: this.props.route.item.lat,
-                  longitude: this.props.route.item.lng,
-                  latitudeDelta: 0.005,
-                  longitudeDelta: 0.005,
-                }}
-                style = {{height : 300}}
-                >
-                <MapView.Marker
-                  coordinate = {{latitude: this.props.route.item.lat, longitude: this.props.route.item.lng}}
-                  title = {this.props.route.item.address}
-                  description = {this.props.route.item.type}
-                  pinColor = {this.props.route.item.available ? '#00ff00' : '#ff0000'}
-                />
+                  initialRegion={{
+                    latitude: this.props.route.item.lat,
+                    longitude: this.props.route.item.lng,
+                    latitudeDelta: 0.005,
+                    longitudeDelta: 0.005,
+                  }}
+                  style = {{height : 300}}
+                  >
+                  <MapView.Marker
+                    coordinate = {{latitude: this.props.route.item.lat, longitude: this.props.route.item.lng}}
+                    title = {this.props.route.item.address}
+                    description = {this.props.route.item.type}
+                    pinColor = {this.props.route.item.available ? '#00ff00' : '#ff0000'}
+                  />
                 </MapView>
             </CardItem>
             <CardItem>
