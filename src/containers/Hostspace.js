@@ -34,13 +34,16 @@ enableButton(){
   if (myType && myAddress && myPrice && myCity && myState){ //Checks if no fields empty
     this._handlePress();
   } else{
-    alert ('please fill out all fields');
+    Alert.alert (
+      'Cannot Submit yet',
+      'please fill out all fields'
+    );
   }
 }
 
 
   _handlePress() {
-    this.setState({hideButton : true}); //Set submit to spinner 
+    this.setState({hideButton : true}); //Set submit to spinner
 
     var self = this;
     console.log('Pressed!');
@@ -82,14 +85,20 @@ enableButton(){
       /////////////////////////
       fetch (googleURL).then (function (response) {
         if (response.status !== 200) {
-          alert ('error with fetch call, code : ' + response.status);
+          Alert.alert (
+            'error with fetch call',
+            'code: '+response.status
+          );
           self.setState({hideButton : false});
           return;
         }
         response.json().then (function (data) {
           if (data.status == 'OK') {
             if (data.results[0].geometry.location_type != 'ROOFTOP') {
-              alert ('Invalid Address -- somewhat bogus address');
+              Alert.alert (
+                'Invalid Address',
+                'somewhat bogus address'
+              );
               self.setState({hideButton : false});
             } else {
               if (myType && myAddress && myPrice && myCity && myState) { //Checks if no fields empty
@@ -101,7 +110,10 @@ enableButton(){
               }
             }
           } else {
-            alert ('Invalid Address -- completely bogus address');
+            Alert.alert (
+              'Invalid Address',
+              'completely bogus address'
+            );
             self.setState({hideButton : false});
           }
 
@@ -266,9 +278,9 @@ enableButton(){
 
                   {this.state.hideButton ?
                      <Spinner color='#e74c3c'/> :
-                     <Button large block 
+                     <Button large block
                        onPress={() => {this.enableButton(); }}> Submit New Space </Button>}
-          
+
               </View>
           </Content>
       </Container>

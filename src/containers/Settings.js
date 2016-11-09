@@ -18,10 +18,14 @@ export default class Settings extends Component {
     logOutUser(switchPage, destination) {
         firebase.auth().signOut().then(function() {
 
-             alert ('logged out');
+             Alert.alert (
+               'logged out'
+             );
             // switchPage(destination);
         }, function (error) {
-            // alert ('error logging out');
+            Alert.alert (
+              'error logging out'
+            );
         });
     }
 

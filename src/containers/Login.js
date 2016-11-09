@@ -60,14 +60,21 @@ export default class Login extends Component {
 
 
         if( !email || !password){
-          alert ("Fill out all fields");
+          Alert.alert (
+            'Fill out all fields'
+          );
           return;
         }
         firebase.auth().signInWithEmailAndPassword (email, password).then (function() {
-            //alert ('successfully signed in');
+            // Alert.alert (
+            //   'successfully signed in'
+            // );
             // switchPage(destination);
         }, function (error) {
-            alert (error);
+            Alert.alert (
+              'sign in process',
+              'error'
+            );
         });
     }
 
