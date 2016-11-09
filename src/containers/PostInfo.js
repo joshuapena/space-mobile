@@ -43,18 +43,7 @@ export default class PostInfo extends Component {
           }, self._navigateBack());
         });
       } else {
-        firebase.database().ref ('listings/' + postId + '/checkedUser').once ('value').then (function (posterSnapshot) {
-          const posterEmail = posterSnapshot.val();
-          if (posterEmail != currentUser.email) {
-            alert ('Error: you are not checked into this space\n' + posterEmail);
-          } else {
-            firebase.database().ref ('listings/' + postId).update ({available : true, checkedUser: false}, function() {
-              firebase.database().ref ('users/' + currentUser.uid).update ({
-                checkedIn : false, checkedSpace : false
-              }, self._navigateBack());
-            });
-          }
-        });
+        alert ('Error: you are already checked into a space');
       }
     });
   }
