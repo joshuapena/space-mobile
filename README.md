@@ -33,6 +33,6 @@ open android project and run emulator
 * Matthew Kim
 
 ## Screenshots
-![Alt text](http://i.imgur.com/XBRzojk.png "Optional title")
-![Alt text](http://i.imgur.com/aOXHcMf.png "Optional title")
-![Alt text](http://i.imgur.com/AHbnHgE.png "Optional title")
+<img src="http://i.imgur.com/XBRzojk.png" width="275">
+<img src="http://i.imgur.com/aOXHcMf.png" width="275">
+<img src="http://i.imgur.com/AHbnHgE.png" width="275">
