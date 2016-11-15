@@ -1,12 +1,15 @@
 import MapView from 'react-native-maps';
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TextInput, View, Image, TouchableHighlight, Modal,
-        TouchableOpacity,DrawerLayoutAndroid, ToolbarAndroid} from 'react-native';
-import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, Title, List, Icon, 
+        TouchableOpacity,DrawerLayoutAndroid, ToolbarAndroid, Alert} from 'react-native';
+import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, Title, List, Icon,
         ListItem, Footer, FooterTab, InputGroup, Input} from 'native-base';
 
 
 var DrawerLayout = require('react-native-drawer-layout');
+var firebase = require('firebase');
+
+var markerList = null;
 
 export default class MyMapView extends Component {
 
@@ -22,14 +25,21 @@ export default class MyMapView extends Component {
     initialPosition: {
       coords: {
         latitude: 36.9914,
-        longitude: -122.0609        
+        longitude: -122.0609
       }
     },
-    markers: this.props.route.listArray,
     lastPosition: 'unknown',
   };
 
   watchID: ?number = null;
+
+  componentWillMount() {
+    markerList = [];
+    var ref = firebase.database().ref ('listings');
+    ref.orderByKey().on ('child_added', function (snapshot) {
+      markerList.push (snapshot.val());
+    });
+  }
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
@@ -37,7 +47,12 @@ export default class MyMapView extends Component {
         var initialPosition = position;
         this.setState({initialPosition});
       },
-      (error) => alert(JSON.stringify(error)),
+      (error) => {
+        Alert.alert (
+          'Error mounting',
+          JSON.stringify(error)
+        );
+      },
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
     this.watchID = navigator.geolocation.watchPosition((position) => {
@@ -48,11 +63,15 @@ export default class MyMapView extends Component {
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
+  }
+
+
+  componentWillUpdate() {
 
   }
 
 	_navigateBack(){
-      this.props.navigator.replacePreviousAndPop ({name : 'MyListView'});
+      this.props.navigator.pop();
     }
 
   _navigateListView(){
@@ -72,7 +91,7 @@ export default class MyMapView extends Component {
     var navigationView = (
       <View style={{flex: 1, backgroundColor: 'white'}}>
         <Text style={{margin: 10, fontSize: 20, textAlign: 'center'}}> SPACE </Text>
-          
+
       </View>
     );
 		return (
@@ -89,12 +108,12 @@ export default class MyMapView extends Component {
             </Button>
             <Title> SPACE MAP</Title>
           </Header>
-          
+
           <InputGroup borderType='regular' >
             <Input placeholder='Type your location here'/>
           </InputGroup>
-		      
-          <MapView 
+
+          <MapView
             initialRegion={{
               latitude: this.getLat(),
               longitude: this.getLong(),
@@ -103,15 +122,27 @@ export default class MyMapView extends Component {
             }}
             style = {{flex : 1}}
           >
-          {this.props.route.listArray.map (marker => (
+          {markerList.map (marker => (
           <MapView.Marker
             key = {marker.uid}
-            coordinate = {{latitude: marker.latitude, longitude: marker.longitude}}
+            coordinate = {{latitude: marker.lat, longitude: marker.lng}}
             title = {marker.type}
-            description = {marker.description}
-            pinColor = {marker.availability ? '#00ff00' : '#ff0000'}
+            description = {marker.address + '\n' + marker.city + '\n' + marker.state}
+            pinColor = {marker.available ? '#00ff00' : '#ff0000'}
+            onPress = {() => this.props.navigator.push({
+            name: 'PostInfo',
+            item: marker,
+            lat: marker.lat,
+            lng: marker.lng
+            })}
             />
           ))}
+          <MapView.Marker
+            key = {"your location"}
+            coordinate = {{latitude: this.getLat(), longitude: this.getLong()}}
+            title = {"You are here"}
+            pinColor = {"#6600ff"}
+            />
           </MapView>
 
         </DrawerLayoutAndroid>

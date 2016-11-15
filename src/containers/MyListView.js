@@ -27,9 +27,12 @@ var DrawerLayout = require('react-native-drawer-layout');
  * fashion because currently there exists no other options
  * to retrieve that data :(
  */
+<<<<<<< HEAD
 var listArray = [];
 var listHash = {};
 
+=======
+>>>>>>> ae70330c2f6ab469675ae12aee206037e814463a
 export default class MyListView extends Component {
 
   constructor(props) {
@@ -64,8 +67,8 @@ export default class MyListView extends Component {
   _navigatePostInfo(self, item){
     // console.log("the post you clicked", Object.keys.(item[0]));
     // console.log("the post id ", item.keys)
-    var lat;
-    var lng;
+    var lat = 0;
+    var lng = 0;
     var ref = firebase.database().ref("listings/" + item.uid);
     ref.once("value").then(function(snapshot){
       lat = snapshot.lat;
@@ -80,8 +83,6 @@ export default class MyListView extends Component {
   _navigateMyMapView(self){
     self.props.navigator.push({
       name: 'MyMapView', // Matches route.name
-      listArray: listArray,
-      listHash: listHash
     })
   }
 
@@ -112,9 +113,8 @@ export default class MyListView extends Component {
  }
 
   componentWillMount() {
-    listArray = [];
-    listHash = {};
     var ref = firebase.database().ref ('listings');
+<<<<<<< HEAD
     ref.orderByKey().on ('child_added', function (snapshot) {
       listArray.push ({
                       uid: snapshot.val().uid,
@@ -126,6 +126,9 @@ export default class MyListView extends Component {
                       availability: snapshot.val().available
                    });
     });
+=======
+    ref.orderByKey().on ('child_added', function (snapshot) {});
+>>>>>>> ae70330c2f6ab469675ae12aee206037e814463a
   }
 
   mixins: [TimerMixin]

@@ -5,7 +5,7 @@ Can navigate to Signup
 */
 
 import React, {Component} from 'react';
-import {Navigator, StyleSheet, Text, TextInput, View, Image, BackAndroid} from 'react-native';
+import {Navigator, StyleSheet, Text, TextInput, View, Image, BackAndroid, Alert} from 'react-native';
 import Button from 'react-native-button';
 const dismissKeyboard = require('dismissKeyboard')
 
@@ -60,14 +60,21 @@ export default class Login extends Component {
 
 
         if( !email || !password){
-          alert ("Fill out all fields");
+          Alert.alert (
+            'Fill out all fields'
+          );
           return;
         }
         firebase.auth().signInWithEmailAndPassword (email, password).then (function() {
-            //alert ('successfully signed in');
+            // Alert.alert (
+            //   'successfully signed in'
+            // );
             // switchPage(destination);
         }, function (error) {
-            alert (error);
+            Alert.alert (
+              'sign in process',
+              'error'
+            );
         });
     }
 

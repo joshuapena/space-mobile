@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Container, Content, Button, Thumbnail, Header, Icon, Title, List, ListItem, Footer, FooterTab } from 'native-base';
-import {Navigator, StyleSheet, Text, TextInput, View, Image} from 'react-native';
+import {Navigator, StyleSheet, Text, TextInput, View, Image, Alert} from 'react-native';
 // import Button from 'react-native-button';
 
 var firebase = require ('firebase');
@@ -18,10 +18,14 @@ export default class Settings extends Component {
     logOutUser(switchPage, destination) {
         firebase.auth().signOut().then(function() {
 
-             alert ('logged out');
+             Alert.alert (
+               'logged out'
+             );
             // switchPage(destination);
         }, function (error) {
-            // alert ('error logging out');
+            Alert.alert (
+              'error logging out'
+            );
         });
     }
 

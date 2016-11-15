@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, BackAndroid} from 'react-native';
+import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, BackAndroid, Alert} from 'react-native';
 import {Container, Content, Thumbnail, Button, Header, Title, Grid, Col, Row, Card, CardItem, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
 import MapView from 'react-native-maps';
 
@@ -33,49 +33,21 @@ export default class PostInfo extends Component {
 
   checkSpace(){
     var self = this;
-    var postID = self.props.route.item.uid;
+    var postId = self.props.route.item.uid;
     var currentUser = firebase.auth().currentUser;
-
-    firebase.database().ref('users/' + currentUser.uid).once("value").then(function(snapshot){
-      var checkedIn = snapshot.val().checkedIn;
-      console.log(checkedIn);
-      if(!checkedIn){
-        firebase.database().ref ('listings/' +postID).update({available : false}, function (){
-          firebase.database().ref('users/' + currentUser.uid ).update({
-            checkedIn : true, checkedSpace : postID
-          }, self._navigateBack())
+    firebase.database().ref ('users/' + currentUser.uid).once ('value').then (function (snapshot) {
+      if (!snapshot.val().checkedIn) {
+        firebase.database().ref ('listings/' + postId).update ({available : false, checkedUser : currentUser.email}, function() {
+          firebase.database().ref ('users/' + currentUser.uid).update ({
+            checkedIn : true, checkedSpace : postId
+          }, self._navigateBack());
         });
-      }
-      else if(checkedIn){
-      firebase.database().ref ('listings/' +postID).update({available : true}, function (){
-        firebase.database().ref('users/' + currentUser.uid ).update({
-          checkedIn : false, checkedSpace : false
-        }, self._navigateBack())
-      });
-      }
-      else {
-        alert("you are checked into a spot already");
+      } else {
+        alert ('Error: you are already checked into a space');
       }
     });
   }
 
-  /*
-  +          <MapView
-+            initialRegion={{
-+              latitude: 37.78825,
-+              longitude: -122.4324,
-+              latitudeDelta: 0.0922,
-+              longitudeDelta: 0.0421,
-+            }}
-+            style = {{flex : 1}}
-+          >
-+          <MapView.Marker
-+            coordinate = {{latitude: 37.78825, longitude: -122.4324}}
-+            title = {"SF"}
-+            description = {"description"}
-+          />
-+          </MapView>
-*/
   render(){
     return(
       <Container style={{backgroundColor: 'white'}}>
@@ -95,33 +67,37 @@ export default class PostInfo extends Component {
             <Card>
               <CardItem>
                 <MapView
-                initialRegion={{
-                  latitude: this.props.route.item.lat,
-                  longitude: this.props.route.item.lng,
-                  latitudeDelta: 0.005,
-                  longitudeDelta: 0.005,
-                }}
-                style = {{height : 300}}
-                >
-                <MapView.Marker
-                coordinate = {{latitude: this.props.route.item.lat, longitude: this.props.route.item.lng}}
-                title = {this.props.route.item.address}
-                description = {this.props.route.item.type}
-                />
+                  initialRegion={{
+                    latitude: this.props.route.item.lat,
+                    longitude: this.props.route.item.lng,
+                    latitudeDelta: 0.005,
+                    longitudeDelta: 0.005,
+                  }}
+                  style = {{height : 300}}
+                  >
+                  <MapView.Marker
+                    coordinate = {{latitude: this.props.route.item.lat, longitude: this.props.route.item.lng}}
+                    title = {this.props.route.item.address}
+                    description = {this.props.route.item.type}
+                    pinColor = {this.props.route.item.available ? '#00ff00' : '#ff0000'}
+                  />
                 </MapView>
             </CardItem>
             <CardItem>
             <Grid>
               <Row justifyContent='center'>
-                  <Button large rounded disabled={!this.props.route.item.available} onPress={() => this.checkSpace()}>
+                  <Button large block disabled={!this.props.route.item.available} onPress={() => this.checkSpace()}>
                     <Text style={styles.buttonText}> Check In </Text>
                   </Button>
+<<<<<<< HEAD
                   <Button large rounded disabled={this.props.route.item.available} onPress={() => this.checkSpace()}>
                     <Text style={styles.buttonText}> Check Out </Text>
                   </Button>
                   <Button large rounded onPress={() => this.forceUpdate()}>
                     <Text style={styles.buttonText}> Refresh </Text>
                   </Button>
+=======
+>>>>>>> ae70330c2f6ab469675ae12aee206037e814463a
               </Row>
             </Grid>
             </CardItem>
