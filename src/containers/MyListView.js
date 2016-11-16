@@ -131,7 +131,7 @@ export default class MyListView extends Component {
   componentDidMount(){
     // this.getFirebaseData();
     var self = this;
-    firebase.database().ref('listings/').on("value", function(snapshot){
+    firebase.database().ref('listings/').once("value", function(snapshot){
       self.setState({
         spinnerState: false,
         dataSource :  snapshot.val(),
