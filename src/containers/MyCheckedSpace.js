@@ -36,12 +36,11 @@ export default class MyCheckedSpace extends Component {
     var self = this;
     var postID = self.state.thisSpace.uid;
     var currentUser = firebase.auth().currentUser;
-
     firebase.database().ref('users/' + currentUser.uid).once("value").then(function(snapshot){
       var checkedIn = snapshot.val().checkedIn;
-      // console.log(snapshot.val());
       console.log(checkedIn);
       if(checkedIn){
+        self.setState ({dataExists: false});
         firebase.database().ref ('listings/' +postID).update({available : true}, function (){
           firebase.database().ref('users/' + currentUser.uid ).update({
             checkedIn : false, checkedSpace : false
@@ -86,41 +85,55 @@ export default class MyCheckedSpace extends Component {
   })
 }
 
- render() {
-   return (
-      <Container style={{backgroundColor: 'white'}}>
-      <Header style={{backgroundColor: '#e74c3c'}}>
-      <Button transparent onPress={() => this._navigateBack()}>
-          <Icon name='ios-arrow-back' />
-      </Button>
-        <Title>SPACE</Title>
-      </Header>
-        <Content>
+  render() {
+    if (this.state.dataExists) {
+      return (
+        <Container style={{backgroundColor: 'white'}}>
+        <Header style={{backgroundColor: '#e74c3c'}}>
+        <Button transparent onPress={() => this._navigateBack()}>
+            <Icon name='ios-arrow-back' />
+        </Button>
+          <Title>SPACE</Title>
+        </Header>
+          <Content>
+          {renderIf(this.state.dataExists)(
+            <View>
+            <Text>{this.state.thisSpace.address}</Text>
+            <Text>{this.state.thisSpace.city}</Text>
+            <Text>{this.state.thisSpace.state}</Text>
+            <Text>{this.state.thisSpace.price}</Text>
+            <Text>{this.state.thisSpace.poster}</Text>
+            <Button rounded large onPress ={()=> {this.checkOut()}}> Checkout </Button>
+            </View>
+          )}
+           </Content>
+        </Container>
+      );
+    } else {
+      return (
+        <Container style={{backgroundColor: 'white'}}>
+        <Header style={{backgroundColor: '#e74c3c'}}>
+        <Button transparent onPress={() => this._navigateBack()}>
+            <Icon name='ios-arrow-back' />
+        </Button>
+          <Title>SPACE</Title>
+        </Header>
+          <Content>
 
-        {renderIf(!this.state.dataExists)(
-          <Grid>
-            <Col alignItems='center'>
-              <Icon name='ios-help-circle-outline' style={{fontSize: 200, color: '#e74c3c'}}/>
-              <Text>Looks like you don't have any Checked Out Space.</Text>
-            </Col>
-          </Grid>
-        )}
+          {renderIf(!this.state.dataExists)(
+            <Grid>
+              <Col alignItems='center'>
+                <Icon name='ios-help-circle-outline' style={{fontSize: 200, color: '#e74c3c'}}/>
+                <Text>Looks like you don't have any Checked Out Space.</Text>
+              </Col>
+            </Grid>
+          )}
 
-        {renderIf(this.state.dataExists)(
-          <View>
-          <Text>{this.state.thisSpace.address}</Text>
-          <Text>{this.state.thisSpace.city}</Text>
-          <Text>{this.state.thisSpace.state}</Text>
-          <Text>{this.state.thisSpace.price}</Text>
-          <Text>{this.state.thisSpace.poster}</Text>
-          <Button rounded large onPress ={()=> {this.checkOut()}}> Checkout </Button>
-          </View>
-        )}
-         </Content>
-    </Container>
-
-   );
- }
+        </Content>
+        </Container>
+      );
+    }
+  }
 }
 
 
