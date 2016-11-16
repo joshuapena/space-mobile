@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+  import React, {Component} from 'react';
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, BackAndroid, Alert} from 'react-native';
 import {Container, Content, Thumbnail, Button, Header, Title, Grid, Col, Row, Card, CardItem, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
 import MapView from 'react-native-maps';
@@ -89,15 +89,6 @@ export default class PostInfo extends Component {
                   <Button large block disabled={!this.props.route.item.available} onPress={() => this.checkSpace()}>
                     <Text style={styles.buttonText}> Check In </Text>
                   </Button>
-<<<<<<< HEAD
-                  <Button large rounded disabled={this.props.route.item.available} onPress={() => this.checkSpace()}>
-                    <Text style={styles.buttonText}> Check Out </Text>
-                  </Button>
-                  <Button large rounded onPress={() => this.forceUpdate()}>
-                    <Text style={styles.buttonText}> Refresh </Text>
-                  </Button>
-=======
->>>>>>> ae70330c2f6ab469675ae12aee206037e814463a
               </Row>
             </Grid>
             </CardItem>

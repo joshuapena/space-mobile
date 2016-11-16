@@ -25,6 +25,11 @@ export default class MyCheckedSpace extends Component {
       };
     }
 
+  _navigateListview(){
+    this.props.navigator.push({
+      name: 'MyListView', // Matches route.name
+    })
+  }
 
   checkOut(){
     console.log(this.state.thisSpace);
@@ -93,7 +98,12 @@ export default class MyCheckedSpace extends Component {
         <Content>
 
         {renderIf(!this.state.dataExists)(
-          <Text> There is no data</Text>
+          <Grid>
+            <Col alignItems='center'>
+              <Icon name='ios-help-circle-outline' style={{fontSize: 200, color: '#e74c3c'}}/>
+              <Text>Looks like you don't have any Checked Out Space.</Text>
+            </Col>
+          </Grid>
         )}
 
         {renderIf(this.state.dataExists)(

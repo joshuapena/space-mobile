@@ -27,12 +27,7 @@ var DrawerLayout = require('react-native-drawer-layout');
  * fashion because currently there exists no other options
  * to retrieve that data :(
  */
-<<<<<<< HEAD
-var listArray = [];
-var listHash = {};
 
-=======
->>>>>>> ae70330c2f6ab469675ae12aee206037e814463a
 export default class MyListView extends Component {
 
   constructor(props) {
@@ -114,21 +109,9 @@ export default class MyListView extends Component {
 
   componentWillMount() {
     var ref = firebase.database().ref ('listings');
-<<<<<<< HEAD
-    ref.orderByKey().on ('child_added', function (snapshot) {
-      listArray.push ({
-                      uid: snapshot.val().uid,
-                      username: snapshot.val().poster,
-                      description: snapshot.val().address + '\n' + snapshot.val().city + '\n' + snapshot.val().state,
-                      type: snapshot.val().type,
-                      latitude: snapshot.val().lat,
-                      longitude: snapshot.val().lng,
-                      availability: snapshot.val().available
-                   });
-    });
-=======
+
     ref.orderByKey().on ('child_added', function (snapshot) {});
->>>>>>> ae70330c2f6ab469675ae12aee206037e814463a
+
   }
 
   mixins: [TimerMixin]
