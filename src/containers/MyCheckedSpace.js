@@ -35,12 +35,25 @@ export default class MyCheckedSpace extends Component {
     console.log(this.state.thisSpace);
     var self = this;
     var postID = self.state.thisSpace.uid;
+    var poster = self.state.thisSpace.poster;
+    var price = self.state.thisSpace.price;
     var currentUser = firebase.auth().currentUser;
+    var checkIn;
+    var checkOut;
     firebase.database().ref('users/' + currentUser.uid).once("value").then(function(snapshot){
       var checkedIn = snapshot.val().checkedIn;
       console.log(checkedIn);
       if(checkedIn){
         self.setState ({dataExists: false});
+        checkOut = firebase.database.ServerValue.TIMESTAMP;
+        firebase.database().ref('listings/' + postID+ '/' + currentUser.uid).update({checkoutTime: checkOut });
+        var ref = firebase.database().ref("listings/" + postID+ '/' + currentUser.uid);
+        ref.once("value").then(function(snapshot){
+          checkIn = snapshot.val().checkinTime;
+          //alert(checkOut);
+          console.log("TStamp "+ checkOut.sv);
+          //alert("You owe " + poster + ((Math.ceil(checkOut - checkIn)/3600000) * price));
+        });
         firebase.database().ref ('listings/' +postID).update({available : true}, function (){
           firebase.database().ref('users/' + currentUser.uid ).update({
             checkedIn : false, checkedSpace : false

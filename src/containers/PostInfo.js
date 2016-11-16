@@ -37,6 +37,7 @@ export default class PostInfo extends Component {
     var currentUser = firebase.auth().currentUser;
     firebase.database().ref ('users/' + currentUser.uid).once ('value').then (function (snapshot) {
       if (!snapshot.val().checkedIn) {
+        firebase.database().ref('listings/' + postId+ '/' + currentUser.uid).update({checkinTime: firebase.database.ServerValue.TIMESTAMP });
         firebase.database().ref ('listings/' + postId).update ({available : false, checkedUser : currentUser.email}, function() {
           firebase.database().ref ('users/' + currentUser.uid).update ({
             checkedIn : true, checkedSpace : postId
