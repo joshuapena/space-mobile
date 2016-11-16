@@ -9,6 +9,7 @@ export default {
 	//primary color
 	brandPrimary: '#e74c3c',
 	backgroundColor: 'white',
+	
 	//MylistView.js
 	//sidebar icon
 	sIconColor: '#3498db',
@@ -16,12 +17,31 @@ export default {
 	sButtonColor: '#3498db',
 	//toolbar icon color
 	tIconColor: 'white',
+	//checkin icon color
+	checkInButton: 'green',
+	//listView Text color
+	checkText: 'white',
+	//nav background color
+	navColor: '#25383C',
 
+	//Editpost.js
 	//delete button color
-	//delButton: 'red'
+	delButton: 'red',
 
 	//Hostspace.js
-	submitButton: '#3498db'
+	submitButton: '#3498db',
+	hostSpinner: '#e74c3c',
 	//Login.js
 
+	//MyCheckedSpace.js
+	helpIcon: '#e74c3c',
+
+	//MyPosts.js
+	checkSpace: '#3498db',
+	postSpinner: '#e74c3c',
+
+	//SpaceBootup.js
+	bootColor: '#ecf0f1',
+	rocketColor: '#e74c3c',
+	bootSpinner: '#e74c3c'
 }

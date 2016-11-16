@@ -28,7 +28,7 @@ deleteButtonPressed(){
   var updateObj = {};
   firebase.database().ref ('users/' + currentUser.uid +'/listing/'+self.state.postId).remove();
   firebase.database().ref('/listings/'+self.state.postId).remove(function(){
-    self.props.navigator.pop();
+    self.props.navigator.push({name: 'MyListView',})
   });
 }
 
@@ -52,8 +52,8 @@ componentDidMount(){
 
   render() {
       return (
-          <Container style={{backgroundColor: 'white'}}>
-            <Header style={{backgroundColor: '#e74c3c'}}>
+          <Container style={{backgroundColor: theme.backgroundColor}}>
+            <Header style={{backgroundColor: theme.brandPrimary}}>
               <Button transparent onPress={() => this._navigateBack()}>
                   <Icon name='ios-arrow-back' />
               </Button>
@@ -61,7 +61,7 @@ componentDidMount(){
             </Header>
             <Content>
               <Text>{this.state.postId}</Text>
-              <Button small danger
+              <Button small danger style={{ backgroundColor: theme.delButton }}
                 onPress={()=>{this.deleteButtonPressed()}}
                >Delete this post
                </Button>
