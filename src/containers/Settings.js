@@ -12,7 +12,7 @@ export default class Settings extends Component {
     }
 
     _navigateBack(){
-      this.props.navigator.pop();
+      this.props.navigator.replacePreviousAndPop ({name : 'MyListView'})
     }
 
     logOutUser(switchPage, destination) {
