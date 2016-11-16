@@ -252,8 +252,8 @@ enableButton(){
                 </Picker>
 
                   {this.state.hideButton ?
-                     <Spinner color='#e74c3c'/> :
-                     <Button large block
+                     <Spinner color={theme.brandPrimary}/> :
+                     <Button large block style={{ backgroundColor: theme.submitButton }}
                        onPress={() => {this.enableButton(); }}> Submit New Space </Button>}
 
               </View>
