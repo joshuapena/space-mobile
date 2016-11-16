@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TouchableHighlight, Slider, Picker, TextInput, View, Image, BackAndroid} from 'react-native';
 import {Container, Content, Spinner} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Themes from './Themes';
 
 var firebase = require('firebase');
 

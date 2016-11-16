@@ -11,6 +11,8 @@ import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, Touchable
 import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, Grid, Col, Row,
         Title, List, ListItem, Footer, FooterTab} from 'native-base';
 
+import Themes from './Themes';
+
 const TimerMixin =  require('react-timer-mixin');
 import Icon from 'react-native-vector-icons/FontAwesome';
 var firebase = require ('firebase');

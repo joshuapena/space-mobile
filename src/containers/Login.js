@@ -6,6 +6,7 @@ Can navigate to Signup
 
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TextInput, View, Image, BackAndroid, Alert} from 'react-native';
+import Themes from './Themes';
 import Button from 'react-native-button';
 const dismissKeyboard = require('dismissKeyboard')
 

@@ -8,6 +8,7 @@ import React, {Component} from 'react';
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, Alert} from 'react-native';
 import {Container, Content, Thumbnail, Button, Header, Spinner, Title, Grid, Col, Row,
         List, ListItem, Footer, FooterTab, Icon } from 'native-base';
+import Themes from './Themes';
 
 
 var renderIf = require('render-if');
@@ -100,7 +101,7 @@ export default class MyCheckedSpace extends Component {
         {renderIf(!this.state.dataExists)(
           <Grid>
             <Col alignItems='center'>
-              <Icon name='ios-help-circle-outline' style={{fontSize: 200, color: '#e74c3c'}}/>
+              <Icon name='ios-help-circle-outline' style={{fontSize: 200, color: '#e74c3c' }}/>
               <Text>Looks like you don't have any Checked Out Space.</Text>
             </Col>
           </Grid>

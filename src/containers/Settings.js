@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Container, Content, Button, Thumbnail, Header, Icon, Title, List, ListItem, Footer, FooterTab } from 'native-base';
 import {Navigator, StyleSheet, Text, TextInput, View, Image, Alert} from 'react-native';
 // import Button from 'react-native-button';
+import Themes from './Themes';
 
 var firebase = require ('firebase');
 
