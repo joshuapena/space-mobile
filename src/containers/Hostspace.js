@@ -18,8 +18,8 @@ export default class Hostspace extends Component {
   }
 
   _navigateBack(){
-  this.props.navigator.pop();
-}
+    this.props.navigator.replacePreviousAndPop ({name : 'MyListView'});
+  }
 
 
 enableButton(){
@@ -54,8 +54,6 @@ enableButton(){
     let myType=this.state.type;
     let myCity = this.state.city;
     let myState = this.state.us_state;
-    //let mLat = this.state.lat;
-    //let mLong = this.state.long;
     let myUsername = "";
 
     let currentUser = firebase.auth().currentUser;
@@ -72,10 +70,10 @@ enableButton(){
       var myJson = {
         price: myPrice,
         address: myAddress,
-        city: myCity,
-        us_state: myState,
+        city: 'null',
+        us_state: 'null',
         type : myType,
-        poster: myUsername,
+        poster: firebase.auth().currentUser.email,
         available : true
       }
 
@@ -83,12 +81,11 @@ enableButton(){
       var googleAddress = myAddress.replace (regex, "+") + ',+' + myCity.replace (regex, '+') + ',+' + myState;
       var googleURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + googleAddress + '&key=AIzaSyB57uuwSaQA6dFY65Xj8tRAmubfAa27hYg';
       console.log (googleURL);
-      /////////////////////////
       fetch (googleURL).then (function (response) {
         if (response.status !== 200) {
           Alert.alert (
             'error with fetch call',
-            'code: '+response.status
+            'code: '+ response.status
           );
           self.setState({hideButton : false});
           return;
@@ -98,12 +95,13 @@ enableButton(){
             if (data.results[0].geometry.location_type != 'ROOFTOP') {
               Alert.alert (
                 'Invalid Address',
-                'somewhat bogus address'
+                'Please enter a valid address'
               );
               self.setState({hideButton : false});
             } else {
               if (myType && myAddress && myPrice && myCity && myState) { //Checks if no fields empty
-                console.log(myJson.body);
+                myJson.city = data.results[0].address_components[2].long_name;
+                myJson.us_state = data.results[0].address_components[4].long_name;
                 self.postTestData(myJson, data);
               } else {
                 console.log("not saved to node");
@@ -122,33 +120,9 @@ enableButton(){
       }).catch (function (err) {
         console.log ('fetch error');
       });
-      /////////////////////////
     });
   }
 
-  /*
-    getPostLocation() {
-    var address = this.props.route.item.address;
-    var city = this.props.route.item.city;
-    var state = this.props.route.item.state;
-    var regex = new RegExp ('\\s+', 'g');
-    var googleAddress = address.replace (regex, "+") + ',+' + city.replace (regex, '+') + ',+' + state;
-    var googleURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + googleAddress + '&key=AIzaSyB57uuwSaQA6dFY65Xj8tRAmubfAa27hYg';
-    console.log (googleURL);
-    fetch (googleURL).then (function (response) {
-      if (response.status !== 200) {
-        console.log ('error with fetch call, code : ' + response.status);
-        return;
-      }
-      response.json().then (function (data) {
-        lat = data.results[0].geometry.location.lat;
-        lng = data.results[0].geometry.location.lng;
-      })
-    }).catch (function (err) {
-      console.log ('fetch error');
-    });
-  }
-  */
   postTestData(myPost, locationData) {
     var self = this;
     console.log("posting data");
