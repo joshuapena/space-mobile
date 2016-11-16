@@ -125,7 +125,7 @@ export default class MyPosts extends Component {
  render() {
    return (
       <Container style={{backgroundColor: 'white'}}>
-      <Header style={{backgroundColor: '#e74c3c'}}>
+      <Header style={{backgroundColor: theme.brandPrimary}}>
         <Button transparent onPress={() => this. _navigateBack()}>
           <Icon name='ios-arrow-back' />
         </Button>

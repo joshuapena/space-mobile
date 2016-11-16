@@ -133,26 +133,26 @@ export default class MyListView extends Component {
       <View style={{flex: 1, backgroundColor: '#25383C'}}>
         <Text style={{margin: 10, fontSize: 50, textAlign: 'center', color: 'white'}}> SPACE </Text>
         <View style={{alignItems:'center', paddingBottom:15}}>
-          <Icon name='user' style={{fontSize: 50, color: '#3498db'}}/>
+          <Icon name='user' color= {theme.sIconColor} style={{fontSize: 50}}/>
           <Text style={{fontSize: 20, color: '#3498db'}}> User </Text>
         </View>
           <List>
               <ListItem>
-                <Icon name="plus-circle" size={30} color="#3498db"/>
-                <Button transparent color='#3498db' onPress={() => {this._navigateHostspace()}}> 
+                <Icon name="plus-circle" size={30} color={theme.sIconColor}/>
+                <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateHostspace()}}> 
                  Create Space </Button>
               </ListItem>
               <ListItem>
-                <Icon name="sign-out" size={30} color="#3498db"/>
-                <Button transparent color='#3498db'onPress={() => {this._navigateMyPosts()}}> My Postings </Button>
+                <Icon name="sign-out" size={30} color={theme.sIconColor}/>
+                <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateMyPosts()}}> My Postings </Button>
               </ListItem>
               <ListItem>
-                <Icon name="car" size={30} color="#3498db"/>
-                <Button transparent color='#3498db' onPress={() => {this._navigateMyCheckedSpace()}}> My Space </Button>
+                <Icon name="car" size={30} color={theme.sIconColor}/>
+                <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateMyCheckedSpace()}}> My Space </Button>
               </ListItem> 
               <ListItem>
-                <Icon name="cog" size={30} color="#3498db"/>
-                <Button transparent color='#3498db' onPress={() => {this._navigateSettings()}}> Settings </Button>
+                <Icon name="cog" size={30} color={theme.sIconColor}/>
+                <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateSettings()}}> Settings </Button>
               </ListItem> 
           </List>
       </View>
@@ -165,13 +165,13 @@ export default class MyListView extends Component {
           ref = {'DRAWER'}
           renderNavigationView={() => navigationView}>
 
-          <Header style={{backgroundColor: '#e74c3c'}}>
+          <Header style={{backgroundColor: theme.brandPrimary}}>
             <Button transparent onPress={() => this.refs['DRAWER'].openDrawer()}>
-              <Icon name="navicon" size={20} color="white"/>
+              <Icon name="navicon" size={20} color={theme.tIconColor}/>
             </Button>
             <Title>SPACE</Title>
             <Button transparent onPress={() => {this._navigateMyMapView(this)}}> 
-              <Icon name="map-o" size={25} color="white"/>
+              <Icon name="map-o" size={25} color={theme.tIconColor}/>
             </Button>
           </Header>
 
