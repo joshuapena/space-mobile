@@ -110,20 +110,14 @@ export default class MyListView extends Component {
  // }
 
 
-getFirebaseData(){
-  var self = this;
-  firebase.database().ref('listings/').on("value", function(snapshot){
-    self.setState({
-      spinnerState: false,
-      dataSource :  snapshot.val(),
-    });
-    console.log(snapshot.val());
-  });
-}
+// getFirebaseData(){
+//
+// }
 
- getTestData() {
-  console.log('getTestData');
-};
+
+//  getTestData() {
+//   console.log('getTestData');
+// };
 
 
   componentWillMount() {
@@ -133,9 +127,17 @@ getFirebaseData(){
 
   }
 
-  mixins: [TimerMixin]
+  // mixins: [TimerMixin]
   componentDidMount(){
-    this.getFirebaseData();
+    // this.getFirebaseData();
+    var self = this;
+    firebase.database().ref('listings/').on("value", function(snapshot){
+      self.setState({
+        spinnerState: false,
+        dataSource :  snapshot.val(),
+      });
+      console.log(snapshot.val());
+    });
     // this.getTestData();
     // this.timer = setInterval( () => {
     //   this.getTestData();
