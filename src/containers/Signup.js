@@ -10,6 +10,7 @@ Some of the error messages crash the app
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TextInput, View, Image, Alert} from 'react-native';
 import Button from 'react-native-button';
+import theme from'./Themes';
 
 const dismissKeyboard = require('dismissKeyboard')
 var firebase = require ('firebase');

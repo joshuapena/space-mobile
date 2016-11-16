@@ -7,6 +7,8 @@ Can navigate to Signup
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TextInput, View, Image, BackAndroid, Alert} from 'react-native';
 import Button from 'react-native-button';
+import theme from'./Themes';
+
 const dismissKeyboard = require('dismissKeyboard')
 
 var firebase = require ('firebase');

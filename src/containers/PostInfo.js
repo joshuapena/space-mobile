@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, BackAndroid, Alert} from 'react-native';
 import {Container, Content, Thumbnail, Button, Header, Title, Grid, Col, Row, Card, CardItem, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
 import MapView from 'react-native-maps';
+import theme from'./Themes';
 
 var firebase = require('firebase');
 

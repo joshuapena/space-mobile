@@ -7,6 +7,7 @@ Can navigate back to MyListViews
 import React, {Component} from 'react';
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
 import {Container, Content, Thumbnail, Button, Icon, Grid, Col, Row, Header, Spinner, Title, List, ListItem, Footer, FooterTab} from 'native-base';
+import theme from'./Themes';
 
 var renderIf = require('render-if');
 
@@ -131,7 +132,7 @@ export default class MyPosts extends Component {
         <Title>My Posts</Title>
       </Header>
 
-      <Content>
+      <Content theme={theme}>
       {renderIf(this.state.spinnerState)(
         <Spinner color='#e74c3c' />
       )}
@@ -139,7 +140,7 @@ export default class MyPosts extends Component {
       {renderIf(!this.state.dataExists)(
         <Grid>
           <Col alignItems='center'>
-            <Icon name='ios-help-circle-outline' style={{fontSize: 200, color: '#e74c3c'}}/>
+            <Icon name='ios-help-circle-outline' style={{fontSize: 200, color: theme.brandPrimary}}/>
             <Text>Looks like you don't have any postings.</Text>
             <Text>Want to Create a Space?</Text> 
             <Button large block transparent color='#3498db' onPress={() => {this._navigateHostspace()}}>
