@@ -50,8 +50,8 @@ export default class PostInfo extends Component {
 
   render(){
     return(
-      <Container style={{backgroundColor: 'white'}}>
-      <Header style={{backgroundColor: '#e74c3c'}}>
+      <Container style={{backgroundColor: theme.backgroundColor}}>
+      <Header style={{backgroundColor: theme.brandPrimary}}>
         <Button transparent onPress={() => this._navigateBack()}>
             <Icon name='ios-arrow-back' />
         </Button>

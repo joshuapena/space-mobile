@@ -110,7 +110,7 @@ export default class Signup extends Component {
 
     render() {
         return (
-            <View style={{flex: 1, backgroundColor: 'white'}}>
+            <View style={{flex: 1, backgroundColor: theme.backgroundColor}}>
                 <Text style = {styles.welcome}>
                     Signup
                 </Text>

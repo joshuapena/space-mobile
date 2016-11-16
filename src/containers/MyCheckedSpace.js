@@ -88,8 +88,8 @@ export default class MyCheckedSpace extends Component {
   render() {
     if (this.state.dataExists) {
       return (
-        <Container style={{backgroundColor: 'white'}}>
-        <Header style={{backgroundColor: '#e74c3c'}}>
+        <Container style={{backgroundColor: theme.backgroundColor}}>
+        <Header style={{backgroundColor: theme.brandPrimary}}>
         <Button transparent onPress={() => this._navigateBack()}>
             <Icon name='ios-arrow-back' />
         </Button>
@@ -111,8 +111,8 @@ export default class MyCheckedSpace extends Component {
       );
     } else {
       return (
-        <Container style={{backgroundColor: 'white'}}>
-        <Header style={{backgroundColor: '#e74c3c'}}>
+        <Container style={{backgroundColor: theme.backgroundColor}}>
+        <Header style={{backgroundColor: theme.brandPrimary}}>
         <Button transparent onPress={() => this._navigateBack()}>
             <Icon name='ios-arrow-back' />
         </Button>
@@ -123,7 +123,7 @@ export default class MyCheckedSpace extends Component {
           {renderIf(!this.state.dataExists)(
             <Grid>
               <Col alignItems='center'>
-                <Icon name='ios-help-circle-outline' style={{fontSize: 200, color: '#e74c3c'}}/>
+                <Icon name='ios-help-circle-outline' style={{fontSize: 200, color: theme.helpIcon}}/>
                 <Text>Looks like you don't have any Checked Out Space.</Text>
               </Col>
             </Grid>
