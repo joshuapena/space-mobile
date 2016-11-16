@@ -157,6 +157,32 @@ export default class MyListView extends Component {
           </List>
       </View>
     );
+  if (this.state.spinnerState) {
+  return (
+        <View style={styles.containerToolbar}>
+          <DrawerLayoutAndroid
+            drawerWidth={200}
+            drawerPosition={DrawerLayoutAndroid.positions.Left}
+            ref = {'DRAWER'}
+            renderNavigationView={() => navigationView}>
+  
+            <Header style={{backgroundColor: theme.brandPrimary}}>
+              <Button transparent onPress={() => this.refs['DRAWER'].openDrawer()}>
+                <Icon name="navicon" size={20} color={theme.tIconColor}/>
+              </Button>
+              <Title>SPACE</Title>
+              <Button transparent onPress={() => {this._navigateMyMapView(this)}}> 
+                <Icon name="map-o" size={25} color={theme.tIconColor}/>
+              </Button>
+            </Header>
+            <View>
+            <Spinner color={theme.brandPrimary}/>
+            </View>
+          </DrawerLayoutAndroid>
+       </View>
+    );
+  }
+  else {
    return (
       <View style={styles.containerToolbar}>
         <DrawerLayoutAndroid
@@ -215,6 +241,7 @@ export default class MyListView extends Component {
         </DrawerLayoutAndroid>
      </View>
    );
+  }
  }
 }
 
