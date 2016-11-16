@@ -49,13 +49,13 @@ export default class SpaceBootup extends Component {
 
   render(){
     return(
-      <Container style={{backgroundColor: '#ecf0f1'}}>
+      <Container style={{backgroundColor: theme.bootColor}}>
           <Content>
               <View>
               <Text style={styles.welcome}>
-                Sp<Icon name="rocket" size={30} color="#e74c3c"/>ce
+                Sp<Icon name="rocket" size={30} color= {theme.rocketColor}/>ce
               </Text>
-              <Spinner color='#e74c3c'/>
+              <Spinner color= {theme.bootSpinner}/>
               </View>
           </Content>
       </Container>

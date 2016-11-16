@@ -89,7 +89,7 @@ export default class MyMapView extends Component {
 
 	render(){
     var navigationView = (
-      <View style={{flex: 1, backgroundColor: 'white'}}>
+      <View style={{flex: 1, backgroundColor: theme.backgroundColor}}>
         <Text style={{margin: 10, fontSize: 20, textAlign: 'center'}}> SPACE </Text>
 
       </View>
@@ -102,7 +102,7 @@ export default class MyMapView extends Component {
           ref = {'DRAWER'}
           renderNavigationView={() => navigationView}>
 
-          <Header style={{backgroundColor: '#e74c3c'}}>
+          <Header style={{backgroundColor: theme.brandPrimary}}>
             <Button transparent onPress={() => this. _navigateBack()}>
               <Icon name='ios-arrow-back' />
             </Button>

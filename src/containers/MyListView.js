@@ -135,7 +135,7 @@ export default class MyListView extends Component {
         <Text style={{margin: 10, fontSize: 50, textAlign: 'center', color: 'white'}}> SPACE </Text>
         <View style={{alignItems:'center', paddingBottom:15}}>
           <Icon name='user' color= {theme.sIconColor} style={{fontSize: 50}}/>
-          <Text style={{fontSize: 20, color: '#3498db'}}> User </Text>
+          <Text style={{fontSize: 20, color: theme.sIconColor}}> User </Text>
         </View>
           <List>
               <ListItem>
@@ -159,6 +159,32 @@ export default class MyListView extends Component {
           </List>
       </View>
     );
+  if (this.state.spinnerState) {
+  return (
+        <View style={styles.containerToolbar}>
+          <DrawerLayoutAndroid
+            drawerWidth={200}
+            drawerPosition={DrawerLayoutAndroid.positions.Left}
+            ref = {'DRAWER'}
+            renderNavigationView={() => navigationView}>
+
+            <Header style={{backgroundColor: theme.brandPrimary}}>
+              <Button transparent onPress={() => this.refs['DRAWER'].openDrawer()}>
+                <Icon name="navicon" size={20} color={theme.tIconColor}/>
+              </Button>
+              <Title>SPACE</Title>
+              <Button transparent onPress={() => {this._navigateMyMapView(this)}}>
+                <Icon name="map-o" size={25} color={theme.tIconColor}/>
+              </Button>
+            </Header>
+            <View>
+            <Spinner color={theme.brandPrimary}/>
+            </View>
+          </DrawerLayoutAndroid>
+       </View>
+    );
+  }
+  else {
    return (
       <View style={styles.containerToolbar}>
         <DrawerLayoutAndroid
@@ -183,10 +209,10 @@ export default class MyListView extends Component {
                 <ListItem>
                   <Card>
                     {item.available ?
-                      <Card backgroundColor='green'>
+                      <Card backgroundColor= {theme.checkInButton}>
                       <Text style={{fontSize: 20, color: 'white'}}> {item.address}</Text>
                       </Card> :
-                      <Card backgroundColor='#e74c3c'>
+                      <Card backgroundColor= {theme.brandPrimary}>
                       <Text style={{fontSize: 20, color: 'white'}}> {item.address}</Text>
                       </Card>}
                     <CardItem button onPress={() => {this._navigatePostInfo(this, item)}}>
@@ -204,8 +230,8 @@ export default class MyListView extends Component {
 
                         <Col alignItems='center'>
                             {item.available ?
-                            <Icon name="sign-in" color= 'green' size={50}/> :
-                            <Icon name="car" color='#e74c3c' size= {50}/> }
+                            <Icon name="sign-in" color= {theme.checkInButton} size={50}/> :
+                            <Icon name="car" color={theme.brandPrimary} size= {50}/> }
                         </Col>
                       </Grid>
 
@@ -217,6 +243,7 @@ export default class MyListView extends Component {
         </DrawerLayoutAndroid>
      </View>
    );
+  }
  }
 }
 
