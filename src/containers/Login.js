@@ -7,6 +7,8 @@ Can navigate to Signup
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TextInput, View, Image, BackAndroid, Alert} from 'react-native';
 import Button from 'react-native-button';
+import theme from'./Themes';
+
 const dismissKeyboard = require('dismissKeyboard')
 
 var firebase = require ('firebase');
@@ -21,36 +23,6 @@ export default class Login extends Component {
     _navigateCreate(){
       this.props.navigator.push({name: "Signup"});
     }
-
-
-    // componentWillMount(){
-    //
-    //
-    //   var nav = this.props.navigator;
-    //   BackAndroid.addEventListener('hardwareBackPress', () => {
-    //     if (nav.getCurrentRoutes().length === 1  ) {
-    //        return false;
-    //     }
-    //     nav.pop();
-    //     return true;
-    //   });
-    //   var self = this;
-    //
-    //   //Checks if user is already logged in
-    //   firebase.auth().onAuthStateChanged(function(user) {
-    //     // goToPage(user)
-    //     if (user) {
-    //       console.log("user is signed in at login screen");
-    //       console.log(user.email);
-    //       self.props.navigator.push({name: "MyListView"});
-    //       change = true;
-    //     } else {
-    //       console.log("no one is signed in");
-    //       return;
-    //     }
-    //   });
-    // }
-
 
     logInOnPress(switchPage, destination) {
         dismissKeyboard();
@@ -80,7 +52,7 @@ export default class Login extends Component {
 
     render() {
         return (
-            <View style={{flex: 1, backgroundColor: 'white'}}>
+            <View style={{flex: 1, backgroundColor: theme.backgroundColor}}>
                 <Text style = {styles.welcome}>
                     Login
                 </Text>

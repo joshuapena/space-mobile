@@ -1,6 +1,6 @@
 # Space -- CMPS 115 intro to software development
 
-##Prerequisites to install
+## Prerequisites to install
 * Android studio
 * Nodejs
 
@@ -9,7 +9,7 @@
 open android project and run emulator  
 `react-native run-android`
 
-##Goals
+## Goals
 * Create an application that allows 'owners' to post parking spaces as available for rent
 * Users that are 'renters' can check into parking spaces
 
@@ -24,11 +24,15 @@ open android project and run emulator
 * Firebase
 * Google Location API
 
-##Team Members
+## Team Members
 * Raul Lopez- Luna 
 * Joshua Peña
 * Colin Au
 * David Sun
 * Tyler Tagawa
 * Matthew Kim
-  
+
+## Screenshots
+<img src="http://i.imgur.com/XBRzojk.png" width="275">
+<img src="http://i.imgur.com/aOXHcMf.png" width="275">
+<img src="http://i.imgur.com/AHbnHgE.png" width="275">

@@ -4,7 +4,7 @@ import {Navigator, StyleSheet, Text, TextInput, View, Image, TouchableHighlight,
         TouchableOpacity,DrawerLayoutAndroid, ToolbarAndroid, Alert} from 'react-native';
 import {Container, Content, Card, CardItem, Thumbnail, Button, Header, Spinner, Title, List, Icon,
         ListItem, Footer, FooterTab, InputGroup, Input} from 'native-base';
-
+import theme from'./Themes';
 
 var DrawerLayout = require('react-native-drawer-layout');
 var firebase = require('firebase');

@@ -7,6 +7,7 @@ Delete and edit ride from this page
 import React, {Component} from 'react';
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
 import {Container, Content, Thumbnail, Button, Header, Title, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
+import theme from'./Themes';
 
 var firebase = require ('firebase');
 
