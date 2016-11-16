@@ -58,7 +58,7 @@ export default class MyPosts extends Component {
   }
 
   _navigateBack(){
-    this.props.navigator.pop()
+    this.props.navigator.replacePreviousAndPop ({name : 'MyListView'});
   }
 
   getTestData() {

@@ -21,7 +21,8 @@ export default class MyCheckedSpace extends Component {
     this.state = {
         spinnerState : true,
         thisSpace : {},
-        dataExists : false
+        dataExists : false,
+        checkingOut : false
       };
     }
 
@@ -32,6 +33,7 @@ export default class MyCheckedSpace extends Component {
   }
 
   checkOut(){
+    this.setState ({checkingOut: true});
     console.log(this.state.thisSpace);
     var self = this;
     var postID = self.state.thisSpace.uid;
@@ -59,7 +61,7 @@ export default class MyCheckedSpace extends Component {
 
 
   _navigateBack(){
-    this.props.navigator.pop();
+    this.props.navigator.replacePreviousAndPop ({name : 'MyListView'})
   }
 
   componentWillMount(){
@@ -109,7 +111,23 @@ export default class MyCheckedSpace extends Component {
            </Content>
         </Container>
       );
-    } else {
+    } 
+    else if (this.state.checkingOut) {
+        return (
+          <Container style={{backgroundColor: 'white'}}>
+          <Header style={{backgroundColor: '#e74c3c'}}>
+          <Button transparent onPress={() => this._navigateBack()}>
+              <Icon name='ios-arrow-back' />
+          </Button>
+            <Title>SPACE</Title>
+          </Header>
+            <Content>
+            <Spinner color={theme.brandPrimary}/>
+            </Content>
+        </Container>
+      );
+    }
+    else {
       return (
         <Container style={{backgroundColor: theme.backgroundColor}}>
         <Header style={{backgroundColor: theme.brandPrimary}}>
@@ -128,8 +146,7 @@ export default class MyCheckedSpace extends Component {
               </Col>
             </Grid>
           )}
-
-        </Content>
+          </Content>
         </Container>
       );
     }
