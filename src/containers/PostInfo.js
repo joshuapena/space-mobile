@@ -5,7 +5,6 @@ import MapView from 'react-native-maps';
 
 var firebase = require('firebase');
 
-
 export default class PostInfo extends Component {
   constructor (props) {
       super (props);
@@ -86,7 +85,8 @@ export default class PostInfo extends Component {
             <CardItem>
             <Grid>
               <Row justifyContent='center'>
-                  <Button large block disabled={!this.props.route.item.available} onPress={() => this.checkSpace()}>
+                  <Button large block disabled={!this.props.route.item.available || (firebase.auth().currentUser.email === this.props.route.item.poster)} 
+                    onPress={() => firebase.auth().currentUser.uid === this.props.route.item.uid ? alert ('Cannot check in to your own space') : this.checkSpace()}>
                     <Text style={styles.buttonText}> Check In </Text>
                   </Button>
               </Row>
