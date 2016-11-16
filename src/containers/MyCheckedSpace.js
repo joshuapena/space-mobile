@@ -8,7 +8,7 @@ import React, {Component} from 'react';
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, Alert} from 'react-native';
 import {Container, Content, Thumbnail, Button, Header, Spinner, Title, Grid, Col, Row,
         List, ListItem, Footer, FooterTab, Icon } from 'native-base';
-
+import theme from'./Themes';
 
 var renderIf = require('render-if');
 var firebase = require('firebase');
