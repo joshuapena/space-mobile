@@ -90,24 +90,41 @@ export default class MyListView extends Component {
   }
 
 
-  getTestData() {
-   fetch('https://space-ucsc.herokuapp.com/viewList',)
-     .then((response) => response.json())
-     .then((responseJson) => {
-       //console.log("GET /test : ", responseJson.code);
-       //console.log(JSON.stringify(responseJson.spaceListing, null, 3));
-      //  console.log("this is the responseJson", responseJson.spaceListing);
-       this.setState({
-         spinnerState: false,
-         dataSource :  responseJson.spaceListing,
-       });
-      //  console.log("this is the dataSource", this.state.dataSource);
-       responseJson.code;
-     })
-     .catch((error) => {
-       console.error(error);
-     });
- }
+ //  getTestData() {
+ //   fetch('https://space-ucsc.herokuapp.com/viewList',)
+ //     .then((response) => response.json())
+ //     .then((responseJson) => {
+ //       //console.log("GET /test : ", responseJson.code);
+ //       //console.log(JSON.stringify(responseJson.spaceListing, null, 3));
+ //      //  console.log("this is the responseJson", responseJson.spaceListing);
+ //       this.setState({
+ //         spinnerState: false,
+ //         dataSource :  responseJson.spaceListing,
+ //       });
+ //      //  console.log("this is the dataSource", this.state.dataSource);
+ //       responseJson.code;
+ //     })
+ //     .catch((error) => {
+ //       console.error(error);
+ //     });
+ // }
+
+
+getFirebaseData(){
+  var self = this;
+  firebase.database().ref('listings/').on("value", function(snapshot){
+    self.setState({
+      spinnerState: false,
+      dataSource :  snapshot.val(),
+    });
+    console.log(snapshot.val());
+  });
+}
+
+ getTestData() {
+  console.log('getTestData');
+};
+
 
   componentWillMount() {
     var ref = firebase.database().ref ('listings');
@@ -118,15 +135,16 @@ export default class MyListView extends Component {
 
   mixins: [TimerMixin]
   componentDidMount(){
-    this.getTestData();
-    this.timer = setInterval( () => {
-      this.getTestData();
-    }, 1000)
+    this.getFirebaseData();
+    // this.getTestData();
+    // this.timer = setInterval( () => {
+    //   this.getTestData();
+    // }, 1000)
   }
 
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
+  // componentWillUnmount() {
+  //   clearInterval(this.timer);
+  // }
 
 
  render() {
