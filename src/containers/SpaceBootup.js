@@ -30,12 +30,17 @@ export default class SpaceBootup extends Component {
       if (user) {
         console.log("user is signed in at login screen");
         console.log(user.email);
+
         self.props.navigator.immediatelyResetRouteStack([{name: 'MyListView'}]);
+
         // setTimeout(()=>{self.props.navigator.push({name: "MyListView"})}, 1000);
-        change = true;
       } else {
+        self.props.navigator.popToTop();
         console.log("no one is signed in");
+
+
         self.props.navigator.immediatelyResetRouteStack([{name: 'Login'}]);        // setTimeout(()=>{self.props.navigator.push({name: "Login"})}, 1000);
+
         return;
       }
     });
@@ -44,13 +49,13 @@ export default class SpaceBootup extends Component {
 
   render(){
     return(
-      <Container style={{backgroundColor: '#ecf0f1'}}>
+      <Container style={{backgroundColor: theme.bootColor}}>
           <Content>
               <View>
               <Text style={styles.welcome}>
-                Sp<Icon name="rocket" size={30} color="#e74c3c"/>ce
+                Sp<Icon name="rocket" size={30} color= {theme.rocketColor}/>ce
               </Text>
-              <Spinner color='#e74c3c'/>
+              <Spinner color= {theme.bootSpinner}/>
               </View>
           </Content>
       </Container>

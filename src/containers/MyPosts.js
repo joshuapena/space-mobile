@@ -58,7 +58,7 @@ export default class MyPosts extends Component {
   }
 
   _navigateBack(){
-    this.props.navigator.pop()
+    this.props.navigator.replacePreviousAndPop ({name : 'MyListView'});
   }
 
   getTestData() {
@@ -124,8 +124,8 @@ export default class MyPosts extends Component {
   //item is returned by list. represents an index of the array (aka one post)
  render() {
    return (
-      <Container style={{backgroundColor: 'white'}}>
-      <Header style={{backgroundColor: '#e74c3c'}}>
+      <Container style={{backgroundColor: theme.backgroundColor}}>
+      <Header style={{backgroundColor: theme.brandPrimary}}>
         <Button transparent onPress={() => this. _navigateBack()}>
           <Icon name='ios-arrow-back' />
         </Button>
@@ -134,7 +134,7 @@ export default class MyPosts extends Component {
 
       <Content theme={theme}>
       {renderIf(this.state.spinnerState)(
-        <Spinner color='#e74c3c' />
+        <Spinner color={theme.postSpinner} />
       )}
 
       {renderIf(!this.state.dataExists)(
@@ -143,7 +143,7 @@ export default class MyPosts extends Component {
             <Icon name='ios-help-circle-outline' style={{fontSize: 200, color: theme.brandPrimary}}/>
             <Text>Looks like you don't have any postings.</Text>
             <Text>Want to Create a Space?</Text> 
-            <Button large block transparent color='#3498db' onPress={() => {this._navigateHostspace()}}>
+            <Button large block transparent color= {theme.checkSpace} onPress={() => {this._navigateHostspace()}}>
              Create a Space </Button>
           </Col>
         </Grid>

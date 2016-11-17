@@ -26,9 +26,10 @@ var DrawerLayout = require('react-native-drawer-layout');
 
 /* this listArray element queries firebase and appends all
  * latitude and longitude pairs into it. It is used in this
- * fashion because currently there exists no other options 
+ * fashion because currently there exists no other options
  * to retrieve that data :(
  */
+
 export default class MyListView extends Component {
 
   constructor(props) {
@@ -73,8 +74,6 @@ export default class MyListView extends Component {
     self.props.navigator.push({
       name: 'PostInfo', // Matches route.name
       item: item,
-      lat: lat,
-      lng: lng
     })
   }
 
@@ -91,41 +90,63 @@ export default class MyListView extends Component {
   }
 
 
-  getTestData() {
-   fetch('https://space-ucsc.herokuapp.com/viewList',)
-     .then((response) => response.json())
-     .then((responseJson) => {
-       //console.log("GET /test : ", responseJson.code);
-       //console.log(JSON.stringify(responseJson.spaceListing, null, 3));
-      //  console.log("this is the responseJson", responseJson.spaceListing);
-       this.setState({
-         spinnerState: false,
-         dataSource :  responseJson.spaceListing,
-       });
-      //  console.log("this is the dataSource", this.state.dataSource);
-       responseJson.code;
-     })
-     .catch((error) => {
-       console.error(error);
-     });
- }
+ //  getTestData() {
+ //   fetch('https://space-ucsc.herokuapp.com/viewList',)
+ //     .then((response) => response.json())
+ //     .then((responseJson) => {
+ //       //console.log("GET /test : ", responseJson.code);
+ //       //console.log(JSON.stringify(responseJson.spaceListing, null, 3));
+ //      //  console.log("this is the responseJson", responseJson.spaceListing);
+ //       this.setState({
+ //         spinnerState: false,
+ //         dataSource :  responseJson.spaceListing,
+ //       });
+ //      //  console.log("this is the dataSource", this.state.dataSource);
+ //       responseJson.code;
+ //     })
+ //     .catch((error) => {
+ //       console.error(error);
+ //     });
+ // }
+
+
+// getFirebaseData(){
+//
+// }
+
+
+//  getTestData() {
+//   console.log('getTestData');
+// };
+
 
   componentWillMount() {
     var ref = firebase.database().ref ('listings');
+
     ref.orderByKey().on ('child_added', function (snapshot) {});
+
   }
 
-  mixins: [TimerMixin]
+  // mixins: [TimerMixin]
   componentDidMount(){
-    this.getTestData();
-    this.timer = setInterval( () => {
-      this.getTestData();
-    }, 1000)
+    // this.getFirebaseData();
+    var self = this;
+    firebase.database().ref('listings/').once("value", function(snapshot){
+      self.setState({
+        spinnerState: false,
+        dataSource :  snapshot.val(),
+      });
+      console.log(snapshot.val());
+    });
+    // this.getTestData();
+    // this.timer = setInterval( () => {
+    //   this.getTestData();
+    // }, 1000)
   }
 
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
+  // componentWillUnmount() {
+  //   clearInterval(this.timer);
+  // }
 
 
  render() {
@@ -133,30 +154,57 @@ export default class MyListView extends Component {
       <View style={{flex: 1, backgroundColor: '#25383C'}}>
         <Text style={{margin: 10, fontSize: 50, textAlign: 'center', color: 'white'}}> SPACE </Text>
         <View style={{alignItems:'center', paddingBottom:15}}>
-          <Icon name='user' style={{fontSize: 50, color: '#3498db'}}/>
-          <Text style={{fontSize: 20, color: '#3498db'}}> User </Text>
+          <Icon name='user' color= {theme.sIconColor} style={{fontSize: 50}}/>
+          <Text style={{fontSize: 20, color: theme.sIconColor}}> User </Text>
         </View>
           <List>
               <ListItem>
-                <Icon name="plus-circle" size={30} color="#3498db"/>
-                <Button transparent color='#3498db' onPress={() => {this._navigateHostspace()}}> 
+                <Icon name="plus-circle" size={30} color={theme.sIconColor}/>
+                <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateHostspace()}}>
                  Create Space </Button>
               </ListItem>
               <ListItem>
-                <Icon name="sign-out" size={30} color="#3498db"/>
-                <Button transparent color='#3498db'onPress={() => {this._navigateMyPosts()}}> My Postings </Button>
+                <Icon name="sign-out" size={30} color={theme.sIconColor}/>
+                <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateMyPosts()}}> My Postings </Button>
               </ListItem>
               <ListItem>
-                <Icon name="car" size={30} color="#3498db"/>
-                <Button transparent color='#3498db' onPress={() => {this._navigateMyCheckedSpace()}}> My Space </Button>
-              </ListItem> 
+                <Icon name="car" size={30} color={theme.sIconColor}/>
+                <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateMyCheckedSpace()}}> My Space </Button>
+              </ListItem>
               <ListItem>
-                <Icon name="cog" size={30} color="#3498db"/>
-                <Button transparent color='#3498db' onPress={() => {this._navigateSettings()}}> Settings </Button>
-              </ListItem> 
+                <Icon name="cog" size={30} color={theme.sIconColor}/>
+                <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateSettings()}}> Settings </Button>
+              </ListItem>
+
           </List>
       </View>
     );
+  if (this.state.spinnerState) {
+  return (
+        <View style={styles.containerToolbar}>
+          <DrawerLayoutAndroid
+            drawerWidth={200}
+            drawerPosition={DrawerLayoutAndroid.positions.Left}
+            ref = {'DRAWER'}
+            renderNavigationView={() => navigationView}>
+
+            <Header style={{backgroundColor: theme.brandPrimary}}>
+              <Button transparent onPress={() => this.refs['DRAWER'].openDrawer()}>
+                <Icon name="navicon" size={20} color={theme.tIconColor}/>
+              </Button>
+              <Title>SPACE</Title>
+              <Button transparent onPress={() => {this._navigateMyMapView(this)}}>
+                <Icon name="map-o" size={25} color={theme.tIconColor}/>
+              </Button>
+            </Header>
+            <View>
+            <Spinner color={theme.brandPrimary}/>
+            </View>
+          </DrawerLayoutAndroid>
+       </View>
+    );
+  }
+  else {
    return (
       <View style={styles.containerToolbar}>
         <DrawerLayoutAndroid
@@ -165,45 +213,45 @@ export default class MyListView extends Component {
           ref = {'DRAWER'}
           renderNavigationView={() => navigationView}>
 
-          <Header style={{backgroundColor: '#e74c3c'}}>
+          <Header style={{backgroundColor: theme.brandPrimary}}>
             <Button transparent onPress={() => this.refs['DRAWER'].openDrawer()}>
-              <Icon name="navicon" size={20} color="white"/>
+              <Icon name="navicon" size={20} color={theme.tIconColor}/>
             </Button>
             <Title>SPACE</Title>
-            <Button transparent onPress={() => {this._navigateMyMapView(this)}}> 
-              <Icon name="map-o" size={25} color="white"/>
+            <Button transparent onPress={() => {this._navigateMyMapView(this)}}>
+              <Icon name="map-o" size={25} color={theme.tIconColor}/>
             </Button>
           </Header>
 
-        
+
           <List dataArray={this.state.dataSource}
               renderRow={(item) =>
                 <ListItem>
                   <Card>
                     {item.available ?
-                      <Card backgroundColor='green'>
+                      <Card backgroundColor= {theme.checkInButton}>
                       <Text style={{fontSize: 20, color: 'white'}}> {item.address}</Text>
                       </Card> :
-                      <Card backgroundColor='#e74c3c'>
+                      <Card backgroundColor= {theme.brandPrimary}>
                       <Text style={{fontSize: 20, color: 'white'}}> {item.address}</Text>
                       </Card>}
                     <CardItem button onPress={() => {this._navigatePostInfo(this, item)}}>
 
                       <Grid>
-                        <Col> 
+                        <Col>
                           <Text style={{fontSize: 20}}>
-                            Price: ${item.price}{"\n"} 
-                            Type: {item.type}   {"\n"} 
-                            Status: {item.available ? 
-                              <Text>Open</Text> : 
-                              <Text>Occupied</Text>} 
+                            Price: ${item.price}{"\n"}
+                            Type: {item.type}   {"\n"}
+                            Status: {item.available ?
+                              <Text>Open</Text> :
+                              <Text>Occupied</Text>}
                           </Text>
                         </Col>
 
                         <Col alignItems='center'>
-                            {item.available ? 
-                            <Icon name="sign-in" color= 'green' size={50}/> :
-                            <Icon name="car" color='#e74c3c' size= {50}/> }
+                            {item.available ?
+                            <Icon name="sign-in" color= {theme.checkInButton} size={50}/> :
+                            <Icon name="car" color={theme.brandPrimary} size= {50}/> }
                         </Col>
                       </Grid>
 
@@ -215,6 +263,7 @@ export default class MyListView extends Component {
         </DrawerLayoutAndroid>
      </View>
    );
+  }
  }
 }
 

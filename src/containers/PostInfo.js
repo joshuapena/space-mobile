@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+  import React, {Component} from 'react';
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, BackAndroid, Alert} from 'react-native';
 import {Container, Content, Thumbnail, Button, Header, Title, Grid, Col, Row, Card, CardItem, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
 import MapView from 'react-native-maps';
@@ -28,7 +28,7 @@ export default class PostInfo extends Component {
   }
 
   componentDidMount(){
-    console.log(this.props.route.item);
+    console.log(this.props.route);
   }
 
   checkSpace(){
@@ -51,8 +51,8 @@ export default class PostInfo extends Component {
 
   render(){
     return(
-      <Container style={{backgroundColor: 'white'}}>
-      <Header style={{backgroundColor: '#e74c3c'}}>
+      <Container style={{backgroundColor: theme.backgroundColor}}>
+      <Header style={{backgroundColor: theme.brandPrimary}}>
         <Button transparent onPress={() => this._navigateBack()}>
             <Icon name='ios-arrow-back' />
         </Button>

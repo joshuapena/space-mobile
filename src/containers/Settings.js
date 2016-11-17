@@ -12,7 +12,7 @@ export default class Settings extends Component {
     }
 
     _navigateBack(){
-      this.props.navigator.pop();
+      this.props.navigator.replacePreviousAndPop ({name : 'MyListView'})
     }
 
     logOutUser(switchPage, destination) {
@@ -31,8 +31,8 @@ export default class Settings extends Component {
 
     render() {
         return (
-            <Container style={{backgroundColor: 'white'}}>
-            <Header style={{backgroundColor: '#e74c3c'}}>
+            <Container style={{backgroundColor: theme.backgroundColor}}>
+            <Header style={{backgroundColor: theme.brandPrimary}}>
               <Button transparent onPress={() => this._navigateBack()}>
                   <Icon name='ios-arrow-back' />
               </Button>
