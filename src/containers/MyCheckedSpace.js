@@ -52,9 +52,8 @@ export default class MyCheckedSpace extends Component {
         var ref = firebase.database().ref("listings/" + postID+ '/' + currentUser.uid);
         ref.once("value").then(function(snapshot){
           checkIn = snapshot.val().checkinTime;
-          //alert(checkOut);
-          console.log("TStamp "+ checkOut.sv);
-          //alert("You owe " + poster + ((Math.ceil(checkOut - checkIn)/3600000) * price));
+          checkOut = snapshot.val().checkoutTime;
+          alert("You owe " + poster + " $" + ((Math.ceil((checkOut - checkIn)/3600000)) * price));
         });
         firebase.database().ref ('listings/' +postID).update({available : true}, function (){
           firebase.database().ref('users/' + currentUser.uid ).update({
