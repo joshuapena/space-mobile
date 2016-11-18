@@ -130,8 +130,22 @@ export default class MyListView extends Component {
 
   // mixins: [TimerMixin]
   componentDidMount(){
-    // this.getFirebaseData();
     var self = this;
+    let currentUser = firebase.auth().currentUser;
+
+    // to get username
+    var ref = firebase.database().ref("users/" + currentUser.uid+ "/username");
+    ref.once("value")
+    .then(function(snapshot) {
+      var key = snapshot.val(); // "ada"
+      myUsername = key;
+      self.setState({"username" : myUsername});
+
+    });
+      // console.log("this is a key", key);
+
+
+    // this.getFirebaseData();
     firebase.database().ref('listings/').on("value", function(snapshot){
       if(self.state.stateShouldUpdate){
         self.setState({
@@ -159,7 +173,7 @@ export default class MyListView extends Component {
         <Text style={{margin: 10, fontSize: 50, textAlign: 'center', color: 'white'}}> SPACE </Text>
         <View style={{alignItems:'center', paddingBottom:15}}>
           <Icon name='user' color= {theme.sIconColor} style={{fontSize: 50}}/>
-          <Text style={{fontSize: 20, color: theme.sIconColor}}> User </Text>
+          <Text style={{fontSize: 20, color: theme.sIconColor}}> {this.state.username} </Text>
         </View>
           <List>
               <ListItem>

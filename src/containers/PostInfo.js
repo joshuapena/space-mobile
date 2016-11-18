@@ -1,5 +1,5 @@
   import React, {Component} from 'react';
-import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, BackAndroid, Alert} from 'react-native';
+import {Navigator, Modal, TouchableHighlight, ListView, StyleSheet, Text, TextInput, View, Image, BackAndroid, Alert} from 'react-native';
 import {Container, Content, Thumbnail, Button, Header, Title, Grid, Col, Row, Card, CardItem, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
 import MapView from 'react-native-maps';
 import theme from'./Themes';
@@ -9,7 +9,12 @@ var firebase = require('firebase');
 export default class PostInfo extends Component {
   constructor (props) {
       super (props);
-      this.state = {text : 'this text will be updated by typing', lat : 0, lng : 0, available: true};
+
+      this.state = {text : 'this text will be updated by typing', lat : 0, lng : 0, modalVisible: false};
+  }
+
+  setModalVisible(visible){
+    this.setState({modalVisible: visible});
   }
 
   _navigateBack(){
@@ -49,13 +54,13 @@ export default class PostInfo extends Component {
     firebase.database().ref ('users/' + currentUser.uid).once('value', function (snapshot) {
       //check if you are already checked in somewhere
       if (!snapshot.val().checkedIn) {
-        if(self.state.available == true){
-          firebase.database().ref('listings/' + postId).update({available : false, checkedUser : currentUser.email}, function() {
-            firebase.database().ref ('users/' + currentUser.uid).update ({
-              checkedIn : true, checkedSpace : postId
-            }, self._navigateBack());
-          });
-        }
+
+        firebase.database().ref('listings/' + postId+ '/' + currentUser.uid).update({checkinTime: firebase.database.ServerValue.TIMESTAMP });
+        firebase.database().ref ('listings/' + postId).update ({available : false, checkedUser : currentUser.email}, function() {
+          firebase.database().ref ('users/' + currentUser.uid).update ({
+            checkedIn : true, checkedSpace : postId
+          }, self._navigateBack());
+        });
       } else {
         alert ('Error: you are already checked into a space');
       }
@@ -70,6 +75,7 @@ export default class PostInfo extends Component {
             <Icon name='ios-arrow-back' />
         </Button>
         <Title>{this.props.route.item.address}</Title>
+
       </Header>
         <Content>
             <View style={{margin:10}}>
@@ -80,6 +86,38 @@ export default class PostInfo extends Component {
             </Card>
             <Card>
               <CardItem>
+              <Modal
+          animationType={"slide"}
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {alert("Modal has been closed.")}}
+          >
+         <View style={{marginTop: 22}}>
+          <View>
+            <Text>
+            Are you sure you want to check in to this spot?
+            You will be charged at least for 1 hour of service
+
+            </Text>
+
+            <TouchableHighlight onPress={() => {
+              this.setModalVisible(!this.state.modalVisible);
+              this.checkSpace();
+            }}>
+              <Text style={styles.confirmText}>Confirm</Text>
+            </TouchableHighlight>
+            <Text>
+
+
+            </Text>
+            <TouchableHighlight onPress={() => {
+              this.setModalVisible(!this.state.modalVisible);
+            }}>
+              <Text style={styles.declineText}>Decline</Text>
+            </TouchableHighlight>
+          </View>
+         </View>
+        </Modal>
                 <MapView
                   initialRegion={{
                     latitude: this.props.route.item.lat,
@@ -100,8 +138,10 @@ export default class PostInfo extends Component {
             <CardItem>
             <Grid>
               <Row justifyContent='center'>
-                  <Button large block disabled={!this.state.available || (firebase.auth().currentUser.email === this.props.route.item.poster)}
-                    onPress={() => firebase.auth().currentUser.uid === this.props.route.item.uid ? alert ('Cannot check in to your own space') : this.checkSpace()}>
+
+                  <Button large block disabled={!this.props.route.item.available || (firebase.auth().currentUser.email === this.props.route.item.poster)}
+                    onPress={() => firebase.auth().currentUser.uid === this.props.route.item.uid ? alert ('Cannot check in to your own space') : this.setModalVisible(true)}>
+
                     <Text style={styles.buttonText}> Check In </Text>
                   </Button>
               </Row>
@@ -123,5 +163,17 @@ const styles = StyleSheet.create({
   buttonText: {
     color:'white',
     fontSize:20,
+  },
+  confirmText: {
+    color:'blue',
+    fontSize:50,
+    textAlign:'center',
+    fontWeight:'bold',
+  },
+  declineText: {
+    color:'red',
+    fontSize:50,
+    textAlign:'center',
+    fontWeight:'bold',
   },
 });
