@@ -1,0 +1,29 @@
+language: objective-c
+
+osx_image: xcode8
+
+install:
+  - mkdir -p /Users/travis/build/facebook/.nvm
+  - export NVM_DIR="/Users/travis/build/facebook/.nvm"
+  - brew install nvm
+  - source $(brew --prefix nvm)/nvm.sh
+  - nvm install 5
+  - rm -Rf "${TMPDIR}/jest_preprocess_cache"
+  - wget https://github.com/yarnpkg/yarn/releases/download/v0.16.0/yarn-0.16.0.js
+  - export yarn="node $(pwd)/yarn-0.16.0.js"
+  - $yarn install
+
+script:
+  - npm test
+
+branches:
+  only:
+    - master
+    - /^.*-stable$/
+
+notifications:
+  email:
+    recipients:
+      - joapena@ucsc.edu
+    on_failure: change
+    on_success: change
