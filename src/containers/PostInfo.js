@@ -1,4 +1,7 @@
-  import React, {Component} from 'react';
+/*
+This shows the infomation of the posts in the list view and map view.
+*/  
+import React, {Component} from 'react';
 import {Navigator, Modal, TouchableHighlight, ListView, StyleSheet, Text, TextInput, View, Image, BackAndroid, Alert} from 'react-native';
 import {Container, Content, Thumbnail, Button, Header, Title, Grid, Col, Row, Card, CardItem, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
 import MapView from 'react-native-maps';

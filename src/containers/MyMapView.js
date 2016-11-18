@@ -1,3 +1,6 @@
+/*
+This shows the map and the marker for parking space nearby and the user position.
+*/
 import MapView from 'react-native-maps';
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TextInput, View, Image, TouchableHighlight, Modal,

@@ -1,3 +1,6 @@
+/*
+This is the framework/page where the user creates a post by inputting the address, state, and price. 
+*/
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TouchableHighlight, Slider, Picker, TextInput, View, Image, Alert} from 'react-native';
 import {Container, Content, Button, Thumbnail, Header,Spinner, Icon, Title, List, ListItem, Footer, FooterTab } from 'native-base';

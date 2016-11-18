@@ -1,3 +1,6 @@
+/*
+This help to show a spinner when sign in and going to list view. It happens while the app loads the data.
+*/
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TouchableHighlight, Slider, Picker, TextInput, View, Image, BackAndroid} from 'react-native';
 import {Container, Content, Spinner} from 'native-base';
