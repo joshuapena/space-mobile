@@ -39,6 +39,7 @@ export default class MyListView extends Component {
       this.state = {
         dataSource: ds.cloneWithRows([]),
         spinnerState : true,
+        stateShouldUpdate : true
       };
     }
 
@@ -131,11 +132,14 @@ export default class MyListView extends Component {
   componentDidMount(){
     // this.getFirebaseData();
     var self = this;
-    firebase.database().ref('listings/').once("value", function(snapshot){
-      self.setState({
-        spinnerState: false,
-        dataSource :  snapshot.val(),
-      });
+    firebase.database().ref('listings/').on("value", function(snapshot){
+      if(self.state.stateShouldUpdate){
+        self.setState({
+          spinnerState: false,
+          dataSource :  snapshot.val(),
+          stateShouldUpdate : false
+        });
+      }
       console.log(snapshot.val());
     });
     // this.getTestData();

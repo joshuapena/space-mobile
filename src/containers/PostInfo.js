@@ -9,7 +9,7 @@ var firebase = require('firebase');
 export default class PostInfo extends Component {
   constructor (props) {
       super (props);
-      this.state = {text : 'this text will be updated by typing', lat : 0, lng : 0};
+      this.state = {text : 'this text will be updated by typing', lat : 0, lng : 0, available: true};
   }
 
   _navigateBack(){
@@ -29,19 +29,33 @@ export default class PostInfo extends Component {
 
   componentDidMount(){
     console.log(this.props.route);
+    var self = this;
+    var curItem = this.props.route.item;
+    firebase.database().ref('listings/' + curItem.uid + '/available' ).on('value', function(snapshot){
+      self.setState({
+        available : snapshot.val()
+      })
+      console.log('I am here:');
+      console.log(snapshot.val());
+    });
   }
 
   checkSpace(){
     var self = this;
     var postId = self.props.route.item.uid;
     var currentUser = firebase.auth().currentUser;
-    firebase.database().ref ('users/' + currentUser.uid).once ('value').then (function (snapshot) {
+
+
+    firebase.database().ref ('users/' + currentUser.uid).once('value', function (snapshot) {
+      //check if you are already checked in somewhere
       if (!snapshot.val().checkedIn) {
-        firebase.database().ref ('listings/' + postId).update ({available : false, checkedUser : currentUser.email}, function() {
-          firebase.database().ref ('users/' + currentUser.uid).update ({
-            checkedIn : true, checkedSpace : postId
-          }, self._navigateBack());
-        });
+        if(self.state.available == true){
+          firebase.database().ref('listings/' + postId).update({available : false, checkedUser : currentUser.email}, function() {
+            firebase.database().ref ('users/' + currentUser.uid).update ({
+              checkedIn : true, checkedSpace : postId
+            }, self._navigateBack());
+          });
+        }
       } else {
         alert ('Error: you are already checked into a space');
       }
@@ -79,14 +93,14 @@ export default class PostInfo extends Component {
                     coordinate = {{latitude: this.props.route.item.lat, longitude: this.props.route.item.lng}}
                     title = {this.props.route.item.address}
                     description = {this.props.route.item.type}
-                    pinColor = {this.props.route.item.available ? '#00ff00' : '#ff0000'}
+                    pinColor = {this.state.available ? '#00ff00' : '#ff0000'}
                   />
                 </MapView>
             </CardItem>
             <CardItem>
             <Grid>
               <Row justifyContent='center'>
-                  <Button large block disabled={!this.props.route.item.available || (firebase.auth().currentUser.email === this.props.route.item.poster)} 
+                  <Button large block disabled={!this.state.available || (firebase.auth().currentUser.email === this.props.route.item.poster)}
                     onPress={() => firebase.auth().currentUser.uid === this.props.route.item.uid ? alert ('Cannot check in to your own space') : this.checkSpace()}>
                     <Text style={styles.buttonText}> Check In </Text>
                   </Button>
