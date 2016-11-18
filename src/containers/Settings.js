@@ -1,3 +1,6 @@
+/*
+This shows a new page where the user could change the username or log out.
+*/
 import React, {Component} from 'react';
 import { Container, Content, Button, Thumbnail, Header, Icon, Title, List, ListItem, Footer, FooterTab } from 'native-base';
 import {Navigator, StyleSheet, Text, TextInput, View, Image, Alert} from 'react-native';
