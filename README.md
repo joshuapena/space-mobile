@@ -1,4 +1,4 @@
-# Space -- CMPS 115 intro to software development
+# Space -- CMPS 115 intro to software development [![Build Status](https://travis-ci.com/joshuapena/space-mobile.svg?token=HzFyJ9YsrUhgZBxZgQXk&branch=master)](https://travis-ci.com/joshuapena/space-mobile)
 
 ## Prerequisites to install
 * Android studio
@@ -25,7 +25,7 @@ open android project and run emulator
 * Google Location API
 
 ## Team Members
-* Raul Lopez- Luna 
+* Raul Lopez- Luna
 * Joshua Peña
 * Colin Au
 * David Sun
