@@ -11,7 +11,8 @@ var firebase = require ('firebase');
 export default class Hostspace extends Component {
   constructor(props){
     super(props);
-    this.state = {text : 'this text will be updated by typing',
+    // default values which will be updated when user inputs
+    this.state = {
     type : 'Garage',
     us_state : 'Alabama',
     price : 1,
@@ -20,13 +21,14 @@ export default class Hostspace extends Component {
   };
   }
 
+  // navigate back to the MyListView
   _navigateBack(){
     this.props.navigator.replacePreviousAndPop ({name : 'MyListView'});
   }
 
 
+ // checks if the fields are filled
 enableButton(){
-  console.log("edit text");
   let myPrice = this.state.price;
   let myAddress = this.state.address;
   let myType = this.state.type;
@@ -45,12 +47,11 @@ enableButton(){
   }
 }
 
-
+  // only gets called when everything is filled in
   _handlePress() {
     this.setState({hideButton : true}); //Set submit to spinner
 
     var self = this;
-    console.log('Pressed!');
 
     let myPrice=this.state.price;
     let myAddress=this.state.address;
@@ -68,8 +69,8 @@ enableButton(){
     .then(function(snapshot) {
       var key = snapshot.val(); // "ada"
       myUsername = key;
-      // console.log("this is a key", key);
 
+      //stores the data into firebase
       var myJson = {
         price: myPrice,
         address: myAddress,
@@ -79,7 +80,9 @@ enableButton(){
         poster: firebase.auth().currentUser.email,
         available : true
       }
-
+      
+      //gets the address and then convert it to lat in google maps
+      // it calls google maps
       var regex = new RegExp ('\\s+', 'g');
       var googleAddress = myAddress.replace (regex, "+") + ',+' + myCity.replace (regex, '+') + ',+' + myState;
       var googleURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + googleAddress + '&key=AIzaSyB57uuwSaQA6dFY65Xj8tRAmubfAa27hYg';
@@ -93,6 +96,7 @@ enableButton(){
           self.setState({hideButton : false});
           return;
         }
+        //makes sure that it is a valid address in the world
         response.json().then (function (data) {
           if (data.status == 'OK') {
             if (data.results[0].geometry.location_type != 'ROOFTOP') {
@@ -102,16 +106,18 @@ enableButton(){
               );
               self.setState({hideButton : false});
             } else {
+
+              //everything is good with the address aka valid address
               if (myType && myAddress && myPrice && myCity && myState) { //Checks if no fields empty
                 myJson.city = data.results[0].address_components[2].long_name;
                 myJson.us_state = data.results[0].address_components[4].long_name;
-                self.postTestData(myJson, data);
+                self.postData(myJson, data);
               } else {
-                console.log("not saved to node");
                 self.setState({hideButton : false});
               }
             }
           } else {
+            //totally false address
             Alert.alert (
               'Invalid Address',
               'completely bogus address'
@@ -121,12 +127,12 @@ enableButton(){
 
         })
       }).catch (function (err) {
-        console.log ('fetch error');
       });
     });
   }
 
-  postTestData(myPost, locationData) {
+  // creates the post 
+  postData(myPost, locationData) {
     var self = this;
     console.log("posting data");
     var currentUser = firebase.auth().currentUser;
@@ -147,7 +153,7 @@ enableButton(){
 
 
   render(){
-
+    // this creates the style, color, and post.
     return(
       <Container style={{backgroundColor: theme.backgroundColor}}>
         <Header style={{backgroundColor: theme.brandPrimary}}>
@@ -167,6 +173,8 @@ enableButton(){
                 <Picker style={styles.picker}
                   selectedValue={this.state.type}
                   onValueChange={(type) => this.setState({type: type})}>
+
+      {/*This provides an option for garage or driveway*/}
                   <Picker.Item label="Garage" value="Garage" />
                   <Picker.Item label="Driveway" value="Driveway" />
                 </Picker>
@@ -183,6 +191,7 @@ enableButton(){
                   maximumValue={20}
                   onValueChange={(value) => this.setState({price: value})}/>
 
+      {/*This lists out the address*/}
                 <TextInput style={styles.options}
                   placeholder = "address"
                   onChangeText={(address) => {
@@ -191,13 +200,14 @@ enableButton(){
                   }
                   value = {this.state.address}/>
 
+      {/*This lists out the city*/}
                 <TextInput style={styles.options}
                   placeholder = "City"
                   onChangeText={(city) => {
                     this.setState({city})
                 }}
                   value = {this.state.city}/>
-
+      {/*This provides an option to choose the states*/}
                 <Text style={styles.options}>State:</Text>
                 <Picker style={styles.picker}
                   selectedValue={this.state.us_state}
@@ -254,6 +264,7 @@ enableButton(){
                   <Picker.Item label="Wyoming"        value="Wyoming" />
                 </Picker>
 
+            {/*This allows to submit the post with the price, address, and state*/}
                   {this.state.hideButton ?
                      <Spinner color={theme.hostSpinner}/> :
                      <Button large block style={{ backgroundColor: theme.submitButton }}
@@ -266,6 +277,7 @@ enableButton(){
   }
 }
 
+// styles
 const styles = StyleSheet.create({
   picker: {
     flex: 1,

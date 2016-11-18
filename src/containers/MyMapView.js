@@ -16,14 +16,7 @@ var markerList = null;
 
 export default class MyMapView extends Component {
 
-  /*
-  <MapView.Marker
-  coordinate = {{latitude: this.props.route.item.lat, longitude: this.props.route.item.lng}}
-  title = {this.props.route.item.address}
-  description = {this.props.route.item.type}
-  />
-  */
-
+/* This shows the inital position of the map when the mapview is opened on*/
   state = {
     initialPosition: {
       coords: {
@@ -70,40 +63,35 @@ export default class MyMapView extends Component {
 
 
   componentWillUpdate() {
-
   }
 
+  //navigate back to previous screen.
 	_navigateBack(){
       this.props.navigator.pop();
     }
 
+// navigate to the MyListView when called.
   _navigateListView(){
     this.props.navigator.push({
       name: 'MyListView', // Matches route.name
     })
   }
 
+  //returns the latitiude of the parking space.
   getLat(){
     return this.state.initialPosition.coords.latitude;
   }
+
+  //returns the longitude of the parking space.
   getLong(){
     return this.state.initialPosition.coords.longitude;
   }
 
+  // This creates the style and view of the mapView screen.
 	render(){
-    var navigationView = (
-      <View style={{flex: 1, backgroundColor: theme.backgroundColor}}>
-        <Text style={{margin: 10, fontSize: 20, textAlign: 'center'}}> SPACE </Text>
-
-      </View>
-    );
+    // This creates the toolbar and the title of it.
 		return (
       <View style={styles.containerToolbar}>
-        <DrawerLayoutAndroid
-          drawerWidth={200}
-          drawerPosition={DrawerLayoutAndroid.positions.Left}
-          ref = {'DRAWER'}
-          renderNavigationView={() => navigationView}>
 
           <Header style={{backgroundColor: theme.brandPrimary}}>
             <Button transparent onPress={() => this. _navigateBack()}>
@@ -111,11 +99,8 @@ export default class MyMapView extends Component {
             </Button>
             <Title> SPACE MAP</Title>
           </Header>
-
-          <InputGroup borderType='regular' >
-            <Input placeholder='Type your location here'/>
-          </InputGroup>
-
+    
+    {/*This shows the map of the current location and the marker of parking space. */}
           <MapView
             initialRegion={{
               latitude: this.getLat(),
@@ -125,6 +110,9 @@ export default class MyMapView extends Component {
             }}
             style = {{flex : 1}}
           >
+
+      {/*This shows the marker of the parking space*/}
+
           {markerList.map (marker => (
           <MapView.Marker
             key = {marker.uid}
@@ -132,6 +120,7 @@ export default class MyMapView extends Component {
             title = {marker.type}
             description = {marker.address + '\n' + marker.city + '\n' + marker.state}
             pinColor = {marker.available ? '#00ff00' : '#ff0000'}
+            
             onPress = {() => this.props.navigator.push({
             name: 'PostInfo',
             item: marker,
@@ -140,6 +129,8 @@ export default class MyMapView extends Component {
             })}
             />
           ))}
+          
+      {/*This shows the current location of the user*/}
           <MapView.Marker
             key = {"your location"}
             coordinate = {{latitude: this.getLat(), longitude: this.getLong()}}
@@ -148,12 +139,12 @@ export default class MyMapView extends Component {
             />
           </MapView>
 
-        </DrawerLayoutAndroid>
      </View>
 			);
 	}
 }
 
+//styles
 const styles = StyleSheet.create({
   welcome: {
     fontSize: 50,

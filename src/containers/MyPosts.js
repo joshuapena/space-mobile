@@ -22,6 +22,7 @@ export default class MyPosts extends Component {
   constructor(props) {
     super(props);
 
+//defines/shows the initial state of the page 'MyPosts' 
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
       this.state = {
         spinnerState: true,
@@ -31,24 +32,25 @@ export default class MyPosts extends Component {
       };
     }
 
+// this shows the spinner
   mixins: [TimerMixin]
-  _navigateSignUp(){
-    this.props.navigator.push({
-      name: 'Hostspace', // Matches route.name
-    })
-  }
+
+//this navigate to the Hostspace when called
   _navigateHostspace(){
     this.props.navigator.push({
       name: 'Hostspace', // Matches route.name
     })
   }
 
+//this navigate to settings when called upon
   _navigateSettings(){
     this.props.navigator.push({
       name: 'Settings', // Matches route.name
     })
   }
-    _navigateEditPost(self, item){
+
+//this navigate to 'EditPost' when called to edit the post
+  _navigateEditPost(self, item){
     console.log(item)
     self.props.navigator.push({
       name: 'EditPost', // Matches route.name
@@ -57,20 +59,22 @@ export default class MyPosts extends Component {
     })
   }
 
+//navigate back to 'MyListView' when called
   _navigateBack(){
     this.props.navigator.replacePreviousAndPop ({name : 'MyListView'});
   }
 
-  getTestData() {
+  getData() {
     var currentUser = firebase.auth().currentUser;
     var myState = this.state;
     var self = this;
     var myStateObj = this.state.dataSource;
     var myStateArr = [];
 
+//load the posts and listings for the current user.
     if (currentUser) {
       firebase.database().ref('/users/' + currentUser.uid + "/listing/").once('value').then(function(snapshot) {
-        // console.log("this is the snapshot",snapshot.val());
+
         if(!snapshot.val()){
           console.log("no data");
           self.setState({
@@ -83,16 +87,14 @@ export default class MyPosts extends Component {
           firebase.database().ref('/listings/' + childSnapshot.key).once('value').then(function(postSnapshot){
             var postKey = postSnapshot.key;
             var postData = postSnapshot.val();
-            // console.log("the rides posted are " + postKey);
-            // console.log("post and data "+ JSON.stringify (postData));
-            //myStateArr.push({postKey : postData});
+            
             myStateObj[postKey] = postData;
             var obj = {[postKey] : postData}
             myStateArr.push(obj);
 
 
             self.setState({spinnerState: false});
-            // console.log("myObjWithData " + JSON.stringify(myStateObj));
+
             console.log("myArrWithData " + JSON.stringify(myStateArr));
             self.setState({
               dataSource : myStateObj,
@@ -101,18 +103,13 @@ export default class MyPosts extends Component {
 
           });
 
-
-
         });
       });
     }
   }
 
   componentDidMount(){
-    this.getTestData();
-    // this.timer = setInterval( () => {
-    //   this.getTestData();
-    // }, 4500)
+    this.getData();
   }
 
   componentWillUnmount() {
@@ -137,6 +134,7 @@ export default class MyPosts extends Component {
         <Spinner color={theme.postSpinner} />
       )}
 
+{/*This screen will appear when there is no data of the user posts*/}
       {renderIf(!this.state.dataExists)(
         <Grid>
           <Col alignItems='center'>
@@ -148,6 +146,8 @@ export default class MyPosts extends Component {
           </Col>
         </Grid>
       )}
+{/*This screen appears when there is a post and it will list it out*/}
+
         <List dataArray={this.state.dataArray}
             renderRow={(item) =>
               <ListItem button onPress={() => {this._navigateEditPost(this, item)}}>
@@ -161,7 +161,7 @@ export default class MyPosts extends Component {
  }
 }
 
-
+//styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
