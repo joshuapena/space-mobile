@@ -14,7 +14,7 @@ export default class PostInfo extends Component {
   constructor (props) {
       super (props);
 
-      this.state = {text : 'this text will be updated by typing', lat : 0, lng : 0, modalVisible: false};
+      this.state = {text : 'this text will be updated by typing', lat : 0, lng : 0, modalVisible: false, myUsername: ''};
   }
 
   setModalVisible(visible){
@@ -56,6 +56,14 @@ export default class PostInfo extends Component {
       console.log('I am here:');
       //console.log(snapshot.val());
     });
+      // to get username
+    let currentUser = firebase.auth().currentUser;
+    var ref = firebase.database().ref("users/" + currentUser.uid+ "/username");
+    ref.once("value")
+    .then(function(snapshot) {
+      var key = snapshot.val(); // "ada"
+      self.setState({myUsername:key})
+    })
   }
 
 //a fucntion to check the parking space through the post id, user, and listings from firebase.
@@ -157,9 +165,9 @@ export default class PostInfo extends Component {
             </CardItem>
             <CardItem>
 
-                  <Button large block disabled={!this.state.available  || (firebase.auth().currentUser.email === this.props.route.item.poster)}
+                  <Button large block disabled={!this.state.available  || (this.state.myUsername === this.props.route.item.poster)}
                     onPress={() => firebase.auth().currentUser.uid === this.props.route.item.uid ? alert ('Cannot check in to your own space') : this.setModalVisible(true)}>
-                    {firebase.auth().currentUser.email === this.props.route.item.poster?
+                    {this.state.myUsername === this.props.route.item.poster?
                     <Text style={styles.buttonText}> This is your spot </Text> :
                     <Text style={styles.buttonText}> Check In</Text>
                     }
