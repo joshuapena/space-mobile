@@ -43,18 +43,21 @@ export default class MyListView extends Component {
       };
     }
 
+  //this provides a function to navigate to Hostspace via the drawer
   _navigateHostspace(){
     this.props.navigator.push({
       name: 'Hostspace', // Matches route.name
     })
   }
 
+  //this provides a function to navigate to Settings via the drawer
   _navigateSettings(){
     this.props.navigator.push({
       name: 'Settings', // Matches route.name
     })
   }
 
+  //this provides a function to navigate to MyPosts via the drawer
   _navigateMyPosts(){
     clearInterval(this.timer);
     this.props.navigator.push({
@@ -62,64 +65,39 @@ export default class MyListView extends Component {
     })
   }
 
+  // this provides a function to navigate to the map view and checked space
+  // when the post is clicked on
   _navigatePostInfo(self, item){
     // console.log("the post you clicked", Object.keys.(item[0]));
     // console.log("the post id ", item.keys)
     var lat = 0;
     var lng = 0;
+    //info from the firebase database
     var ref = firebase.database().ref("listings/" + item.uid);
     ref.once("value").then(function(snapshot){
       lat = snapshot.lat;
       lng = snapshot.lng;
     });
+    //post info
     self.props.navigator.push({
       name: 'PostInfo', // Matches route.name
       item: item,
     })
   }
 
+  //navigate to the map view
   _navigateMyMapView(self){
     self.props.navigator.push({
       name: 'MyMapView', // Matches route.name
     })
   }
 
+  //navigate to the checked space
   _navigateMyCheckedSpace(){
     this.props.navigator.push({
       name: 'MyCheckedSpace', // Matches route.name
     })
   }
-
-
- //  getTestData() {
- //   fetch('https://space-ucsc.herokuapp.com/viewList',)
- //     .then((response) => response.json())
- //     .then((responseJson) => {
- //       //console.log("GET /test : ", responseJson.code);
- //       //console.log(JSON.stringify(responseJson.spaceListing, null, 3));
- //      //  console.log("this is the responseJson", responseJson.spaceListing);
- //       this.setState({
- //         spinnerState: false,
- //         dataSource :  responseJson.spaceListing,
- //       });
- //      //  console.log("this is the dataSource", this.state.dataSource);
- //       responseJson.code;
- //     })
- //     .catch((error) => {
- //       console.error(error);
- //     });
- // }
-
-
-// getFirebaseData(){
-//
-// }
-
-
-//  getTestData() {
-//   console.log('getTestData');
-// };
-
 
   componentWillMount() {
     var ref = firebase.database().ref ('listings');
@@ -156,20 +134,15 @@ export default class MyListView extends Component {
       }
       console.log(snapshot.val());
     });
-    // this.getTestData();
-    // this.timer = setInterval( () => {
-    //   this.getTestData();
-    // }, 1000)
+    
   }
 
-  // componentWillUnmount() {
-  //   clearInterval(this.timer);
-  // }
-
-
  render() {
+  //this is the data inside the drawer when opened via button clicked or swipe.
   var navigationView = (
-      <View style={{flex: 1, backgroundColor: '#25383C'}}>
+      //list out the button that will navigate to 'Create Space', 'My Postings', 'My Space', and 'Settings' {/* */}
+
+      <View style={{flex: 1, backgroundColor: theme.navColor}}>
         <Text style={{margin: 10, fontSize: 50, textAlign: 'center', color: 'white'}}> SPACE </Text>
         <View style={{alignItems:'center', paddingBottom:15}}>
           <Icon name='user' color= {theme.sIconColor} style={{fontSize: 50}}/>
@@ -197,9 +170,12 @@ export default class MyListView extends Component {
           </List>
       </View>
     );
+
+  // this shows the spinner when loading and shows the drawer, title, and the toolbar with the button
   if (this.state.spinnerState) {
   return (
         <View style={styles.containerToolbar}>
+
           <DrawerLayoutAndroid
             drawerWidth={200}
             drawerPosition={DrawerLayoutAndroid.positions.Left}
@@ -207,14 +183,18 @@ export default class MyListView extends Component {
             renderNavigationView={() => navigationView}>
 
             <Header style={{backgroundColor: theme.brandPrimary}}>
+              //open the drawer via the 'hamburger' burger
               <Button transparent onPress={() => this.refs['DRAWER'].openDrawer()}>
                 <Icon name="navicon" size={20} color={theme.tIconColor}/>
               </Button>
+
               <Title>SPACE</Title>
+
               <Button transparent onPress={() => {this._navigateMyMapView(this)}}>
                 <Icon name="map-o" size={25} color={theme.tIconColor}/>
               </Button>
             </Header>
+
             <View>
             <Spinner color={theme.brandPrimary}/>
             </View>
@@ -222,6 +202,9 @@ export default class MyListView extends Component {
        </View>
     );
   }
+  //this is the drawer layout where it is positioned on the left and navigate to the 'drawer' when 
+        // the button pressed or swipe. It also creates the toolbar when it contains the 'hamburger icon' to go
+        // to the drawer and a 'map-o' to go to the map view.
   else {
    return (
       <View style={styles.containerToolbar}>
@@ -231,6 +214,7 @@ export default class MyListView extends Component {
           ref = {'DRAWER'}
           renderNavigationView={() => navigationView}>
 
+      {/*this creates a toolbar where it contains the drawer icon and map icon*/}
           <Header style={{backgroundColor: theme.brandPrimary}}>
             <Button transparent onPress={() => this.refs['DRAWER'].openDrawer()}>
               <Icon name="navicon" size={20} color={theme.tIconColor}/>
@@ -241,7 +225,7 @@ export default class MyListView extends Component {
             </Button>
           </Header>
 
-
+      {/*list out the posts with its address, type of space, status, and the price.*/}
           <List dataArray={this.state.dataSource}
               renderRow={(item) =>
                 <ListItem>
@@ -255,6 +239,7 @@ export default class MyListView extends Component {
                       </Card>}
                     <CardItem button onPress={() => {this._navigatePostInfo(this, item)}}>
 
+      {/*This shows the price, type, and if the item is available.*/}
                       <Grid>
                         <Col>
                           <Text style={{fontSize: 20}}>
@@ -265,7 +250,7 @@ export default class MyListView extends Component {
                               <Text>Occupied</Text>}
                           </Text>
                         </Col>
-
+      {/*This shows the check-in button*/}
                         <Col alignItems='center'>
                             {item.available ?
                             <Icon name="sign-in" color= {theme.checkInButton} size={50}/> :
@@ -284,7 +269,6 @@ export default class MyListView extends Component {
   }
  }
 }
-
 
 const styles = StyleSheet.create({
   drawerOption: {

@@ -9,6 +9,7 @@ import theme from'./Themes';
 
 var firebase = require('firebase');
 
+// this states the current state of the screen and renders when updated
 export default class PostInfo extends Component {
   constructor (props) {
       super (props);
@@ -20,10 +21,12 @@ export default class PostInfo extends Component {
     this.setState({modalVisible: visible});
   }
 
+// navigate back to MyListView
   _navigateBack(){
     this.props.navigator.replacePreviousAndPop ({name : 'MyListView'});
   }
 
+// allows the phone back button to go back
   componentWillMount(){
     var nav = this.props.navigator;
     BackAndroid.addEventListener('hardwareBackPress', () => {
@@ -55,6 +58,7 @@ export default class PostInfo extends Component {
     });
   }
 
+//a fucntion to check the parking space through the post id, user, and listings from firebase.
   checkSpace(){
     var self = this;
     var postId = self.props.route.item.uid;
@@ -65,12 +69,15 @@ export default class PostInfo extends Component {
       //check if you are already checked in somewhere
       if (!snapshot.val().checkedIn) {
 
+        //update the time in the app and firebase when checked into a space
         firebase.database().ref('listings/' + postId+ '/' + currentUser.uid).update({checkinTime: firebase.database.ServerValue.TIMESTAMP });
+        // check if the parking space is open
         firebase.database().ref ('listings/' + postId).update ({available : false, checkedUser : currentUser.email}, function() {
           firebase.database().ref ('users/' + currentUser.uid).update ({
             checkedIn : true, checkedSpace : postId
           }, self._navigateBack());
         });
+    // any alert that prevents you from checking into multiple parking spaces.
       } else {
         alert ('Error: you are already checked into a space');
       }
@@ -85,8 +92,8 @@ export default class PostInfo extends Component {
             <Icon name='ios-arrow-back' />
         </Button>
         <Title>{this.props.route.item.address}</Title>
-
       </Header>
+    {/* This make sure the user wants to check into the space by stating the price and question*/}
         <Content>
             <View style={{margin:10}}>
             <Card style={{paddingBottom:10}}>
@@ -110,6 +117,7 @@ export default class PostInfo extends Component {
 
             </Text>
 
+    {/* This allows the user to confirm that they want to check out the space*/}
             <TouchableHighlight onPress={() => {
               this.setModalVisible(!this.state.modalVisible);
               this.checkSpace();
@@ -128,6 +136,8 @@ export default class PostInfo extends Component {
           </View>
          </View>
         </Modal>
+
+            {/* This shows the map view (small map) of the parking space on the map via a marker.*/}
                 <MapView
                   initialRegion={{
                     latitude: this.props.route.item.lat,

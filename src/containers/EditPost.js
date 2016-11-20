@@ -12,27 +12,30 @@ import theme from'./Themes';
 var firebase = require ('firebase');
 
 export default class EditPost extends Component {
+  //when this.state is updated, the app will render again
   constructor (props) {
       super (props);
       this.state = {
-        text : 'this text will be updated by typing',
         postId: "",
         thisPost: ""
     };
   }
 
-
+//this is the code to delete the post from the app and the database when the button is pressed.
 deleteButtonPressed(){
   var self = this;
   var currentUser = firebase.auth().currentUser;
   var updateObj = {};
   firebase.database().ref ('users/' + currentUser.uid +'/listing/'+self.state.postId).remove();
+  // this deletes the post and go back to the MyListView
   firebase.database().ref('/listings/'+self.state.postId).remove(function(){
-    self.props.navigator.pop();
+
+    self.props.navigator.replacePreviousAndPop({name: 'MyListView',})
+
   });
 }
 
-
+//navigate back
 _navigateBack(){
   this.props.navigator.pop();
 }
@@ -41,15 +44,14 @@ componentDidMount(){
 
   var mykey = Object.keys(this.props.route.item)[0]
   var myValues = Object.values(this.props.route.item)[0]
-  console.log(mykey);
-  console.log(myValues);
-  console.log(this.props.route.item[mykey]);
+
+  //when this.state is updated, the app will render again
   this.setState({
     postId: mykey,
     thisPost: Object.values(this.props.route.item)[0]
   })
 }
-
+// this shows the user's posts and have the option to delete the post when the post is clicked on
   render() {
       return (
           <Container style={{backgroundColor: theme.backgroundColor}}>
@@ -59,8 +61,8 @@ componentDidMount(){
               </Button>
               <Title>{this.state.thisPost.address}</Title>
             </Header>
+
             <Content>
-              <Text>{this.state.postId}</Text>
               <Button small danger style={{ backgroundColor: theme.delButton }}
                 onPress={()=>{this.deleteButtonPressed()}}
                >Delete this post

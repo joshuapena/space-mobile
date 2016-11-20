@@ -3,10 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
   },
   "dependencies": {
     "firebase": "^3.5.1",
+    "jest": "^17.0.3",
     "native-base": "^0.5.11",
     "react": "^15.3.2",
     "react-native": "^0.36.0",
