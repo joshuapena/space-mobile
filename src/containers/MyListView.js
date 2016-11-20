@@ -163,7 +163,7 @@ export default class MyListView extends Component {
 
               <Row style={{paddingTop:15}} size={1}>
                 <Col style={{paddingLeft:15, paddingTop: 7}} size={1}>
-                  <Icon name="car" size={30} color={theme.sIconColor}/>
+                  <Icon name="car" size={25} color={theme.sIconColor}/>
                 </Col>
                 <Col size={4}>
                   <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateMyCheckedSpace()}}>
