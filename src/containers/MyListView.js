@@ -39,7 +39,6 @@ export default class MyListView extends Component {
       this.state = {
         dataSource: ds.cloneWithRows([]),
         spinnerState : true,
-        stateShouldUpdate : true
       };
     }
 
@@ -101,7 +100,7 @@ export default class MyListView extends Component {
 
   // componentWillMount() {
   //   var ref = firebase.database().ref ('listings');
-  //   ref.orderByKey().on ('child_added', function (snapshot) {});
+  //   ref.orderByKey().on('child_added', function (snapshot) {});
   // }
 
   // mixins: [TimerMixin]
@@ -118,18 +117,13 @@ export default class MyListView extends Component {
       self.setState({"username" : myUsername});
 
     });
-      // console.log("this is a key", key);
 
-
-    // this.getFirebaseData();
     firebase.database().ref('listings/').on("value", function(snapshot){
-      if(self.state.stateShouldUpdate){
         self.setState({
           spinnerState: false,
           dataSource :  snapshot.val(),
           stateShouldUpdate : false
         });
-      }
       console.log(snapshot.val());
     });
 
