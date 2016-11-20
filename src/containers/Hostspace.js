@@ -77,7 +77,7 @@ enableButton(){
         city: 'null',
         us_state: 'null',
         type : myType,
-        poster: firebase.auth().currentUser.email,
+        poster: myUsername,
         available : true
       }
       
