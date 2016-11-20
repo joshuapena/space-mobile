@@ -45,18 +45,9 @@ export default class Settings extends Component {
               </Button>
               <Title>Settings</Title>
             </Header>
-              <Content>
-
-            {/* This allows the username to chnage their username by pressing the button*/}
+              <Content>          
                   <View style={{margin:10}}>
-                      <TextInput
-                        placeholder = "Change your username"
-                        onChangeText = {(username) => this.setState ({username})}
-                        value = {this.state.username}
-                      />
-                      <Button large block>
-                        Change username
-                      </Button>
+
 
             {/* This allows the user to log out when they press the log out button which leads to the login page*/}
                       <Button large block onPress = {() => {this.logOutUser(

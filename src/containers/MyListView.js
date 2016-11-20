@@ -134,7 +134,7 @@ export default class MyListView extends Component {
       }
       console.log(snapshot.val());
     });
-    
+
   }
 
  render() {
@@ -150,7 +150,7 @@ export default class MyListView extends Component {
         </View>
           <Grid>
               <Row style={{paddingTop:15}} size={1}>
-                <Col style={{paddingLeft:15}} size={1}>
+                <Col style={{paddingLeft:15, paddingTop: 7}} size={1}>
                   <Icon name="plus-circle" size={30} color={theme.sIconColor}/>
                 </Col>
                 <Col size={4}>
@@ -160,7 +160,7 @@ export default class MyListView extends Component {
               </Row>
 
               <Row style={{paddingTop:15}} size={1}>
-                <Col style={{paddingLeft:15}} size={1}>
+                <Col style={{paddingLeft:15, paddingTop: 7}} size={1}>
                   <Icon name="sign-out" size={30} color={theme.sIconColor}/>
                 </Col>
                 <Col size={4}>
@@ -170,7 +170,7 @@ export default class MyListView extends Component {
               </Row>
 
               <Row style={{paddingTop:15}} size={1}>
-                <Col style={{paddingLeft:15}} size={1}>
+                <Col style={{paddingLeft:15, paddingTop: 7}} size={1}>
                   <Icon name="car" size={30} color={theme.sIconColor}/>
                 </Col>
                 <Col size={4}>
@@ -180,7 +180,7 @@ export default class MyListView extends Component {
               </Row>
 
               <Row style={{paddingTop:15}} size={3}>
-                <Col style={{paddingLeft:15}} size={1}>
+                <Col style={{paddingLeft:15, paddingTop: 7}} size={1}>
                   <Icon name="cog" size={30} color={theme.sIconColor}/>
                 </Col>
                 <Col size={4}>
@@ -223,7 +223,7 @@ export default class MyListView extends Component {
        </View>
     );
   }
-  //this is the drawer layout where it is positioned on the left and navigate to the 'drawer' when 
+  //this is the drawer layout where it is positioned on the left and navigate to the 'drawer' when
         // the button pressed or swipe. It also creates the toolbar when it contains the 'hamburger icon' to go
         // to the drawer and a 'map-o' to go to the map view.
   else {
