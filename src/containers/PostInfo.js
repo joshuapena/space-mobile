@@ -1,6 +1,6 @@
 /*
 This shows the infomation of the posts in the list view and map view.
-*/  
+*/
 import React, {Component} from 'react';
 import {Navigator, Modal, TouchableHighlight, ListView, StyleSheet, Text, TextInput, View, Image, BackAndroid, Alert} from 'react-native';
 import {Container, Content, Thumbnail, Button, Header, Title, Grid, Col, Row, Card, CardItem, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
@@ -35,6 +35,13 @@ export default class PostInfo extends Component {
     });
   }
 
+  componentWillUnmount(){
+    // Remove all callbacks of any type
+    var curItem = this.props.route.item;
+    firebase.database().ref('listings/' + curItem.uid + '/available' ).off();
+    console.log('component did unmount');
+  }
+
   componentDidMount(){
     console.log(this.props.route);
     var self = this;
@@ -44,7 +51,7 @@ export default class PostInfo extends Component {
         available : snapshot.val()
       })
       console.log('I am here:');
-      console.log(snapshot.val());
+      //console.log(snapshot.val());
     });
   }
 

@@ -28,7 +28,7 @@ deleteButtonPressed(){
   var updateObj = {};
   firebase.database().ref ('users/' + currentUser.uid +'/listing/'+self.state.postId).remove();
   firebase.database().ref('/listings/'+self.state.postId).remove(function(){
-    self.props.navigator.push({name: 'MyListView',})
+    self.props.navigator.pop();
   });
 }
 
