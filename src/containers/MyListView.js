@@ -99,12 +99,10 @@ export default class MyListView extends Component {
     })
   }
 
-  componentWillMount() {
-    var ref = firebase.database().ref ('listings');
-
-    ref.orderByKey().on ('child_added', function (snapshot) {});
-
-  }
+  // componentWillMount() {
+  //   var ref = firebase.database().ref ('listings');
+  //   ref.orderByKey().on ('child_added', function (snapshot) {});
+  // }
 
   // mixins: [TimerMixin]
   componentDidMount(){
