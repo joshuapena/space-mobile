@@ -106,7 +106,7 @@ export default class MyMapView extends Component {
           renderNavigationView={() => navigationView}>
 
           <Header style={{backgroundColor: theme.brandPrimary}}>
-            <Button transparent onPress={() => this. _navigateBack()}>
+            <Button transparent onPress={() => this._navigateBack()}>
               <Icon name='ios-arrow-back' />
             </Button>
             <Title> SPACE MAP</Title>
@@ -131,7 +131,7 @@ export default class MyMapView extends Component {
             coordinate = {{latitude: marker.lat, longitude: marker.lng}}
             title = {marker.type}
             description = {marker.address + '\n' + marker.city + '\n' + marker.state}
-            pinColor = {marker.available ? '#00ff00' : '#ff0000'}
+            pinColor = {marker.available ? theme.brandPrimary : '#d35400'}
             onPress = {() => this.props.navigator.push({
             name: 'PostInfo',
             item: marker,
