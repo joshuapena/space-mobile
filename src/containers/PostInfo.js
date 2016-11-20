@@ -159,10 +159,12 @@ export default class PostInfo extends Component {
             <Grid>
               <Row justifyContent='center'>
 
-                  <Button large block disabled={!this.props.route.item.available || (firebase.auth().currentUser.email === this.props.route.item.poster)}
+                  <Button large block disabled={!this.state.available  || (firebase.auth().currentUser.email === this.props.route.item.poster)}
                     onPress={() => firebase.auth().currentUser.uid === this.props.route.item.uid ? alert ('Cannot check in to your own space') : this.setModalVisible(true)}>
-
-                    <Text style={styles.buttonText}> Check In </Text>
+                    {firebase.auth().currentUser.email === this.props.route.item.poster?
+                    <Text style={styles.buttonText}> This is your spot </Text> :
+                    <Text style={styles.buttonText}> Check In</Text>
+                    }
                   </Button>
               </Row>
             </Grid>

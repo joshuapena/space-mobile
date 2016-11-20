@@ -194,7 +194,6 @@ export default class MyListView extends Component {
   if (this.state.spinnerState) {
   return (
         <View style={styles.containerToolbar}>
-
           <DrawerLayoutAndroid
             drawerWidth={200}
             drawerPosition={DrawerLayoutAndroid.positions.Left}
