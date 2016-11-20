@@ -45,8 +45,7 @@ export default class MyMapView extends Component {
       },
       (error) => {
         Alert.alert (
-          'Error mounting',
-          JSON.stringify(error)
+          'Could not get GPS location.'
         );
       },
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
