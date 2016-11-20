@@ -157,26 +157,47 @@ export default class MyListView extends Component {
           <Icon name='user' color= {theme.sIconColor} style={{fontSize: 50}}/>
           <Text style={{fontSize: 20, color: theme.sIconColor}}> User </Text>
         </View>
-          <List>
-              <ListItem>
-                <Icon name="plus-circle" size={30} color={theme.sIconColor}/>
-                <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateHostspace()}}>
-                 Create Space </Button>
-              </ListItem>
-              <ListItem>
-                <Icon name="sign-out" size={30} color={theme.sIconColor}/>
-                <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateMyPosts()}}> My Postings </Button>
-              </ListItem>
-              <ListItem>
-                <Icon name="car" size={30} color={theme.sIconColor}/>
-                <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateMyCheckedSpace()}}> My Space </Button>
-              </ListItem>
-              <ListItem>
-                <Icon name="cog" size={30} color={theme.sIconColor}/>
-                <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateSettings()}}> Settings </Button>
-              </ListItem>
+          <Grid>
+              <Row style={{paddingTop:15}} size={1}>
+                <Col style={{paddingLeft:15}} size={1}>
+                  <Icon name="plus-circle" size={30} color={theme.sIconColor}/>
+                </Col>
+                <Col size={4}>
+                  <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateHostspace()}}>
+                  <Text style={{fontSize: 20, color: theme.brandPrimary}}> Create Space </Text></Button>
+                </Col>
+              </Row>
 
-          </List>
+              <Row style={{paddingTop:15}} size={1}>
+                <Col style={{paddingLeft:15}} size={1}>
+                  <Icon name="sign-out" size={30} color={theme.sIconColor}/>
+                </Col>
+                <Col size={4}>
+                  <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateMyPosts()}}>
+                  <Text style={{fontSize: 20, color: theme.brandPrimary}}> My Postings </Text></Button>
+                </Col>
+              </Row>
+
+              <Row style={{paddingTop:15}} size={1}>
+                <Col style={{paddingLeft:15}} size={1}>
+                  <Icon name="car" size={30} color={theme.sIconColor}/>
+                </Col>
+                <Col size={4}>
+                  <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateMyCheckedSpace()}}>
+                  <Text style={{fontSize: 20, color: theme.brandPrimary}}> My Space </Text></Button>
+                </Col>
+              </Row>
+
+              <Row style={{paddingTop:15}} size={3}>
+                <Col style={{paddingLeft:15}} size={1}>
+                  <Icon name="cog" size={30} color={theme.sIconColor}/>
+                </Col>
+                <Col size={4}>
+                  <Button transparent color={theme.sButtonColor} onPress={() => {this._navigateSettings()}}>
+                  <Text style={{fontSize: 20, color: theme.brandPrimary}}> Settings </Text></Button>
+                </Col>
+              </Row>
+          </Grid>
       </View>
     );
   if (this.state.spinnerState) {
@@ -229,10 +250,10 @@ export default class MyListView extends Component {
                 <ListItem>
                   <Card>
                     {item.available ?
-                      <Card backgroundColor= {theme.checkInButton}>
+                      <Card backgroundColor= {theme.brandPrimary}>
                       <Text style={{fontSize: 20, color: 'white'}}> {item.address}</Text>
                       </Card> :
-                      <Card backgroundColor= {theme.brandPrimary}>
+                      <Card backgroundColor= {theme.checkOutButton}>
                       <Text style={{fontSize: 20, color: 'white'}}> {item.address}</Text>
                       </Card>}
                     <CardItem button onPress={() => {this._navigatePostInfo(this, item)}}>
@@ -250,8 +271,8 @@ export default class MyListView extends Component {
 
                         <Col alignItems='center'>
                             {item.available ?
-                            <Icon name="sign-in" color= {theme.checkInButton} size={50}/> :
-                            <Icon name="car" color={theme.brandPrimary} size= {50}/> }
+                            <Icon name="sign-in" color= {theme.brandPrimary} size={50}/> :
+                            <Icon name="car" color={theme.checkOutButton} size= {50}/> }
                         </Col>
                       </Grid>
 
