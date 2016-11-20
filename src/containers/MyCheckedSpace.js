@@ -127,7 +127,7 @@ export default class MyCheckedSpace extends Component {
     else if (this.state.checkingOut) {
         return (
           <Container style={{backgroundColor: 'white'}}>
-          <Header style={{backgroundColor: '#e74c3c'}}>
+          <Header style={{backgroundColor: theme.brandPrimary}}>
           <Button transparent onPress={() => this._navigateBack()}>
               <Icon name='ios-arrow-back' />
           </Button>
