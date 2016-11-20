@@ -15,6 +15,7 @@ var renderIf = require('render-if');
 const Dimensions = require('Dimensions');
 const TimerMixin =  require('react-timer-mixin');
 
+// firebase database
 var firebase = require ('firebase');
 
 export default class MyPosts extends Component {

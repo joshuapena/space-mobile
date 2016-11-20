@@ -1,6 +1,7 @@
 /*
 This is a page to declare variables for colors in the app.
 */
+
 import Color from 'color';
 
 import {Platform} from 'react-native';
