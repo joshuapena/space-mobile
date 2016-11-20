@@ -5,23 +5,28 @@ import Color from 'color';
 
 import {Platform} from 'react-native';
 
+var mainColor = '#3498db';
+
 export default {
+
 
 	//color variables 
 	
 	//primary color
-	brandPrimary: '#e74c3c',
+	brandPrimary: mainColor,
 	backgroundColor: 'white',
 	
 	//MylistView.js
 	//sidebar icon
-	sIconColor: '#3498db',
+	sIconColor: mainColor,
 	//sidebar button
-	sButtonColor: '#3498db',
+	sButtonColor: mainColor,
 	//toolbar icon color
 	tIconColor: 'white',
 	//checkin icon color
-	checkInButton: 'green',
+	checkInButton: mainColor,
+	//checkout icon color
+	checkOutButton: '#d35400',
 	//listView Text color
 	checkText: 'white',
 	//nav background color
@@ -32,19 +37,19 @@ export default {
 	delButton: 'red',
 
 	//Hostspace.js
-	submitButton: '#3498db',
-	hostSpinner: '#e74c3c',
+	submitButton: mainColor,
+	hostSpinner:  mainColor,
 	//Login.js
 
 	//MyCheckedSpace.js
-	helpIcon: '#e74c3c',
+	helpIcon: mainColor,
 
 	//MyPosts.js
-	checkSpace: '#3498db',
-	postSpinner: '#e74c3c',
+	checkSpace: mainColor,
+	postSpinner: mainColor,
 
 	//SpaceBootup.js
 	bootColor: '#ecf0f1',
-	rocketColor: '#e74c3c',
-	bootSpinner: '#e74c3c'
+	rocketColor: mainColor,
+	bootSpinner: mainColor
 }
