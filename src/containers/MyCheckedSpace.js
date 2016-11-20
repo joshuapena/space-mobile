@@ -5,7 +5,7 @@ The space a user is currently checked into
 import React, {Component} from 'react';
 
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, Alert} from 'react-native';
-import {Container, Content, Thumbnail, Button, Header, Spinner, Title, Grid, Col, Row,
+import {Container, Content, Thumbnail, Button, Header, Card, CardItem, Spinner, Title, Grid, Col, Row,
         List, ListItem, Footer, FooterTab, Icon } from 'native-base';
 import theme from'./Themes';
 
@@ -118,16 +118,45 @@ export default class MyCheckedSpace extends Component {
         </Header>
           <Content>
           {renderIf(this.state.dataExists)(
-            <View>
-            <Text>{this.state.thisSpace.address}</Text>
-            <Text>{this.state.thisSpace.city}</Text>
-            <Text>{this.state.thisSpace.state}</Text>
-            <Text>{this.state.thisSpace.price}</Text>
-            <Text>{this.state.thisSpace.poster}</Text>
-            <Button rounded large onPress ={()=> {this.checkOut()}}> Checkout </Button>
+            <View style={{margin:10}}>
+            <Card>
+            <Row>
+              <Col size={1}>
+                <Icon name="ios-pin-outline" style={{color: theme.brandPrimary, margin: 10, paddingLeft:3}} />
+              </Col>
+              <Col size={5}>
+              <Text style={styles.info}>{this.state.thisSpace.address}</Text>
+              </Col>
+            </Row>
+            <Row>
+              <Col size={1}>
+                <Icon name="ios-globe-outline" style={styles.icons} />
+              </Col>
+              <Col size={5}>
+                <Text style={styles.info}>{this.state.thisSpace.city}, {this.state.thisSpace.state}</Text>
+              </Col>
+            </Row>
+            <Row>
+              <Col size={1}>
+                <Icon name="ios-contact-outline" style={styles.icons} />
+              </Col>
+              <Col size={5}>
+                <Text style={styles.info}>Posted by {this.state.thisSpace.poster}.</Text>
+              </Col>
+            </Row>
+            <Row>
+              <Col size={1}>
+                <Icon name="ios-cash-outline" style={styles.icons} />
+              </Col>
+              <Col size={5}>
+                <Text style={styles.info}>${this.state.thisSpace.price}</Text>
+              </Col>
+            </Row>
+            <Button block large onPress ={()=> {this.checkOut()}}> Checkout </Button>
+            </Card>
             </View>
           )}
-           </Content>
+          </Content>
         </Container>
       );
     } 
@@ -177,6 +206,14 @@ export default class MyCheckedSpace extends Component {
 
 
 const styles = StyleSheet.create({
+  icons: {
+    color: theme.brandPrimary,
+    margin: 10,
+  },
+  info: {
+    fontSize: 20,
+    paddingTop: 10,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

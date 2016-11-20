@@ -151,13 +151,11 @@ export default class PostInfo extends Component {
                     coordinate = {{latitude: this.props.route.item.lat, longitude: this.props.route.item.lng}}
                     title = {this.props.route.item.address}
                     description = {this.props.route.item.type}
-                    pinColor = {this.state.available ? '#00ff00' : '#ff0000'}
+                    pinColor = {this.state.available ? theme.brandPrimary : theme.checkOutButton}
                   />
                 </MapView>
             </CardItem>
             <CardItem>
-            <Grid>
-              <Row justifyContent='center'>
 
                   <Button large block disabled={!this.state.available  || (firebase.auth().currentUser.email === this.props.route.item.poster)}
                     onPress={() => firebase.auth().currentUser.uid === this.props.route.item.uid ? alert ('Cannot check in to your own space') : this.setModalVisible(true)}>
@@ -166,8 +164,8 @@ export default class PostInfo extends Component {
                     <Text style={styles.buttonText}> Check In</Text>
                     }
                   </Button>
-              </Row>
-            </Grid>
+
+
             </CardItem>
             </Card>
           </View>
