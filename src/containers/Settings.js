@@ -2,7 +2,7 @@
 This shows a new page where the user could change the username or log out.
 */
 import React, {Component} from 'react';
-import { Container, Content, Button, Thumbnail, Header, Icon, Title, List, ListItem, Footer, FooterTab } from 'native-base';
+import { Container, Content, Button, Thumbnail, Header, Title, Grid, Row, Col, Icon, List, ListItem, Footer, FooterTab } from 'native-base';
 import {Navigator, StyleSheet, Text, TextInput, View, Image, Alert} from 'react-native';
 import theme from'./Themes';
 
@@ -47,14 +47,24 @@ export default class Settings extends Component {
             </Header>
               <Content>          
                   <View style={{margin:10}}>
-
-
+                  <Grid>
+                   <Row>
+                      <Col style={{alignItems:'center', paddingTop:25}}>
+                      <Image 
+                        style={{width: 300, height: 300}}
+                        source={require('./solar-system.png')}/>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col style={{paddingTop:100}}>
             {/* This allows the user to log out when they press the log out button which leads to the login page*/}
-                      <Button large block onPress = {() => {this.logOutUser(
-                        this.props.navigator.resetTo,{name: 'SpaceBootup'})}}>
-                        Log out
-                      </Button>
-
+                        <Button large block onPress = {() => {this.logOutUser(
+                          this.props.navigator.resetTo,{name: 'SpaceBootup'})}}>
+                          Log out
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Grid>
                   </View>
               </Content>
             </Container>
