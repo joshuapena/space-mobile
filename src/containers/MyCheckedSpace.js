@@ -2,7 +2,6 @@
 The space a user is currently checked into
 */
 
-
 import React, {Component} from 'react';
 
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image, Alert} from 'react-native';
@@ -15,7 +14,7 @@ var firebase = require('firebase');
 
 export default class MyCheckedSpace extends Component {
 
-
+// this is the inital state which will have a spinner and render when there is new infomation
   constructor(props) {
     super(props);
     this.state = {
@@ -26,12 +25,14 @@ export default class MyCheckedSpace extends Component {
       };
     }
 
+//this navigate to the List View when called
   _navigateListview(){
     this.props.navigator.push({
       name: 'MyListView', // Matches route.name
     })
   }
 
+// this allows a user to checkout a parking space and updates the firebase
   checkOut(){
     this.setState ({checkingOut: true});
     console.log(this.state.thisSpace);
@@ -42,9 +43,13 @@ export default class MyCheckedSpace extends Component {
     var currentUser = firebase.auth().currentUser;
     var checkIn;
     var checkOut;
+
+//firebase 
     firebase.database().ref('users/' + currentUser.uid).once("value").then(function(snapshot){
       var checkedIn = snapshot.val().checkedIn;
       console.log(checkedIn);
+
+//this stores the data of the checkedIn into the firebase.
       if(checkedIn){
         self.setState ({dataExists: false});
         checkOut = firebase.database.ServerValue.TIMESTAMP;
@@ -55,12 +60,15 @@ export default class MyCheckedSpace extends Component {
           checkOut = snapshot.val().checkoutTime;
           alert("You owe " + poster + " $" + ((Math.ceil((checkOut - checkIn)/3600000)) * price));
         });
+
         firebase.database().ref ('listings/' +postID).update({available : true}, function (){
           firebase.database().ref('users/' + currentUser.uid ).update({
             checkedIn : false, checkedSpace : false
           }, self._navigateBack())
         });
       } else {
+
+        //error message when an error occur
         Alert.alert (
           'An error occured',
           'you are not checked into a spot yet'
@@ -69,13 +77,11 @@ export default class MyCheckedSpace extends Component {
     });
   }
 
-
-
-
   _navigateBack(){
     this.props.navigator.replacePreviousAndPop ({name : 'MyListView'})
   }
 
+//make sure the checked out data is in firebase
   componentWillMount(){
     var self = this;
     var currentUser = firebase.auth().currentUser;
@@ -99,6 +105,7 @@ export default class MyCheckedSpace extends Component {
   })
 }
 
+//This shows the address, city, state, and price when there is data of a user checked out space
   render() {
     if (this.state.dataExists) {
       return (
@@ -124,7 +131,7 @@ export default class MyCheckedSpace extends Component {
         </Container>
       );
     } 
-    else if (this.state.checkingOut) {
+    else if (this.state.checkingOut) {        {/*If the user checkout a space, it would appear.*/}
         return (
           <Container style={{backgroundColor: 'white'}}>
           <Header style={{backgroundColor: theme.brandPrimary}}>
@@ -140,6 +147,7 @@ export default class MyCheckedSpace extends Component {
       );
     }
     else {
+{/*This shows the toolbar and the back arrow*/}
       return (
         <Container style={{backgroundColor: theme.backgroundColor}}>
         <Header style={{backgroundColor: theme.brandPrimary}}>
@@ -150,6 +158,7 @@ export default class MyCheckedSpace extends Component {
         </Header>
           <Content>
 
+{/*This appears when the checked out space doesn't exists*/}
           {renderIf(!this.state.dataExists)(
             <Grid>
               <Col alignItems='center'>

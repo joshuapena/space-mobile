@@ -1,6 +1,7 @@
 /*
 This help to show a spinner when sign in and going to list view. It happens while the app loads the data.
 */
+
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TouchableHighlight, Slider, Picker, TextInput, View, Image, BackAndroid} from 'react-native';
 import {Container, Content, Spinner} from 'native-base';
@@ -9,6 +10,7 @@ import theme from'./Themes';
 
 var firebase = require('firebase');
 
+//inital state and renders when there is new infomation 
 export default class SpaceBootup extends Component {
   constructor(props){
     super(props);
@@ -16,6 +18,7 @@ export default class SpaceBootup extends Component {
     };
   }
 
+// this allows the phone's back button to go back to previous page
   componentDidMount(){
     var nav = this.props.navigator;
     BackAndroid.addEventListener('hardwareBackPress', () => {
@@ -29,27 +32,23 @@ export default class SpaceBootup extends Component {
 
     //Checks if user is already logged in
     firebase.auth().onAuthStateChanged(function(user) {
-      // goToPage(user)
+      //goes to the list view page if the user is already logged in
       if (user) {
-        console.log("user is signed in at login screen");
-        console.log(user.email);
 
         self.props.navigator.immediatelyResetRouteStack([{name: 'MyListView'}]);
 
-        // setTimeout(()=>{self.props.navigator.push({name: "MyListView"})}, 1000);
       } else {
+        // goes to login page when the user isn't logged in
         self.props.navigator.popToTop();
-        console.log("no one is signed in");
 
 
-        self.props.navigator.immediatelyResetRouteStack([{name: 'Login'}]);        // setTimeout(()=>{self.props.navigator.push({name: "Login"})}, 1000);
-
+        self.props.navigator.immediatelyResetRouteStack([{name: 'Login'}]);
         return;
       }
     });
   }
 
-
+// style of the spinner and title after opening the application
   render(){
     return(
       <Container style={{backgroundColor: theme.bootColor}}>
@@ -66,6 +65,7 @@ export default class SpaceBootup extends Component {
   }
 }
 
+//styles
 const styles = StyleSheet.create({
   picker: {
     flex: 1,

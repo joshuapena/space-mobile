@@ -8,16 +8,19 @@ import theme from'./Themes';
 
 var firebase = require ('firebase');
 
+//the inital state of the app and renders when there is updated/new infomation.
 export default class Settings extends Component {
     constructor (props) {
         super (props);
         this.state = {text : 'this text will be updated by typing'};
     }
 
+// this allows the app to navigate to MyListView when called.
     _navigateBack(){
       this.props.navigator.replacePreviousAndPop ({name : 'MyListView'})
     }
 
+// this function log out the user of the app and firebase
     logOutUser(switchPage, destination) {
         firebase.auth().signOut().then(function() {
 
@@ -32,6 +35,7 @@ export default class Settings extends Component {
         });
     }
 
+// this page produces the style of the Settings screen
     render() {
         return (
             <Container style={{backgroundColor: theme.backgroundColor}}>
@@ -42,6 +46,8 @@ export default class Settings extends Component {
               <Title>Settings</Title>
             </Header>
               <Content>
+
+            {/* This allows the username to chnage their username by pressing the button*/}
                   <View style={{margin:10}}>
                       <TextInput
                         placeholder = "Change your username"
@@ -51,6 +57,8 @@ export default class Settings extends Component {
                       <Button large block>
                         Change username
                       </Button>
+
+            {/* This allows the user to log out when they press the log out button which leads to the login page*/}
                       <Button large block onPress = {() => {this.logOutUser(
                         this.props.navigator.resetTo,{name: 'SpaceBootup'})}}>
                         Log out
