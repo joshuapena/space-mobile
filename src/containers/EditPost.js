@@ -6,7 +6,7 @@ Delete and edit ride from this page
 
 import React, {Component} from 'react';
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
-import {Container, Content, Thumbnail, Button, Header, Title, List, ListItem, Footer, FooterTab, Icon } from 'native-base';
+import {Container, Content, Thumbnail, Button, Header, Title, List, ListItem, Grid, Row, Col, Footer, FooterTab, Icon } from 'native-base';
 import theme from'./Themes';
 
 var firebase = require ('firebase');
@@ -61,12 +61,26 @@ componentDidMount(){
               </Button>
               <Title>{this.state.thisPost.address}</Title>
             </Header>
-
             <Content>
-              <Button small danger style={{ backgroundColor: theme.delButton }}
-                onPress={()=>{this.deleteButtonPressed()}}
-               >Delete this post
-               </Button>
+              <View style={{margin:10}}>
+                <Grid>
+                 <Row>
+                    <Col style={{alignItems:'center', paddingTop:25}}>
+                    <Image 
+                      style={{width: 300, height: 300}}
+                      source={require('./icons/meteor-shower.png')}/>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col style={{paddingTop:80}}>
+                      <Button large block style={{ backgroundColor: theme.delButton, margin:10 }}
+                        onPress={()=>{this.deleteButtonPressed()}}
+                        >Delete this post
+                      </Button>
+                    </Col>
+                  </Row>
+                </Grid>
+              </View>
             </Content>
           </Container>
       )
