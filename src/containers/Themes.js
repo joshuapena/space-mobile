@@ -35,7 +35,7 @@ export default {
 
 	//Editpost.js
 	//delete button color
-	delButton: 'red',
+	delButton: '#d35400',
 
 	//Hostspace.js
 	submitButton: mainColor,
