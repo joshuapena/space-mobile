@@ -14,7 +14,7 @@ export default class PostInfo extends Component {
   constructor (props) {
       super (props);
 
-      this.state = {text : 'this text will be updated by typing', lat : 0, lng : 0, modalVisible: false};
+      this.state = {text : 'this text will be updated by typing', lat : 0, lng : 0, modalVisible: false, myUsername: ''};
   }
 
   setModalVisible(visible){
@@ -67,6 +67,13 @@ export default class PostInfo extends Component {
       console.log('I am here:');
       //console.log(snapshot.val());
     });
+    //   // to get username
+    // var ref = firebase.database().ref("users/" + currentUser.uid+ "/username");
+    // ref.once("value")
+    // .then(function(snapshot) {
+    //   var key = snapshot.val(); // "ada"
+    //   self.setState({myUsername:key})
+    // })
   }
 
 //a fucntion to check the parking space through the post id, user, and listings from firebase.
@@ -172,6 +179,7 @@ export default class PostInfo extends Component {
                     onPress={() => firebase.auth().currentUser.uid === this.props.route.item.uid ? alert ('Cannot check in to your own space') : this.setModalVisible(true)}>
                     {firebase.auth().currentUser.email === this.props.route.item.email?
                     <Text style={styles.buttonText}> This is your Space </Text> :
+
                     <Text style={styles.buttonText}> Check In</Text>
                     }
                   </Button>
