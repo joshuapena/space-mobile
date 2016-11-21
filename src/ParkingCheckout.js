@@ -1,9 +1,12 @@
-
+//#####################
+// This is the main navigation of the application and setting everything up
+//#####################
 'use strict';
 
 import React, {Component} from 'react';
 import { View, AppRegistry, Text, Image, StyleSheet, Modal, TouchableHighlight, Navigator, TextInput, BackAndroid} from 'react-native';
 
+// this is importing the files for the app
 import Hostspace from './containers/Hostspace';
 import MyListView from './containers/MyListView';
 import Signup from './containers/Signup';
@@ -16,6 +19,7 @@ import PostInfo from './containers/PostInfo';
 import EditPost from './containers/EditPost';
 import SpaceBootup from './containers/SpaceBootup';
 
+// the firebase databases
 var firebase = require ('firebase');
 var config = {
     apiKey: "AIzaSyAd7nS1dCGQILFxxZ5Jwsla5wy1rnbEI_M",
@@ -25,6 +29,7 @@ var config = {
 }
 firebase.initializeApp (config);
 
+// hardware back press
 BackAndroid.addEventListener('hardwareBackPress', () => {
   try{
     if (_navigator.getCurrentRoutes().length === 1  ) {
@@ -36,6 +41,8 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
     console.log("unable to pop");
   }
 });
+
+//the navigator to the different screen of the application
 
 export default function native (platform) {
   let ParkingCheckout = React.createClass({
