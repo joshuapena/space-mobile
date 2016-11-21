@@ -105,46 +105,12 @@ export default class PostInfo extends Component {
         <Content>
             <View style={{margin:10}}>
             <Card style={{paddingBottom:10}}>
-              <Text style={styles.info}> Posted by {this.props.route.item.poster}.</Text>
+              <Text style={styles.PostInfo}> Posted by {this.props.route.item.poster}.</Text>
               <Text> {this.props.route.item.poster} is asking ${this.props.route.item.price}.</Text>
               <Text> Do you want a {this.props.route.item.type}?</Text>
             </Card>
             <Card>
               <CardItem>
-              <Modal
-          animationType={"slide"}
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {alert("Modal has been closed.")}}
-          >
-         <View style={{marginTop: 22}}>
-          <View>
-            <Text>
-            Are you sure you want to check in to this spot?
-            You will be charged at least for 1 hour of service
-
-            </Text>
-
-    {/* This allows the user to confirm that they want to check out the space*/}
-            <TouchableHighlight onPress={() => {
-              this.setModalVisible(!this.state.modalVisible);
-              this.checkSpace();
-            }}>
-              <Text style={styles.confirmText}>Confirm</Text>
-            </TouchableHighlight>
-            <Text>
-
-
-            </Text>
-            <TouchableHighlight onPress={() => {
-              this.setModalVisible(!this.state.modalVisible);
-            }}>
-              <Text style={styles.declineText}>Decline</Text>
-            </TouchableHighlight>
-          </View>
-         </View>
-        </Modal>
-
             {/* This shows the map view (small map) of the parking space on the map via a marker.*/}
                 <MapView
                   initialRegion={{
@@ -164,19 +130,73 @@ export default class PostInfo extends Component {
                 </MapView>
             </CardItem>
             <CardItem>
-
-                  <Button large block disabled={!this.state.available  || (this.state.myUsername === this.props.route.item.poster)}
-                    onPress={() => firebase.auth().currentUser.uid === this.props.route.item.uid ? alert ('Cannot check in to your own space') : this.setModalVisible(true)}>
-                    {this.state.myUsername === this.props.route.item.poster?
-                    <Text style={styles.buttonText}> This is your spot </Text> :
-                    <Text style={styles.buttonText}> Check In</Text>
-                    }
-                  </Button>
-
-
+            {!this.state.available || (this.state.myUsername === this.props.route.item.poster) ?
+              <Button large block disabled> 
+                {this.state.myUsername === this.props.route.item.poster?
+                <Text style={styles.buttonText}> This is your spot </Text> :
+                <Text style={styles.buttonText}> Check In</Text>
+                }
+              </Button> :
+              <Button large block style={{ backgroundColor: theme.submitButton }}
+              onPress={() => firebase.auth().currentUser.uid === this.props.route.item.uid ? alert ('Cannot check in to your own space') : this.setModalVisible(true)}>
+                {this.state.myUsername === this.props.route.item.poster?
+                <Text style={styles.buttonText}> This is your spot </Text> :
+                <Text style={styles.buttonText}> Check In</Text>
+                }
+              </Button>
+            }
             </CardItem>
             </Card>
           </View>
+          <Modal
+              animationType={"slide"}
+              transparent={false}
+              visible={this.state.modalVisible}
+              onRequestClose={() => {alert("Modal has been closed.")}}
+            >
+            <Text style={{fontSize: 20, margin:20}}>
+              Are you sure you want to check in to this spot?
+              You will be charged at least for 1 hour of service
+            </Text>
+
+        {/* Displays info about space*/}
+          <Card>
+            <CardItem>
+              <Icon name="ios-pin-outline" style={{color: theme.brandPrimary, margin: 10, paddingLeft:3}} />
+              <Text style={styles.info}>{this.props.route.item.address}</Text>
+            </CardItem>
+            <CardItem>
+              <Icon name="ios-globe-outline" style={styles.icons} />
+              <Text style={styles.info}>{this.props.route.item.city}, {this.props.route.item.us_state}</Text>
+            </CardItem>
+            <CardItem>
+              <Icon name="ios-contact-outline" style={styles.icons} />
+              <Text style={styles.info}>Posted by {this.props.route.item.poster}.</Text>
+            </CardItem>
+            <CardItem>
+              <Icon name="ios-cash-outline" style={styles.icons} />
+              <Text style={styles.info}>${this.props.route.item.price}</Text>
+            </CardItem>
+        {/* This allows the user to confirm that they want to check out the space*/}
+          <View style={{margin:20}}>
+            <Button block large 
+              style={{ backgroundColor: theme.submitButton, margin:5}} 
+              onPress={() => {
+              this.setModalVisible(!this.state.modalVisible);
+              this.checkSpace();
+              }}> Confirm 
+            </Button>
+
+            <Button block large 
+              style={{ backgroundColor: theme.delButton, margin:5}} 
+              onPress={() => {
+              this.setModalVisible(!this.state.modalVisible);
+              }}> Decline 
+            </Button>
+
+          </View>
+           </Card>
+        </Modal>
         </Content>
       </Container>
       )
@@ -184,7 +204,15 @@ export default class PostInfo extends Component {
 }
 
 const styles = StyleSheet.create({
+  icons: {
+    color: theme.brandPrimary,
+    margin: 10,
+  },
   info: {
+    fontSize: 20,
+    paddingTop: 10,
+  },
+  PostInfo: {
     color:'#3498db',
     fontSize: 25,
   },
