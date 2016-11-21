@@ -1,5 +1,5 @@
 /*
-This is the framework/page where the user creates a post by inputting the address, state, and price. 
+This is the framework/page where the user creates a post by inputting the address, state, and price.
 */
 import React, {Component} from 'react';
 import {Navigator, StyleSheet, Text, TouchableHighlight, Slider, Picker, TextInput, View, Image, Alert} from 'react-native';
@@ -61,6 +61,8 @@ enableButton(){
     let myUsername = "";
 
     let currentUser = firebase.auth().currentUser;
+    let myEmail = currentUser.email;
+
     let updateObj = {};
 
     // to get username
@@ -77,10 +79,11 @@ enableButton(){
         city: 'null',
         us_state: 'null',
         type : myType,
+        email: myEmail,
         poster: myUsername,
         available : true
       }
-      
+
       //gets the address and then convert it to lat in google maps
       // it calls google maps
       var regex = new RegExp ('\\s+', 'g');
@@ -131,7 +134,7 @@ enableButton(){
     });
   }
 
-  // creates the post 
+  // creates the post
   postData(myPost, locationData) {
     var self = this;
     console.log("posting data");

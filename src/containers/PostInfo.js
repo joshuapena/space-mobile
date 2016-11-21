@@ -46,6 +46,17 @@ export default class PostInfo extends Component {
   }
 
   componentDidMount(){
+
+    var currentUser = firebase.auth().currentUser;
+    var ref = firebase.database().ref("users/" + currentUser.uid+ "/username");
+    ref.once("value")
+    .then(function(snapshot) {
+      var key = snapshot.val(); // "ada"
+      myUsername = key;
+      self.setState({"username" : myUsername});
+    });
+
+
     console.log(this.props.route);
     var self = this;
     var curItem = this.props.route.item;
@@ -157,10 +168,10 @@ export default class PostInfo extends Component {
             </CardItem>
             <CardItem>
 
-                  <Button large block disabled={!this.state.available  || (firebase.auth().currentUser.email === this.props.route.item.poster)}
+                  <Button large block disabled={!this.state.available  || (firebase.auth().currentUser.email === this.props.route.item.email)}
                     onPress={() => firebase.auth().currentUser.uid === this.props.route.item.uid ? alert ('Cannot check in to your own space') : this.setModalVisible(true)}>
-                    {firebase.auth().currentUser.email === this.props.route.item.poster?
-                    <Text style={styles.buttonText}> This is your spot </Text> :
+                    {firebase.auth().currentUser.email === this.props.route.item.email?
+                    <Text style={styles.buttonText}> This is your Space </Text> :
                     <Text style={styles.buttonText}> Check In</Text>
                     }
                   </Button>
