@@ -52,13 +52,15 @@ export default class Settings extends Component {
                       <Col style={{alignItems:'center', paddingTop:25}}>
                       <Image 
                         style={{width: 300, height: 300}}
-                        source={require('./solar-system.png')}/>
+                        source={require('./icons/solar-system.png')}/>
                       </Col>
                     </Row>
                     <Row>
                       <Col style={{paddingTop:100}}>
             {/* This allows the user to log out when they press the log out button which leads to the login page*/}
-                        <Button large block onPress = {() => {this.logOutUser(
+                        <Button large block 
+                          style={{ backgroundColor: theme.submitButton }}
+                          onPress = {() => {this.logOutUser(
                           this.props.navigator.resetTo,{name: 'SpaceBootup'})}}>
                           Log out
                         </Button>
