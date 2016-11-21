@@ -6,11 +6,13 @@ Can navigate back to MyListViews
 
 import React, {Component} from 'react';
 import {Navigator, ListView, StyleSheet, Text, TextInput, View, Image} from 'react-native';
-import {Container, Content, Thumbnail, Button, Icon, Grid, Col, Row, Header, Spinner, Title, List, ListItem, Footer, FooterTab} from 'native-base';
+import {Container, Content, Thumbnail, Button, Grid, Card, CardItem, Col, Row, Header, Spinner, Title, List, ListItem, Footer, FooterTab} from 'native-base';
 import theme from'./Themes';
 
 var renderIf = require('render-if');
 
+import IconFont from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Dimensions = require('Dimensions');
 const TimerMixin =  require('react-timer-mixin');
@@ -125,7 +127,7 @@ export default class MyPosts extends Component {
       <Container style={{backgroundColor: theme.backgroundColor}}>
       <Header style={{backgroundColor: theme.brandPrimary}}>
         <Button transparent onPress={() => this. _navigateBack()}>
-          <Icon name='ios-arrow-back' />
+          <Icon name='ios-arrow-back' style={{fontSize: 30, color: 'white'}}/>
         </Button>
         <Title>My Posts</Title>
       </Header>
@@ -140,7 +142,7 @@ export default class MyPosts extends Component {
         <Grid>
           <Col alignItems='center'>
             <Icon name='ios-help-circle-outline' style={{fontSize: 200, color: theme.brandPrimary}}/>
-            <Text>Looks like you don't have any postings.</Text>
+            <Text>Looks like you dont have any postings.</Text>
             <Text>Want to Create a Space?</Text> 
             <Button large block transparent color= {theme.checkSpace} onPress={() => {this._navigateHostspace()}}>
              Create a Space </Button>
@@ -148,15 +150,43 @@ export default class MyPosts extends Component {
         </Grid>
       )}
 {/*This screen appears when there is a post and it will list it out*/}
+          <List dataArray={this.state.dataArray}
+              renderRow={(item) =>
+                <ListItem style={{margin: 10}}>
+                  <Card>
+                    {Object.values(item)[0].available ?
+                      <Card backgroundColor= {theme.brandPrimary}>
+                      <Text style={{fontSize: 20, color: 'white'}}> {Object.values(item)[0].address}</Text>
+                      </Card> :
+                      <Card backgroundColor= {theme.checkOutButton}>
+                      <Text style={{fontSize: 20, color: 'white'}}> {Object.values(item)[0].address}</Text>
+                      </Card>}
+                    <CardItem button onPress={() => {this._navigateEditPost(this, item)}}>
 
-        <List dataArray={this.state.dataArray}
-            renderRow={(item) =>
-              <ListItem button onPress={() => {this._navigateEditPost(this, item)}}>
-              <Text>My price is {Object.values(item)[0].price}, for a {Object.values(item)[0].type}. {"\n"}It is at {Object.values(item)[0].address} </Text>
-              </ListItem>
-              }>
-        </List>
-  </Content>
+      {/*This shows the price, type, and if the item is available.*/}
+                      <Grid style={{margin: 10}}>
+                        <Col>
+                          <Text style={{fontSize: 20}}>
+                            Price: ${Object.values(item)[0].price}{"\n"}
+                            Type: {Object.values(item)[0].type}   {"\n"}
+                            Status: {Object.values(item)[0].available ?
+                              <Text>Open</Text> :
+                              <Text>Occupied</Text>}
+                          </Text>
+                        </Col>
+      {/*This shows the check-in button*/}
+                        <Col alignItems='center'>
+                            {Object.values(item)[0].available ?
+                            <IconFont name="sign-in" color= {theme.brandPrimary} size={50}/> :
+                            <IconFont name="car" color={theme.checkOutButton} size= {50}/> }
+                        </Col>
+                      </Grid>
+                    </CardItem>
+                  </Card>
+                </ListItem>
+                }>
+          </List>
+      </Content>
     </Container>
    );
  }
@@ -164,6 +194,12 @@ export default class MyPosts extends Component {
 
 //styles
 const styles = StyleSheet.create({
+  containerListView: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    backgroundColor: 'white',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
