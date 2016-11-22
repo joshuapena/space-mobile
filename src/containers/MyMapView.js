@@ -118,7 +118,7 @@ export default class MyMapView extends Component {
             coordinate = {{latitude: marker.lat, longitude: marker.lng}}
             title = {marker.type}
             description = {marker.address + '\n' + marker.city + '\n' + marker.state}
-            pinColor = {marker.available ? theme.brandPrimary : '#d35400'}
+            pinColor = {marker.available ? theme.brandPrimary : theme.checkOutButton}
             onPress = {() => this.props.navigator.push({
             name: 'PostInfo',
             item: marker,
