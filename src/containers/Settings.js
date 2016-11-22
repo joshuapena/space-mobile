@@ -56,10 +56,10 @@ export default class Settings extends Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col style={{paddingTop:100}}>
+                      <Col style={{paddingTop:80}}>
             {/* This allows the user to log out when they press the log out button which leads to the login page*/}
                         <Button large block 
-                          style={{ backgroundColor: theme.submitButton }}
+                          style={{ backgroundColor: theme.submitButton, margin:10}}
                           onPress = {() => {this.logOutUser(
                           this.props.navigator.resetTo,{name: 'SpaceBootup'})}}>
                           Log out
