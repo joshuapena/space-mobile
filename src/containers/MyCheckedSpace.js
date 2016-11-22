@@ -152,7 +152,13 @@ export default class MyCheckedSpace extends Component {
                 <Text style={styles.info}>${this.state.thisSpace.price}</Text>
               </Col>
             </Row>
-            <Button block large onPress ={()=> {this.checkOut()}}> Checkout </Button>
+            <Card>
+            <CardItem>
+            <Button block large 
+              style={{ backgroundColor: theme.submitButton }} 
+              onPress ={()=> {this.checkOut()}}> Checkout </Button>
+            </CardItem>
+            </Card>
             </Card>
             </View>
           )}

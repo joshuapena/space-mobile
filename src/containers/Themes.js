@@ -27,7 +27,7 @@ export default {
 	//checkin icon color
 	checkInButton: mainColor,
 	//checkout icon color
-	checkOutButton: '#d35400',
+	checkOutButton: '#e74c3c',
 	//listView Text color
 	checkText: 'white',
 	//nav background color
@@ -35,7 +35,7 @@ export default {
 
 	//Editpost.js
 	//delete button color
-	delButton: 'red',
+	delButton: '#e74c3c',
 
 	//Hostspace.js
 	submitButton: mainColor,
