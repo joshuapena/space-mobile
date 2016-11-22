@@ -46,6 +46,17 @@ export default class PostInfo extends Component {
   }
 
   componentDidMount(){
+
+    var currentUser = firebase.auth().currentUser;
+    var ref = firebase.database().ref("users/" + currentUser.uid+ "/username");
+    ref.once("value")
+    .then(function(snapshot) {
+      var key = snapshot.val(); // "ada"
+      myUsername = key;
+      self.setState({"username" : myUsername});
+    });
+
+
     console.log(this.props.route);
     var self = this;
     var curItem = this.props.route.item;
@@ -56,14 +67,13 @@ export default class PostInfo extends Component {
       console.log('I am here:');
       //console.log(snapshot.val());
     });
-      // to get username
-    let currentUser = firebase.auth().currentUser;
-    var ref = firebase.database().ref("users/" + currentUser.uid+ "/username");
-    ref.once("value")
-    .then(function(snapshot) {
-      var key = snapshot.val(); // "ada"
-      self.setState({myUsername:key})
-    })
+    //   // to get username
+    // var ref = firebase.database().ref("users/" + currentUser.uid+ "/username");
+    // ref.once("value")
+    // .then(function(snapshot) {
+    //   var key = snapshot.val(); // "ada"
+    //   self.setState({myUsername:key})
+    // })
   }
 
 //a fucntion to check the parking space through the post id, user, and listings from firebase.

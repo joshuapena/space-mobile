@@ -115,7 +115,6 @@ export default class MyListView extends Component {
       var key = snapshot.val(); // "ada"
       myUsername = key;
       self.setState({"username" : myUsername});
-
     });
 
     firebase.database().ref('listings/').on("value", function(snapshot){
