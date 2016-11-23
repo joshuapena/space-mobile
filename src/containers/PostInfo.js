@@ -140,16 +140,16 @@ export default class PostInfo extends Component {
                 </MapView>
             </CardItem>
             <CardItem>
-            {!this.state.available || (this.state.myUsername === this.props.route.item.poster) ?
-              <Button large block disabled> 
-                {this.state.myUsername === this.props.route.item.poster?
+            {!this.state.available || (firebase.auth().currentUser.email === this.props.route.item.email) ?
+              <Button large block disabled>
+                {firebase.auth().currentUser.email === this.props.route.item.email?
                 <Text style={styles.buttonText}> This is your spot </Text> :
                 <Text style={styles.buttonText}> Check In</Text>
                 }
               </Button> :
               <Button large block style={{ backgroundColor: theme.submitButton }}
               onPress={() => firebase.auth().currentUser.uid === this.props.route.item.uid ? alert ('Cannot check in to your own space') : this.setModalVisible(true)}>
-                {this.state.myUsername === this.props.route.item.poster?
+                {firebase.auth().currentUser.email === this.props.route.item.email?
                 <Text style={styles.buttonText}> This is your spot </Text> :
                 <Text style={styles.buttonText}> Check In</Text>
                 }
@@ -189,19 +189,19 @@ export default class PostInfo extends Component {
             </CardItem>
         {/* This allows the user to confirm that they want to check out the space*/}
           <View style={{margin:20}}>
-            <Button block large 
-              style={{ backgroundColor: theme.submitButton, margin:5}} 
+            <Button block large
+              style={{ backgroundColor: theme.submitButton, margin:5}}
               onPress={() => {
               this.setModalVisible(!this.state.modalVisible);
               this.checkSpace();
-              }}> Confirm 
+              }}> Confirm
             </Button>
 
-            <Button block large 
-              style={{ backgroundColor: theme.delButton, margin:5}} 
+            <Button block large
+              style={{ backgroundColor: theme.delButton, margin:5}}
               onPress={() => {
               this.setModalVisible(!this.state.modalVisible);
-              }}> Decline 
+              }}> Decline
             </Button>
 
           </View>
