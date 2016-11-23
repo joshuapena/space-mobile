@@ -26,13 +26,15 @@ deleteButtonPressed(){
   var self = this;
   var currentUser = firebase.auth().currentUser;
   var updateObj = {};
+  if(this.state.thisPost.available){ 
   firebase.database().ref ('users/' + currentUser.uid +'/listing/'+self.state.postId).remove();
   // this deletes the post and go back to the MyListView
   firebase.database().ref('/listings/'+self.state.postId).remove(function(){
-
     self.props.navigator.replacePreviousAndPop({name: 'MyListView',})
-
-  });
+  }); 
+  }else{
+  alert ('Error: space is currently occupied');
+  }
 }
 
 //navigate back
